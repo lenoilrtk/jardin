@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 13-05-2025 a las 16:18:15
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: May 13, 2025 at 04:35 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `jardin`
+-- Database: `jardin`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `libros_1`
+-- Table structure for table `libros_1`
 --
 
 CREATE TABLE `libros_1` (
@@ -42,7 +42,7 @@ CREATE TABLE `libros_1` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Volcado de datos para la tabla `libros_1`
+-- Dumping data for table `libros_1`
 --
 
 INSERT INTO `libros_1` (`libro_id`, `titulo`, `autor`, `ilustrador`, `editorial`, `clasificacion`, `color`, `observaciones`, `resumen`, `origen`, `imagen`) VALUES
@@ -919,7 +919,22 @@ INSERT INTO `libros_1` (`libro_id`, `titulo`, `autor`, `ilustrador`, `editorial`
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `prestamos`
+-- Table structure for table `movimientos`
+--
+
+CREATE TABLE `movimientos` (
+  `id_movimientos` int(10) NOT NULL,
+  `usuario_id` int(10) NOT NULL,
+  `tabla_modif` text NOT NULL,
+  `campos_modif` text NOT NULL,
+  `valores_modif` text NOT NULL,
+  `fecha` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `prestamos`
 --
 
 CREATE TABLE `prestamos` (
@@ -933,7 +948,7 @@ CREATE TABLE `prestamos` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `prestarios`
+-- Table structure for table `prestarios`
 --
 
 CREATE TABLE `prestarios` (
@@ -946,7 +961,7 @@ CREATE TABLE `prestarios` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Table structure for table `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -956,17 +971,24 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `libros_1`
+-- Indexes for table `libros_1`
 --
 ALTER TABLE `libros_1`
   ADD PRIMARY KEY (`libro_id`);
 
 --
--- Indices de la tabla `prestamos`
+-- Indexes for table `movimientos`
+--
+ALTER TABLE `movimientos`
+  ADD PRIMARY KEY (`id_movimientos`),
+  ADD KEY `usuario_id` (`usuario_id`);
+
+--
+-- Indexes for table `prestamos`
 --
 ALTER TABLE `prestamos`
   ADD PRIMARY KEY (`prestamo_id`),
@@ -974,51 +996,63 @@ ALTER TABLE `prestamos`
   ADD KEY `dni_id` (`dni_id`);
 
 --
--- Indices de la tabla `prestarios`
+-- Indexes for table `prestarios`
 --
 ALTER TABLE `prestarios`
   ADD PRIMARY KEY (`dni_id`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`usuario_id`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `libros_1`
+-- AUTO_INCREMENT for table `libros_1`
 --
 ALTER TABLE `libros_1`
   MODIFY `libro_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=869;
 
 --
--- AUTO_INCREMENT de la tabla `prestamos`
+-- AUTO_INCREMENT for table `movimientos`
+--
+ALTER TABLE `movimientos`
+  MODIFY `id_movimientos` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `prestamos`
 --
 ALTER TABLE `prestamos`
   MODIFY `prestamo_id` int(15) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `prestarios`
+-- AUTO_INCREMENT for table `prestarios`
 --
 ALTER TABLE `prestarios`
   MODIFY `dni_id` int(15) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `usuarios`
+-- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
   MODIFY `usuario_id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `prestamos`
+-- Constraints for table `movimientos`
+--
+ALTER TABLE `movimientos`
+  ADD CONSTRAINT `movimientos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`usuario_id`);
+
+--
+-- Constraints for table `prestamos`
 --
 ALTER TABLE `prestamos`
   ADD CONSTRAINT `prestamos_ibfk_2` FOREIGN KEY (`dni_id`) REFERENCES `prestarios` (`dni_id`);
