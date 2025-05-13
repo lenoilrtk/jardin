@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 13, 2025 at 04:35 PM
+-- Generation Time: May 13, 2025 at 04:54 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -923,13 +923,20 @@ INSERT INTO `libros_1` (`libro_id`, `titulo`, `autor`, `ilustrador`, `editorial`
 --
 
 CREATE TABLE `movimientos` (
-  `id_movimientos` int(10) NOT NULL,
+  `id_movimiento` int(10) NOT NULL,
   `usuario_id` int(10) NOT NULL,
   `tabla_modif` text NOT NULL,
   `campos_modif` text NOT NULL,
   `valores_modif` text NOT NULL,
   `fecha` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `movimientos`
+--
+
+INSERT INTO `movimientos` (`id_movimiento`, `usuario_id`, `tabla_modif`, `campos_modif`, `valores_modif`, `fecha`) VALUES
+(1, 41111, 'usuarios', 'usuario_id', '47777,41111', '2025-05-13 11:52:26');
 
 -- --------------------------------------------------------
 
@@ -971,6 +978,13 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `usuarios`
+--
+
+INSERT INTO `usuarios` (`usuario_id`, `contraseña`, `nivel`) VALUES
+(41111, 'asdasd', 1);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -984,7 +998,7 @@ ALTER TABLE `libros_1`
 -- Indexes for table `movimientos`
 --
 ALTER TABLE `movimientos`
-  ADD PRIMARY KEY (`id_movimientos`),
+  ADD PRIMARY KEY (`id_movimiento`),
   ADD KEY `usuario_id` (`usuario_id`);
 
 --
@@ -1021,7 +1035,7 @@ ALTER TABLE `libros_1`
 -- AUTO_INCREMENT for table `movimientos`
 --
 ALTER TABLE `movimientos`
-  MODIFY `id_movimientos` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_movimiento` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `prestamos`
@@ -1039,7 +1053,7 @@ ALTER TABLE `prestarios`
 -- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `usuario_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `usuario_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41112;
 
 --
 -- Constraints for dumped tables
