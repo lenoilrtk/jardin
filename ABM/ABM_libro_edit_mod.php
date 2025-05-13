@@ -8,7 +8,7 @@ $clasificacion = $_POST['clasificacion'];
 $color = $_POST['color'];
 $resumen = $_POST['resumen'];
 $imagen = $_POST['imagen'];
-include "./ABM/conex.php";
+include "./conex.php";
 
 $sql = "UPDATE `libros_1` SET `titulo` = '$titulo', `ilustrador` = '$ilustrador', `editorial` = '$editorial', `clasificacion` = '$clasificacion', `color` = '$color', `observaciones` = 'NULL', `resumen` = '$resumen', `origen` = 'NULL', `imagen` = '$imagen' WHERE `libros_1`.`libro_id` = ".$libro_id.";";
 if ($conn->query($sql) === TRUE) {

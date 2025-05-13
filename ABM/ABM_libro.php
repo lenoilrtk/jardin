@@ -125,7 +125,7 @@
         max-height: 100px;
       }
   </style>
-  <?php include "./ABM/conex.php" ?>
+  <?php include "./conex.php" ?>
 </head>
 
 <body>
