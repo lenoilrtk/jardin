@@ -1,0 +1,80 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #f8d7da;
+    color: #721c24;
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #f5c6cb;
+}
+
+.titulo-principal {
+    text-align: center;
+    margin: 30px 0 10px 0;
+    color: #333;
+    font-size: 26px;
+}
+.form-container {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+}
+
+.form-box {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+input[type=text],
+input[type=number],
+input[type=email],
+input[type=password],
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.registerbtn {
+    background-color: #0077b6;
+    color: white;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s ease;
+}
+
+.registerbtn:hover {
+    background-color: #023e8a;
+}
+
+.signin-link {
+    text-align: center;
+    margin-top: 16px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .form-box {
+        padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 22px;
+    }
+}

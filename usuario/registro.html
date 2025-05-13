@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario</title>
+    <link rel="stylesheet" href="registro.css">
+</head>
+<body>
+
+    <div class="header"></div>
+
+    <h1 class="titulo-principal">Registro de Usuario</h1>
+
+    <div class="form-container">
+        <form action="registro.php" method="POST">
+            <div class="form-box">
+                <label for="nombre"><b>Nombre:</b></label>
+                <input type="text" placeholder="Ingresar su nombre" name="nombre" required>
+
+                <label for="apellido"><b>Apellido:</b></label>
+                <input type="text" placeholder="Ingresar su apellido" name="apellido" required>
+
+                <label for="documento"><b>Número de Documento:</b></label>
+                <input type="number" placeholder="Ingresar su número de documento" name="documento" required>
+
+                <label for="email"><b>Email:</b></label>
+                <input type="email" placeholder="Ingresar su email" name="email" required>
+
+                <label for="contrasena"><b>Contraseña:</b></label>
+                <input type="password" placeholder="Ingresar su contraseña" name="contrasena" required>
+
+                <label for="repetir_contrasena"><b>Repetir contraseña:</b></label>
+                <input type="password" placeholder="Repetir su contraseña" name="repetir_contrasena" required>
+
+                <label for="nivel"><b>Nivel de usuario:</b></label>
+                <select name="nivel" required>
+                    <option value="0">Usuario</option>
+                    <option value="1">Administrador</option>
+                    <option value="2">Super Administrador</option>
+                </select>
+
+                <input type="submit" class="registerbtn" value="Registrarse">
+
+                <div class="signin-link">
+                    <p>¿Ya tenés una cuenta? <a href="login.html">Iniciar Sesión</a></p>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
