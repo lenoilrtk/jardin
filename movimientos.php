@@ -167,16 +167,37 @@
             $sql = "SELECT * FROM movimientos";
             $result = $conn->query($sql);
 
+            function displayArrayValues($array) {
+              $stringToDisplay = "";
+              for ($i = 0; $i < count($array); $i++){
+                if ($i % 2 == 0) {
+                  $stringToDisplay = $stringToDisplay."<p>" . $array[$i];
+                } else {
+                  $stringToDisplay = $stringToDisplay." -> " . $array[$i] . "</p>";
+                }
+              }
+              return $stringToDisplay;
+            }
+            function displayArray($array) {
+              $stringToDisplay = "";
+              foreach ($array as $value) {
+                $stringToDisplay = $stringToDisplay . "<p>" . $value . "</p>";
+              }
+              return $stringToDisplay;
+            }
+
             // Verificar si hay resultados
             if ($result->num_rows > 0) {
               // Mostrar los datos de cada fila
               while ($row = $result->fetch_assoc()) {
+                $campos_modif = explode(",", $row["campos_modif"]);
+                $valores_modif = explode(",", $row["valores_modif"]);
                 echo "<tr>";
                 echo "<th scope='row' class='align-middle'>" . $row["id_movimiento"] . "</th>";
                 echo "<td class='align-middle'><p>" . $row["usuario_id"] . "</p></td>";
                 echo "<td class='align-middle'><p>" . $row["tabla_modif"] . "</p></td>";
-                echo "<td class='align-middle'><p>" . $row["campos_modif"] . "</p></td>";
-                echo "<td class='align-middle'><p>" . $row["valores_modif"] . "</p></td>";
+                echo "<td class='align-middle'>" . displayArray($campos_modif) . "</td>";
+                echo "<td class='align-middle'>" . displayArrayValues($valores_modif) . "</td>";
                 echo "<td class='align-middle'><p>" . $row["fecha"] . "</p></td>";
                 echo "</tr>";
               }
