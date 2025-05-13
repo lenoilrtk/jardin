@@ -6,7 +6,7 @@ $username = "root";
 
 $password = "";
 
-$dbname="chatbot_sencillo";
+$dbname="jardin";
 
 // Crear la conexión
 
