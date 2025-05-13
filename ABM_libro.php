@@ -142,8 +142,8 @@
   <div class="content">
     <h1>ABM</h1>
     
-    <button type="button" class="btn btn-outline-primary">Volver</button>
-    <button type="button" class="btn btn-outline-success">Añadir Libro</button>
+    <a href="./ABM_index.html"><button type="button" class="btn btn-outline-primary">Volver</button></a>
+    <a href="./ABM_libro_añadir.html"><button type="button" class="btn btn-outline-success">Añadir Libro</button></a>
     <br><br>
       <label class="form-label">Fila</label>
       <?php
@@ -204,8 +204,8 @@
         <td class="align-middle text-wrap"><p style="max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' . $row["clasificacion"] . '</p></td>
         <td class="align-middle text-wrap"><p style="max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' . $row["color"] . '</p></td>
         <td class="align-middle text-wrap"><p style="max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' . $row["resumen"] . '</p></td>
-        <td class="align-middle text-center"><button type="button" class="btn btn-sm btn-outline-primary">Modificar</button></td>
-        <td class="align-middle text-center"><button type="button" class="btn btn-sm btn-outline-danger">Borrar</button></td>  
+        <td class="align-middle text-center"><a href="./ABM_libro_edit.php?id='.$row["libro_id"].'"><button type="button" class="btn btn-sm btn-outline-primary">Modificar</button></a></td>
+        <td class="align-middle text-center"><a href="./ABM_libro_del.php?id='.$row["libro_id"].'"><button type="button" class="btn btn-sm btn-outline-danger">Borrar</button></a></td>  
         </tr>
         ';
         }

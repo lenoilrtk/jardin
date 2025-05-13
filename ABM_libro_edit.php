@@ -139,10 +139,51 @@
 
   <!-- CONTENIDO PRINCIPAL -->
   <div class="content">
-    <h1>Log</h1>
-
-    
-
+    <h1>Modificar Libro</h1>
+    <?php
+    include "./ABM/conex.php";
+    $id = $_GET['id'];
+    $sql = "SELECT * FROM `libros_1` WHERE libro_id = $id";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        // Salida de datos de cada fila
+        while($row = $result->fetch_assoc()) {
+    ?>
+    <?php
+    echo '
+<form action="ABM_libro_edit_mod.php?libro_id='.$row["libro_id"].'" method="POST">
+';
+?>
+      <div class="mb-3">
+      
+        <label for="titulo" class="form-label">Título</label>
+        <input type="text" class="form-control" id="titulo" name="titulo" <?php echo ' value="'.$row["titulo"].'" '?> required />
+        <br>
+        <label for="titulo" class="form-label">Autor</label>
+        <input type="text" class="form-control" id="autor" name="autor" <?php echo ' value="'.$row["autor"].'" '?> required />
+        <br>
+        <label for="titulo" class="form-label">Ilustrador</label>
+        <input type="text" class="form-control" id="ilustrador" name="ilustrador" <?php echo ' value="'.$row["ilustrador"].'" '?> required />
+        <br>
+        <label for="titulo" class="form-label">Editorial</label>
+        <input type="text" class="form-control" id="editorial" name="editorial" <?php echo ' value="'.$row["editorial"].'" '?> required />
+        <br>
+        <label for="titulo" class="form-label">Clasificación</label>
+        <input type="text" class="form-control" id="clasificacion" name="clasificacion" <?php echo ' value="'.$row["clasificacion"].'" '?> required />
+        <br>
+        <label for="titulo" class="form-label">Color</label>
+        <input type="text" class="form-control" id="color" name="color" <?php echo ' value="'.$row["color"].'" '?> required />
+        <br>
+         <label for="titulo" class="form-label">Resumen</label>
+        <input type="text" class="form-control" id="resumen" name="resumen" <?php echo ' value="'.$row["resumen"].'" '?> required />
+        <br>
+         <label for="titulo" class="form-label">Imagen</label>
+        <input type="text" class="form-control" id="imagen" name="imagen" <?php echo ' value="'.$row["imagen"].'" '?> required />
+        <br>
+        <input type="submit" value="Modificar" class="btn btn-primary" />
+      </div>
+        </form>
+<?php }; }; ?>
   <!-- FOOTER -->
   <div class="footer">
 
