@@ -1,3 +1,10 @@
+<?php
+
+  include_once './ABM/conex.php';
+  session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -146,24 +153,41 @@
     <table class="table table-bordered border-black">
         <thead>
           <tr>
-            <th scope="col">ID_MOV</th>
-            <th scope="col">ID_USER</th>
-            <th scope="col">Tabla_Modificada</th>
-            <th scope="col">Campos_Modificados</th>
-            <th scope="col">Valores_Modificados</th>
-            <th scope="col">ID_Registro</th>
+            <th scope="col">ID Movimiento</th>
+            <th scope="col">ID Usuario</th>
+            <th scope="col">Tabla Modificada</th>
+            <th scope="col">Campos Modificados</th>
+            <th scope="col">Valores Modificados</th>
+            <th scope="col">Fecha</th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
-          <tr>
-            <th scope="row" class="align-middle">1</th>
-            <td class="align-middle"><p>skibidi dop dop yes yes</p></td>
-            <td class="align-middle"><p>Frate</p></td>
-            <td class="align-middle"><p>Pasa</p></td>
-            <td class="align-middle"><p>la</p></td>
-            <td class="align-middle"><p>Base de datos</p></td>
-          </tr>
+          <?php
+            // Consulta para obtener los movimientos
+            $sql = "SELECT * FROM movimientos";
+            $result = $conn->query($sql);
 
+            // Verificar si hay resultados
+            if ($result->num_rows > 0) {
+              // Mostrar los datos de cada fila
+              while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<th scope='row' class='align-middle'>" . $row["id_movimiento"] . "</th>";
+                echo "<td class='align-middle'><p>" . $row["usuario_id"] . "</p></td>";
+                echo "<td class='align-middle'><p>" . $row["tabla_modif"] . "</p></td>";
+                echo "<td class='align-middle'><p>" . $row["campos_modif"] . "</p></td>";
+                echo "<td class='align-middle'><p>" . $row["valores_modif"] . "</p></td>";
+                echo "<td class='align-middle'><p>" . $row["fecha"] . "</p></td>";
+                echo "</tr>";
+              }
+            } else {
+              echo "<tr><td colspan='6'>No se encontraron movimientos.</td></tr>";
+            }
+
+            // Cerrar la conexión
+            $conn->close();
+
+          ?>
         </tbody>
       </table>
     
