@@ -142,8 +142,8 @@
   <div class="content">
     <h1>ABM</h1>
     
-    <button type="button" class="btn btn-outline-primary">Volver</button>
-    <button type="button" class="btn btn-outline-success">Añadir Libro</button>
+    <a href="./ABM_index.html"><button type="button" class="btn btn-outline-primary">Volver</button></a>
+    <a href="./ABM_libro_añadir.html"><button type="button" class="btn btn-outline-success">Añadir Libro</button></a>
     <br><br>
       <label class="form-label">Fila</label>
       <?php
