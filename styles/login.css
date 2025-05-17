@@ -1,0 +1,102 @@
+/* Estilos específicos para la página de login/registro */
+
+/* Variables adicionales */
+:root {
+    --green: #2e8b57;
+    --green-light: #e6f5ee;
+    --flip-duration: 0.8s;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilos para el contenedor con efecto flip */
+.flip-container {
+    perspective: 1000px;
+    margin: 0 auto;
+}
+
+.flipper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform var(--flip-duration);
+    transform-style: preserve-3d;
+}
+
+/* Rotación al activar la clase flip */
+.flipper.flip {
+    transform: rotateY(180deg);
+}
+
+/* Estilos comunes para ambos lados */
+.front, .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden; /* Safari */
+}
+
+/* Posición inicial del frente (login) */
+.front {
+    z-index: 2;
+    transform: rotateY(0deg);
+}
+
+/* Posición inicial del reverso (registro) - girado 180 grados */
+.back {
+    transform: rotateY(180deg);
+}
+
+/* Asegurarse de que el contenedor tenga suficiente altura */
+.flip-container, .front, .back {
+    min-height: 600px;
+}
+
+/* Avatar circular */
+.avatar-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+/* Botón verde */
+.btn-green {
+    background-color: var(--green);
+    color: white;
+}
+
+.btn-green:hover {
+    background-color: #236744;
+    color: white;
+}
+
+/* Fondo verde */
+.bg-green {
+    background-color: var(--green);
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Mejoras para dispositivos móviles */
+@media (max-width: 768px) {
+    .flip-container, .front, .back {
+        min-height: 650px;
+    }
+}

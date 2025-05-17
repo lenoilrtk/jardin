@@ -1,0 +1,167 @@
+/* Colores personalizados */
+:root {
+    --purple: #8a2be2;
+    --purple-dark: #6a1cb2;
+    --purple-light: #e6d5f5;
+    --pink: #ff69b4;
+    --pink-light: #ffe6f2;
+    --blue: #4169e1;
+    --blue-light: #e6ecff;
+    --green: #2e8b57;
+    --green-light: #e6f5ee;
+    --green-dark: #1a5733;
+    --orange: #ff7f50;
+    --orange-light: #fff0eb;
+    --teal: #20b2aa;
+    --teal-light: #e6f7f6;
+    --yellow: #ffd700;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Encabezado */
+.header-gradient {
+    background: linear-gradient(to right, var(--purple), #4169e1);
+}
+
+.text-purple {
+    color: var(--purple);
+}
+
+.text-purple-dark {
+    color: var(--purple-dark);
+}
+
+.text-purple-light {
+    color: var(--purple-light);
+}
+
+.text-pink {
+    color: var(--pink);
+}
+
+.text-blue {
+    color: var(--blue);
+}
+
+.text-green {
+    color: var(--green);
+}
+
+.text-green-dark {
+    color: var(--green-dark);
+}
+
+.text-orange {
+    color: var(--orange);
+}
+
+.text-teal {
+    color: var(--teal);
+}
+
+.bg-purple-light {
+    background-color: var(--purple-light);
+}
+
+.bg-purple-dark {
+    background-color: var(--purple-dark);
+}
+
+.bg-pink-light {
+    background-color: var(--pink-light);
+}
+
+.bg-blue-light {
+    background-color: var(--blue-light);
+}
+
+.bg-green-light {
+    background-color: var(--green-light);
+}
+
+.bg-orange-light {
+    background-color: var(--orange-light);
+}
+
+.bg-teal-light {
+    background-color: var(--teal-light);
+}
+
+/* Barra de búsqueda */
+.search-icon {
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Botones */
+.btn-purple {
+    background-color: var(--purple);
+    color: white;
+}
+
+.btn-purple:hover {
+    background-color: var(--purple-dark);
+    color: white;
+}
+
+/* Tarjetas de categoría */
+.category-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: none;
+}
+
+.category-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+}
+
+/* Tarjetas de libros */
+.book-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: none;
+    overflow: hidden;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.book-cover {
+    height: 160px;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+}
+
+/* Tarjetas de actividades */
+.activity-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: none;
+}
+
+.activity-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .icon-wrapper {
+        height: 60px;
+    }
+    
+    .book-cover {
+        height: 120px;
+    }
+}

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Administradores - Biblioteca Mágica</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/admin-styles.css">
+</head>
+<body>
+    <!-- Barra de navegación superior -->
+    <nav class="navbar navbar-expand-lg admin-header">
+        <div class="container-fluid">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#adminSidebar">
+                <i class="fas fa-bars text-dark"></i>
+            </button>
+            <a class="navbar-brand d-flex align-items-center ms-2 ms-lg-0" href="index.html">
+                <i class="fas fa-home fs-4"></i>
+            </a>
+            <div class="d-flex align-items-center ms-auto">
+                <div class="dropdown">
+                    <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="avatar-circle-sm bg-white me-2">
+                            <i class="fas fa-user text-pink"></i>
+                        </div>
+                        <span class="fw-medium">¡Hola, Lionel!</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user-cog me-2"></i>Mi Perfil</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Configuración</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="login.html"><i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar (visible en pantallas grandes, colapsable en móviles) -->
+            <div class="col-lg-3 col-xl-2 px-0">
+                <div class="collapse d-lg-block" id="adminSidebar">
+                    <div class="admin-sidebar p-3">
+                        <div class="d-flex align-items-center mb-4 mt-2">
+                            <div class="bg-white p-2 rounded-circle me-3">
+                                <i class="fas fa-book fs-4 text-pink"></i>
+                            </div>
+                            <h5 class="mb-0 fw-bold">Biblioteca Mágica</h5>
+                        </div>
+                        <div class="mb-4">
+                            <p class="text-muted small mb-2">MENÚ PRINCIPAL</p>
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="admin.html"><i class="fas fa-home me-2"></i>Inicio</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="libros.html"><i class="fas fa-book me-2"></i>Libros</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="prestamos.html"><i class="fas fa-bookmark me-2"></i>Préstamos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="gestion-clientes.html"><i class="fas fa-users me-2"></i>Gestión de Clientes</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="text-muted small mb-2">ADMINISTRACIÓN</p>
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="movimientos-admin.html"><i class="fas fa-exchange-alt me-2"></i>Movimientos de Administradores</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="gestion-admin.html"><i class="fas fa-user-cog me-2"></i>Gestión de Administradores</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#"><i class="fas fa-cogs me-2"></i>Configuración</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenido principal -->
+            <main class="col-lg-9 col-xl-10 ms-sm-auto px-md-4 py-4">
+                <div class="container">
+                    <!-- Encabezado de la página -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h1 class="h2 mb-0">
+                                <i class="fas fa-user-cog text-purple me-2"></i>
+                                Gestión de Administradores
+                            </h1>
+                            <p class="text-muted">Administra los usuarios con acceso al panel de control</p>
+                        </div>
+                        <div>
+                            <button class="btn btn-purple rounded-pill" data-bs-toggle="modal" data-bs-target="#addAdminModal">
+                                <i class="fas fa-plus me-2"></i>Nuevo Administrador
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta principal con la tabla de administradores -->
+                    <div class="admin-card mb-4">
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead class="bg-purple-light">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre</th>
+                                            <th>Email</th>
+                                            <th>Rol</th>
+                                            <th>Estado</th>
+                                            <th>Último acceso</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar-circle-sm bg-purple-light me-2">
+                                                        <i class="fas fa-user text-purple"></i>
+                                                    </div>
+                                                    <span>Administrador Principal</span>
+                                                </div>
+                                            </td>
+                                            <td>admin@biblioteca.com</td>
+                                            <td><span class="badge bg-danger">Super Admin</span></td>
+                                            <td><span class="badge bg-success">Activo</span></td>
+                                            <td>Hoy, 10:23 AM</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editAdminModal">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#viewAdminModal">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteAdminModal">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar-circle-sm bg-purple-light me-2">
+                                                        <i class="fas fa-user text-purple"></i>
+                                                    </div>
+                                                    <span>María López</span>
+                                                </div>
+                                            </td>
+                                            <td>maria@biblioteca.com</td>
+                                            <td><span class="badge bg-primary">Admin</span></td>
+                                            <td><span class="badge bg-success">Activo</span></td>
+                                            <td>Hoy, 09:45 AM</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editAdminModal">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#viewAdminModal">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteAdminModal">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar-circle-sm bg-purple-light me-2">
+                                                        <i class="fas fa-user text-purple"></i>
+                                                    </div>
+                                                    <span>Carlos Rodríguez</span>
+                                                </div>
+                                            </td>
+                                            <td>carlos@biblioteca.com</td>
+                                            <td><span class="badge bg-info">Editor</span></td>
+                                            <td><span class="badge bg-success">Activo</span></td>
+                                            <td>Ayer, 15:30 PM</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editAdminModal">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#viewAdminModal">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteAdminModal">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar-circle-sm bg-purple-light me-2">
+                                                        <i class="fas fa-user text-purple"></i>
+                                                    </div>
+                                                    <span>Laura Gómez</span>
+                                                </div>
+                                            </td>
+                                            <td>laura@biblioteca.com</td>
+                                            <td><span class="badge bg-info">Editor</span></td>
+                                            <td><span class="badge bg-success">Activo</span></td>
+                                            <td>Ayer, 14:15 PM</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editAdminModal">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#viewAdminModal">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteAdminModal">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar-circle-sm bg-purple-light me-2">
+                                                        <i class="fas fa-user text-purple"></i>
+                                                    </div>
+                                                    <span>Pedro Sánchez</span>
+                                                </div>
+                                            </td>
+                                            <td>pedro@biblioteca.com</td>
+                                            <td><span class="badge bg-secondary">Visualizador</span></td>
+                                            <td><span class="badge bg-warning text-dark">Inactivo</span></td>
+                                            <td>15/05/2023</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editAdminModal">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#viewAdminModal">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteAdminModal">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white p-3">
+                            <nav aria-label="Paginación de administradores">
+                                <ul class="pagination justify-content-center mb-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Siguiente</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!-- Tarjetas de resumen -->
+                    <div class="row g-4">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stats-card bg-purple-light">
+                                <div class="stats-icon bg-purple">
+                                    <i class="fas fa-users-cog"></i>
+                                </div>
+                                <div class="stats-info">
+                                    <h5>Total Administradores</h5>
+                                    <h3>5</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stats-card bg-danger-light">
+                                <div class="stats-icon bg-danger">
+                                    <i class="fas fa-user-shield"></i>
+                                </div>
+                                <div class="stats-info">
+                                    <h5>Super Admins</h5>
+                                    <h3>1</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stats-card bg-success-light">
+                                <div class="stats-icon bg-success">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                                <div class="stats-info">
+                                    <h5>Activos</h5>
+                                    <h3>4</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stats-card bg-warning-light">
+                                <div class="stats-icon bg-warning">
+                                    <i class="fas fa-user-clock"></i>
+                                </div>
+                                <div class="stats-info">
+                                    <h5>Inactivos</h5>
+                                    <h3>1</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal para añadir administrador -->
+    <div class="modal fade" id="addAdminModal" tabindex="-1" aria-labelledby="addAdminModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-purple-light">
+                    <h5 class="modal-title" id="addAdminModalLabel">Añadir Nuevo Administrador</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="adminName" class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="adminName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="adminEmail" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="adminEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="adminPassword" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="adminPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="adminRole" class="form-label">Rol</label>
+                            <select class="form-select" id="adminRole" required>
+                                <option value="">Seleccionar rol</option>
+                                <option value="super_admin">Super Admin</option>
+                                <option value="admin">Admin</option>
+                                <option value="editor">Editor</option>
+                                <option value="viewer">Visualizador</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Permisos</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="permLibros" checked>
+                                <label class="form-check-label" for="permLibros">Gestión de Libros</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="permClientes" checked>
+                                <label class="form-check-label" for="permClientes">Gestión de Clientes</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="permPrestamos" checked>
+                                <label class="form-check-label" for="permPrestamos">Gestión de Préstamos</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="permAdmin">
+                                <label class="form-check-label" for="permAdmin">Gestión de Administradores</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="permConfig">
+                                <label class="form-check-label" for="permConfig">Configuración del Sistema</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="adminStatus" class="form-label">Estado</label>
+                            <select class="form-select" id="adminStatus" required>
+                                <option value="active">Activo</option>
+                                <option value="inactive">Inactivo</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-purple">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar administrador -->
+    <div class="modal fade" id="editAdminModal" tabindex="-1" aria-labelledby="editAdminModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-purple-light">
+                    <h5 class="modal-title" id="editAdminModalLabel">Editar Administrador</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="editAdminName" class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="editAdminName" value="María López" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editAdminEmail" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="editAdminEmail" value="maria@biblioteca.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editAdminPassword" class="form-label">Nueva Contraseña (dejar en blanco para mantener)</label>
+                            <input type="password" class="form-control" id="editAdminPassword">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editAdminRole" class="form-label">Rol</label>
+                            <select class="form-select" id="editAdminRole" required>
+                                <option value="">Seleccionar rol</option>
+                                <option value="super_admin">Super Admin</option>
+                                <option value="admin" selected>Admin</option>
+                                <option value="editor">Editor</option>
+                                <option value="viewer">Visualizador</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Permisos</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="editPermLibros" checked>
+                                <label class="form-check-label" for="editPermLibros">Gestión de Libros</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="editPermClientes" checked>
+                                <label class="form-check-label" for="editPermClientes">Gestión de Clientes</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="editPermPrestamos" checked>
+                                <label class="form-check-label" for="editPermPrestamos">Gestión de Préstamos</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="editPermAdmin" checked>
+                                <label class="form-check-label" for="editPermAdmin">Gestión de Administradores</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="editPermConfig">
+                                <label class="form-check-label" for="editPermConfig">Configuración del Sistema</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editAdminStatus" class="form-label">Estado</label>
+                            <select class="form-select" id="editAdminStatus" required>
+                                <option value="active" selected>Activo</option>
+                                <option value="inactive">Inactivo</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-purple">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para ver detalles de administrador -->
+    <div class="modal fade" id="viewAdminModal" tabindex="-1" aria-labelledby="viewAdminModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-purple-light">
+                    <h5 class="modal-title" id="viewAdminModalLabel">Detalles del Administrador</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <div class="avatar-circle mx-auto mb-3" style="width: 80px; height: 80px;">
+                            <i class="fas fa-user-cog fs-1 text-purple"></i>
+                        </div>
+                        <h4>María López</h4>
+                        <span class="badge bg-primary">Admin</span>
+                        <span class="badge bg-success">Activo</span>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="fw-bold">ID</h6>
+                        <p>2</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="fw-bold">Correo Electrónico</h6>
+                        <p>maria@biblioteca.com</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="fw-bold">Fecha de Creación</h6>
+                        <p>01/05/2023</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="fw-bold">Último Acceso</h6>
+                        <p>Hoy, 09:45 AM</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="fw-bold">Permisos</h6>
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Gestión de Libros
+                                <i class="fas fa-check text-success"></i>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Gestión de Clientes
+                                <i class="fas fa-check text-success"></i>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Gestión de Préstamos
+                                <i class="fas fa-check text-success"></i>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Gestión de Administradores
+                                <i class="fas fa-check text-success"></i>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Configuración del Sistema
+                                <i class="fas fa-times text-danger"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-purple" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#editAdminModal">Editar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para eliminar administrador -->
+    <div class="modal fade" id="deleteAdminModal" tabindex="-1" aria-labelledby="deleteAdminModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="deleteAdminModalLabel">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-exclamation-triangle text-warning fs-1 mb-3"></i>
+                        <h5>¿Estás seguro de que deseas eliminar este administrador?</h5>
+                        <p class="text-muted">Esta acción no se puede deshacer.</p>
+                    </div>
+                    <div class="alert alert-warning">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="fas fa-info-circle fs-4"></i>
+                            </div>
+                            <div>
+                                <p class="mb-0">Se eliminará el administrador <strong>María López</strong> con correo <strong>maria@biblioteca.com</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="admin-footer py-3">
+        <div class="container text-center">
+            <p class="mb-0">© 2023 Biblioteca Mágica - Panel de Administración</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

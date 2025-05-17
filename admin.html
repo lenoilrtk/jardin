@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Biblioteca Mágica</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/admin-styles.css">
+</head>
+<body>
+    <!-- Barra de navegación superior -->
+    <nav class="navbar navbar-expand-lg admin-header">
+        <div class="container-fluid">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#adminSidebar">
+                <i class="fas fa-bars text-dark"></i>
+            </button>
+            <a class="navbar-brand d-flex align-items-center ms-2 ms-lg-0" href="index.html">
+                <i class="fas fa-home fs-4"></i>
+            </a>
+            <div class="d-flex align-items-center ms-auto">
+                <div class="dropdown">
+                    <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="avatar-circle-sm bg-white me-2">
+                            <i class="fas fa-user text-pink"></i>
+                        </div>
+                        <span class="fw-medium">¡Hola, Lionel!</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user-cog me-2"></i>Mi Perfil</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Configuración</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="login.html"><i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar (visible en pantallas grandes, colapsable en móviles) -->
+            <div class="col-lg-3 col-xl-2 px-0">
+                <div class="collapse d-lg-block" id="adminSidebar">
+                    <div class="admin-sidebar p-3">
+                        <div class="d-flex align-items-center mb-4 mt-2">
+                            <div class="bg-white p-2 rounded-circle me-3">
+                                <i class="fas fa-book fs-4 text-pink"></i>
+                            </div>
+                            <h5 class="mb-0 fw-bold">Biblioteca Mágica</h5>
+                        </div>
+                        <div class="mb-4">
+                            <p class="text-muted small mb-2">MENÚ PRINCIPAL</p>
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="index.html"><i class="fas fa-home me-2"></i>Inicio</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="libros.html"><i class="fas fa-book me-2"></i>Libros</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="prestamos.html"><i class="fas fa-bookmark me-2"></i>Préstamos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="gestion-clientes.html"><i class="fas fa-users me-2"></i>Gestión de Clientes</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="text-muted small mb-2">ADMINISTRACIÓN</p>
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="movimientos-admin.html"><i class="fas fa-exchange-alt me-2"></i>Movimientos de Administradores</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="gestion-administradores.html"><i class="fas fa-user-cog me-2"></i>Gestión de Administradores</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href=""><i class="fas fa-cogs me-2"></i>Configuración</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenido principal -->
+            <main class="col-lg-9 col-xl-10 ms-sm-auto px-md-4 py-4">
+                <div class="container">
+                    <h1 class="text-center mb-2 fw-bold">Bienvenido a la Biblioteca Virtual</h1>
+                    <h4 class="text-center mb-5 text-muted">Gestión de Super Administradores</h4>
+
+                    <div class="row justify-content-center g-4">
+                        <!-- Tarjeta 1: Movimientos de Administradores -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="admin-card h-100">
+                                <div class="card-body text-center p-4">
+                                    <div class="icon-circle bg-pink-light mb-3">
+                                        <i class="fas fa-exchange-alt text-pink"></i>
+                                    </div>
+                                    <h3 class="card-title mb-3">Movimientos de Administradores</h3>
+                                    <p class="card-text text-muted mb-4">Visualiza y gestiona los registros de actividad de los administradores del sistema.</p>
+                                    <a href="#" class="btn btn-pink rounded-pill px-4">
+                                        <i class="fas fa-arrow-right me-2"></i>Acceder
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tarjeta 2: Gestión de Administradores -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="admin-card h-100">
+                                <div class="card-body text-center p-4">
+                                    <div class="icon-circle bg-purple-light mb-3">
+                                        <i class="fas fa-user-cog text-purple"></i>
+                                    </div>
+                                    <h3 class="card-title mb-3">Gestión de Administradores</h3>
+                                    <p class="card-text text-muted mb-4">Añade, modifica o elimina administradores y gestiona sus permisos de acceso.</p>
+                                    <a href="#" class="btn btn-purple rounded-pill px-4">
+                                        <i class="fas fa-arrow-right me-2"></i>Acceder
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tarjeta 3: Gestión de Clientes -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="admin-card h-100">
+                                <div class="card-body text-center p-4">
+                                    <div class="icon-circle bg-blue-light mb-3">
+                                        <i class="fas fa-users text-blue"></i>
+                                    </div>
+                                    <h3 class="card-title mb-3">Gestión de Clientes</h3>
+                                    <p class="card-text text-muted mb-4">Administra los usuarios de la biblioteca, sus préstamos y actividades.</p>
+                                    <a href="#" class="btn btn-blue rounded-pill px-4">
+                                        <i class="fas fa-arrow-right me-2"></i>Acceder
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tarjeta 4: Libros -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="admin-card h-100">
+                                <div class="card-body text-center p-4">
+                                    <div class="icon-circle bg-green-light mb-3">
+                                        <i class="fas fa-book text-green"></i>
+                                    </div>
+                                    <h3 class="card-title mb-3">Libros</h3>
+                                    <p class="card-text text-muted mb-4">Gestiona el catálogo de libros, añade nuevos títulos y actualiza la información.</p>
+                                    <a href="#" class="btn btn-green rounded-pill px-4">
+                                        <i class="fas fa-arrow-right me-2"></i>Acceder
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tarjeta 5: Préstamos -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="admin-card h-100">
+                                <div class="card-body text-center p-4">
+                                    <div class="icon-circle bg-orange-light mb-3">
+                                        <i class="fas fa-bookmark text-orange"></i>
+                                    </div>
+                                    <h3 class="card-title mb-3">Préstamos</h3>
+                                    <p class="card-text text-muted mb-4">Controla los préstamos activos, devoluciones y gestiona las reservas.</p>
+                                    <a href="#" class="btn btn-orange rounded-pill px-4">
+                                        <i class="fas fa-arrow-right me-2"></i>Acceder
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tarjeta 6: Inicio -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="admin-card h-100">
+                                <div class="card-body text-center p-4">
+                                    <div class="icon-circle bg-teal-light mb-3">
+                                        <i class="fas fa-home text-teal"></i>
+                                    </div>
+                                    <h3 class="card-title mb-3">Inicio</h3>
+                                    <p class="card-text text-muted mb-4">Vuelve a la página principal de la biblioteca virtual para los usuarios.</p>
+                                    <a href="index.html" class="btn btn-teal rounded-pill px-4">
+                                        <i class="fas fa-arrow-right me-2"></i>Acceder
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actividad reciente -->
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            <div class="admin-card">
+                                <div class="card-body p-4">
+                                    <h4 class="mb-4"><i class="fas fa-history me-2"></i>Actividad Reciente</h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Usuario</th>
+                                                    <th>Acción</th>
+                                                    <th>Detalles</th>
+                                                    <th>Fecha</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Admin1</td>
+                                                    <td>Añadió libro</td>
+                                                    <td>"El Principito"</td>
+                                                    <td>Hoy, 10:23 AM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Admin2</td>
+                                                    <td>Préstamo</td>
+                                                    <td>Cliente: María López</td>
+                                                    <td>Hoy, 09:45 AM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Admin1</td>
+                                                    <td>Devolución</td>
+                                                    <td>Cliente: Juan Pérez</td>
+                                                    <td>Ayer, 15:30 PM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Admin3</td>
+                                                    <td>Nuevo cliente</td>
+                                                    <td>Carlos Rodríguez</td>
+                                                    <td>Ayer, 14:15 PM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Admin2</td>
+                                                    <td>Actualización</td>
+                                                    <td>Categoría: Cuentos de Hadas</td>
+                                                    <td>Ayer, 11:05 AM</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="admin-footer py-3">
+        <div class="container text-center">
+            <p class="mb-0">© 2023 Biblioteca Mágica - Panel de Administración</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

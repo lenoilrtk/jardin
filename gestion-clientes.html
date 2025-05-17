@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Clientes - Biblioteca Mágica</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/admin-styles.css">
+</head>
+<body>
+    <!-- Barra de navegación superior -->
+    <nav class="navbar navbar-expand-lg admin-header">
+        <div class="container-fluid">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#adminSidebar">
+                <i class="fas fa-bars text-dark"></i>
+            </button>
+            <a class="navbar-brand d-flex align-items-center ms-2 ms-lg-0" href="index.html">
+                <i class="fas fa-home fs-4"></i>
+            </a>
+            <div class="d-flex align-items-center ms-auto">
+                <div class="dropdown">
+                    <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="avatar-circle-sm bg-white me-2">
+                            <i class="fas fa-user text-pink"></i>
+                        </div>
+                        <span class="fw-medium">¡Hola, Lionel!</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user-cog me-2"></i>Mi Perfil</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Configuración</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="login.html"><i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar (visible en pantallas grandes, colapsable en móviles) -->
+            <div class="col-lg-3 col-xl-2 px-0">
+                <div class="collapse d-lg-block" id="adminSidebar">
+                    <div class="admin-sidebar p-3">
+                        <div class="d-flex align-items-center mb-4 mt-2">
+                            <div class="bg-white p-2 rounded-circle me-3">
+                                <i class="fas fa-book fs-4 text-pink"></i>
+                            </div>
+                            <h5 class="mb-0 fw-bold">Biblioteca Mágica</h5>
+                        </div>
+                        <div class="mb-4">
+                            <p class="text-muted small mb-2">MENÚ PRINCIPAL</p>
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="admin.html"><i class="fas fa-home me-2"></i>Inicio</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="libros.html"><i class="fas fa-book me-2"></i>Libros</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="prestamos.html"><i class="fas fa-bookmark me-2"></i>Préstamos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="gestion-clientes.html"><i class="fas fa-users me-2"></i>Gestión de Clientes</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="text-muted small mb-2">ADMINISTRACIÓN</p>
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="movimientos-admin.html"><i class="fas fa-exchange-alt me-2"></i>Movimientos de Administradores</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="gestion-admin.html"><i class="fas fa-user-cog me-2"></i>Gestión de Administradores</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#"><i class="fas fa-cogs me-2"></i>Configuración</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenido principal -->
+            <main class="col-lg-9 col-xl-10 ms-sm-auto px-md-4 py-4">
+                <div class="container">
+                    <!-- Encabezado de la página -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h1 class="h2 mb-0">
+                                <i class="fas fa-users text-blue me-2"></i>
+                                Gestión de Clientes
+                            </h1>
+                            <p class="text-muted">Administra los usuarios de la biblioteca</p>
+                        </div>
+                        <div>
+                            <button class="btn btn-blue rounded-pill" data-bs-toggle="modal" data-bs-target="#addClientModal">
+                                <i class="fas fa-plus me-2"></i>Nuevo Cliente
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Buscador y filtros -->
+                    <div class="admin-card mb-4">
+                        <div class="card-body p-3">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-0">
+                                            <i class="fas fa-search text-muted"></i>
+                                        </span>
+                                        <input type="text" class="form-control border-0 bg-light" placeholder="Buscar cliente...">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-select bg-light border-0">
+                                        <option value="">Estado</option>
+                                        <option value="active">Activo</option>
+                                        <option value="inactive">Inactivo</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-select bg-light border-0">
+                                        <option value="">Ordenar por</option>
+                                        <option value="name_asc">Nombre (A-Z)</option>
+                                        <option value="name_desc">Nombre (Z-A)</option>
+                                        <option value="date_asc">Fecha registro (Antigua)</option>
+                                        <option value="date_desc">Fecha registro (Reciente)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta principal con la tabla de clientes -->
+                    <div class="admin-card mb-4">
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead class="bg-blue-light">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre</th>
+                                            <th>Email</th>
+                                            <th>Teléfono</th>
+                                            <th>Préstamos</th>
+                                            <th>Estado</th>
+                                            <th>Fecha Registro</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1001</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar-circle-sm bg-blue-light me-2">
+                                                        <i class="fas fa-user text-blue"></i>
+                                                    </div>
+                                                    <span>Juan Pérez</span>
+                                                </div>
+                                            </td>
+                                            <td>juan@ejemplo.com</td>
+                                            <td>555-123-4567</td>
+                                            <td><span class="badge bg-info">3 activos</span></td>
+                                            <td><span class="badge bg-success">Activo</span></td>
+                                            <td>15/01/2023</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editClientModal">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#viewClientModal">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteClientModal">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1002</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar-circle-sm bg-blue-light me-2">
+                                                        <i class="fas fa-user text-blue"></i>
+                                                    </div>
+                                                    <span>María López</span>
+                                                </div>
+                                            </td>
+                                            <td>maria@ejemplo.com</td>
+                                            <td>555-987-6543</td>
+                                            <td><span class="badge bg-info">1 activo</span></td>
+                                            <td><span class="badge bg-success">Activo</span></td>
+                                            <td>20/02/2023</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editClientModal">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#viewClientModal">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteClientModal">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1003</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar-circle-sm bg-blue-light me-2">
+                                                        <i class="fas fa-user text-blue"></i>
+                                                    </div>
+                                                    <span>Carlos Rodríguez</span>
+                                                </div>
+                                            </td>
+                                            <td>carlos@ejemplo.com</td>
+                                            <td>555-456-7890</td>
+                                            <td><span class="badge bg-secondary">0 activos</span></td>
+                                            <td><span class="badge bg-success">Activo</span></td>
+                                            <td>05/03/2023</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editClientModal">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#viewClientModal">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteClientModal">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1004</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar-circle-sm bg-blue-light me-2">
+                                                        <i class="fas fa-user text-blue"></i>
+                                                    </div>
+                                                    <span>Ana Martínez</span>
+                                                </div>
+                                            </td>
+                                            <td>ana@ejemplo.com</td>
+                                            <td>555-789-0123</td>
+                                            <td><span class="badge bg-info">2 activos</span></td>
+                                            <td><span class="badge bg-success">Activo</span></td>
+                                            <td>12/03/2023</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editClientModal">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#viewClientModal">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteClientModal">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1005</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar-circle-sm bg-blue-light me-2">
+                                                        <i class="fas fa-user text-blue"></i>
+                                                    </div>
+                                                    <span>Pedro Sánchez</span>
+                                                </div>
+                                            </td>
+                                            <td>pedro@ejemplo.com</td>
+                                            <td>555-234-5678</td>
+                                            <td><span class="badge bg-secondary">0 activos</span></td>
+                                            <td><span class="badge bg-warning text-dark">Inactivo</span></td>
+                                            <td>25/03/2023</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editClientModal">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#viewClientModal">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteClientModal">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white p-3">
+                            <nav aria-label="Paginación de clientes">
+                                <ul class="pagination justify-content-center mb-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Siguiente</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!-- Tarjetas de resumen -->
+                    <div class="row g-4">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stats-card bg-blue-light">
+                                <div class="stats-icon bg-blue">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stats-info">
+                                    <h5>Total Clientes</h5>
+                                    <h3>1,254</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stats-card bg-success-light">
+                                <div class="stats-icon bg-success">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                                <div class="stats-info">
+                                    <h5>Clientes Activos</h5>
+                                    <h3>1,180</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stats-card bg-warning-light">
+                                <div class="stats-icon bg-warning">
+                                    <i class="fas fa-user-clock"></i>
+                                </div>
+                                <div class="stats-info">
+                                    <h5>Clientes Inactivos</h5>
+                                    <h3>74</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stats-card bg-info-light">
+                                <div class="stats-icon bg-info">
+                                    <i class="fas fa-book-reader"></i>
+                                </div>
+                                <div class="stats-info">
+                                    <h5>Préstamos Activos</h5>
+                                    <h3>427</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal para añadir cliente -->
+    <div class="modal fade" id="addClientModal" tabindex="-1" aria-labelledby="addClientModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-blue-light">
+                    <h5 class="modal-title" id="addClientModalLabel">Añadir Nuevo Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="clientName" class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="clientName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="clientEmail" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="clientEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="clientPhone" class="form-label">Teléfono</label>
+                            <input type="tel" class="form-control" id="clientPhone">
+                        </div>
+                        <div class="mb-3">
+                            <label for="clientAddress" class="form-label">Dirección</label>
+                            <textarea class="form-control" id="clientAddress" rows="2"></textarea>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="clientBirthdate" class="form-label">Fecha de Nacimiento</label>
+                                <input type="date" class="form-control" id="clientBirthdate">
+                            </div>
+                            <div class="col">
+                                <label for="clientDocument" class="form-label">Documento de Identidad</label>
+                                <input type="text" class="form-control" id="clientDocument">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="clientStatus" class="form-label">Estado</label>
+                            <select class="form-select" id="clientStatus" required>
+                                <option value="active" selected>Activo</option>
+                                <option value="inactive">Inactivo</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="clientNotes" class="form-label">Notas</label>
+                            <textarea class="form-control" id="clientNotes" rows="2"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-blue">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar cliente -->
+    <div class="modal fade" id="editClientModal" tabindex="-1" aria-labelledby="editClientModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-blue-light">
+                    <h5 class="modal-title" id="editClientModalLabel">Editar Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="editClientName" class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="editClientName" value="Juan Pérez" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editClientEmail" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="editClientEmail" value="juan@ejemplo.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editClientPhone" class="form-label">Teléfono</label>
+                            <input type="tel" class="form-control" id="editClientPhone" value="555-123-4567">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editClientAddress" class="form-label">Dirección</label>
+                            <textarea class="form-control" id="editClientAddress" rows="2">Calle Principal 123, Ciudad</textarea>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="editClientBirthdate" class="form-label">Fecha de Nacimiento</label>
+                                <input type="date" class="form-control" id="editClientBirthdate" value="1990-05-15">
+                            </div>
+                            <div class="col">
+                                <label for="editClientDocument" class="form-label">Documento de Identidad</label>
+                                <input type="text" class="form-control" id="editClientDocument" value="12345678A">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editClientStatus" class="form-label">Estado</label>
+                            <select class="form-select" id="editClientStatus" required>
+                                <option value="active" selected>Activo</option>
+                                <option value="inactive">Inactivo</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editClientNotes" class="form-label">Notas</label>
+                            <textarea class="form-control" id="editClientNotes" rows="2">Cliente habitual. Prefiere libros de aventuras.</textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-blue">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para ver detalles de cliente -->
+    <div class="modal fade" id="viewClientModal" tabindex="-1" aria-labelledby="viewClientModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-blue-light">
+                    <h5 class="modal-title" id="viewClientModalLabel">Detalles del Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center mb-4 mb-md-0">
+                            <div class="avatar-circle mx-auto mb-3" style="width: 100px; height: 100px;">
+                                <i class="fas fa-user fs-1 text-blue"></i>
+                            </div>
+                            <h4>Juan Pérez</h4>
+                            <span class="badge bg-success mb-2">Activo</span>
+                            <p class="text-muted small">Cliente desde: 15/01/2023</p>
+                            <button class="btn btn-sm btn-outline-blue mb-2 w-100">
+                                <i class="fas fa-envelope me-2"></i>Enviar Email
+                            </button>
+                            <button class="btn btn-sm btn-outline-blue w-100">
+                                <i class="fas fa-print me-2"></i>Imprimir Ficha
+                            </button>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <h6 class="fw-bold">ID de Cliente</h6>
+                                    <p>1001</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="fw-bold">Correo Electrónico</h6>
+                                    <p>juan@ejemplo.com</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="fw-bold">Teléfono</h6>
+                                    <p>555-123-4567</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="fw-bold">Documento de Identidad</h6>
+                                    <p>12345678A</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="fw-bold">Fecha de Nacimiento</h6>
+                                    <p>15/05/1990</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="fw-bold">Edad</h6>
+                                    <p>33 años</p>
+                                </div>
+                                <div class="col-12">
+                                    <h6 class="fw-bold">Dirección</h6>
+                                    <p>Calle Principal 123, Ciudad</p>
+                                </div>
+                                <div class="col-12">
+                                    <h6 class="fw-bold">Notas</h6>
+                                    <p>Cliente habitual. Prefiere libros de aventuras.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <h5 class="mb-3">Préstamos Activos</h5>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Libro</th>
+                                    <th>Fecha Préstamo</th>
+                                    <th>Fecha Devolución</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>P-2023-0123</td>
+                                    <td>El Principito</td>
+                                    <td>01/05/2023</td>
+                                    <td>15/05/2023</td>
+                                    <td><span class="badge bg-warning text-dark">Pendiente</span></td>
+                                </tr>
+                                <tr>
+                                    <td>P-2023-0145</td>
+                                    <td>Cien años de soledad</td>
+                                    <td>05/05/2023</td>
+                                    <td>19/05/2023</td>
+                                    <td><span class="badge bg-warning text-dark">Pendiente</span></td>
+                                </tr>
+                                <tr>
+                                    <td>P-2023-0156</td>
+                                    <td>Harry Potter y la piedra filosofal</td>
+                                    <td>10/05/2023</td>
+                                    <td>24/05/2023</td>
+                                    <td><span class="badge bg-warning text-dark">Pendiente</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h5 class="mb-3 mt-4">Historial de Préstamos</h5>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Libro</th>
+                                    <th>Fecha Préstamo</th>
+                                    <th>Fecha Devolución</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>P-2023-0089</td>
+                                    <td>Don Quijote de la Mancha</td>
+                                    <td>15/04/2023</td>
+                                    <td>29/04/2023</td>
+                                    <td><span class="badge bg-success">Devuelto</span></td>
+                                </tr>
+                                <tr>
+                                    <td>P-2023-0067</td>
+                                    <td>La Odisea</td>
+                                    <td>01/04/2023</td>
+                                    <td>15/04/2023</td>
+                                    <td><span class="badge bg-success">Devuelto</span></td>
+                                </tr>
+                                <tr>
+                                    <td>P-2023-0045</td>
+                                    <td>Romeo y Julieta</td>
+                                    <td>15/03/2023</td>
+                                    <td>29/03/2023</td>
+                                    <td><span class="badge bg-success">Devuelto</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-blue" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#editClientModal">Editar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para eliminar cliente -->
+    <div class="modal fade" id="deleteClientModal" tabindex="-1" aria-labelledby="deleteClientModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="deleteClientModalLabel">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-exclamation-triangle text-warning fs-1 mb-3"></i>
+                        <h5>¿Estás seguro de que deseas eliminar este cliente?</h5>
+                        <p class="text-muted">Esta acción no se puede deshacer.</p>
+                    </div>
+                    <div class="alert alert-warning">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="fas fa-info-circle fs-4"></i>
+                            </div>
+                            <div>
+                                <p class="mb-0">Se eliminará el cliente <strong>Juan Pérez</strong> con correo <strong>juan@ejemplo.com</strong>.</p>
+                                <p class="mb-0 mt-2"><strong>Atención:</strong> Este cliente tiene <strong>3 préstamos activos</strong>. Debes resolver estos préstamos antes de eliminar el cliente.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="admin-footer py-3">
+        <div class="container text-center">
+            <p class="mb-0">© 2023 Biblioteca Mágica - Panel de Administración</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

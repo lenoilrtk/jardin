@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
+    crossorigin="anonymous"
+  />
+
+  <title>Biblioteca Virtual</title>
+  
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Barra de navegación */
+    .navbar {
+      background-color: #f5a8d2;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar .nav-icon {
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .navbar span {
+      margin-left: 1rem;
+      font-weight: bold;
+    }
+
+    .navbar a,
+    .navbar a:visited {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    .navbar a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #f5a8d29f;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    /* Contenido */
+    .content {
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    /* Sección de “Términos y condiciones” */
+    .terms-container {
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+    }
+    .terms-container p {
+      margin: 0;
+      font-size: 1rem;
+      color: #555;
+    }
+    .terms-container a {
+      color: #f5a8d2;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+    .terms-container a:hover {
+      color: #f5a8d2;
+    }
+
+    /* Sección de géneros literarios */
+    .genre-section {
+      margin-top: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    /* Ajusta el tamaño de las imágenes (placeholders) si lo deseas */
+    .genre-image {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #aaa;
+    }
+
+    /* Tarjetas de Libros Populares */
+    .card-img-top {
+      max-height: 180px;
+      object-fit: cover;
+    }
+
+    /* Ajustes en móvil para el carousel y tarjetas */
+    @media (max-width: 768px) {
+      .card-img-top {
+        max-height: 150px;
+      }
+
+    
+    }
+    img {
+        max-height: 100px;
+      }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div class="nav-icon">☰</div>
+    <div>
+      <span>¡Hola, Lionel!</span>
+    </div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="content">
+    <h1>Modificar Libro</h1>
+    <?php
+    include "./ABM/conex.php";
+    $id = $_GET['id'];
+    $sql = "SELECT * FROM `libros_1` WHERE libro_id = $id";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        // Salida de datos de cada fila
+        while($row = $result->fetch_assoc()) {
+    ?>
+    <?php
+    echo '
+<form action="ABM_libro_edit_mod.php?libro_id='.$row["libro_id"].'" method="POST">
+';
+?>
+      <div class="mb-3">
+      
+        <label for="titulo" class="form-label">Título</label>
+        <input type="text" class="form-control" id="titulo" name="titulo" <?php echo ' value="'.$row["titulo"].'" '?> required />
+        <br>
+        <label for="titulo" class="form-label">Autor</label>
+        <input type="text" class="form-control" id="autor" name="autor" <?php echo ' value="'.$row["autor"].'" '?> required />
+        <br>
+        <label for="titulo" class="form-label">Ilustrador</label>
+        <input type="text" class="form-control" id="ilustrador" name="ilustrador" <?php echo ' value="'.$row["ilustrador"].'" '?> required />
+        <br>
+        <label for="titulo" class="form-label">Editorial</label>
+        <input type="text" class="form-control" id="editorial" name="editorial" <?php echo ' value="'.$row["editorial"].'" '?> required />
+        <br>
+        <label for="titulo" class="form-label">Clasificación</label>
+        <input type="text" class="form-control" id="clasificacion" name="clasificacion" <?php echo ' value="'.$row["clasificacion"].'" '?> required />
+        <br>
+        <label for="titulo" class="form-label">Color</label>
+        <input type="text" class="form-control" id="color" name="color" <?php echo ' value="'.$row["color"].'" '?> required />
+        <br>
+         <label for="titulo" class="form-label">Resumen</label>
+        <input type="text" class="form-control" id="resumen" name="resumen" <?php echo ' value="'.$row["resumen"].'" '?> required />
+        <br>
+         <label for="titulo" class="form-label">Imagen</label>
+        <input type="text" class="form-control" id="imagen" name="imagen" <?php echo ' value="'.$row["imagen"].'" '?> required />
+        <br>
+        <input type="submit" value="Modificar" class="btn btn-primary" />
+      </div>
+        </form>
+<?php }; }; ?>
+  <!-- FOOTER -->
+  <div class="footer">
+
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+    crossorigin="anonymous"
+  ></script>
+</body>
+</html>

@@ -1,379 +1,229 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <!-- Bootstrap CSS -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
-    crossorigin="anonymous"
-  />
-
-  <title>Biblioteca Virtual</title>
-  
-  <style>
-    /* Estilos generales */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Barra de navegación */
-    .navbar {
-      background-color: #f5a8d2;
-      color: white;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .navbar .nav-icon {
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    .navbar span {
-      margin-left: 1rem;
-      font-weight: bold;
-    }
-
-    .navbar a,
-    .navbar a:visited {
-      color: white;
-      text-decoration: none;
-      margin: 0 10px;
-    }
-    .navbar a:hover {
-      text-decoration: underline;
-    }
-
-    /* Footer */
-    .footer {
-      background-color: #f5a8d2;
-      color: white;
-      text-align: center;
-      padding: 10px 0;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
-
-    /* Contenido */
-    .content {
-      padding: 20px;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 2rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
-    }
-
-    /* Sección de “Términos y condiciones” */
-    .terms-container {
-      margin-top: 1rem;
-      margin-bottom: 2rem;
-    }
-    .terms-container p {
-      margin: 0;
-      font-size: 1rem;
-      color: #555;
-    }
-    .terms-container a {
-      color: #f5a8d2;
-      text-decoration: underline;
-      font-weight: bold;
-    }
-    .terms-container a:hover {
-      color: #f5a8d2;
-    }
-
-    /* Sección de géneros literarios */
-    .genre-section {
-      margin-top: 3rem;
-      margin-bottom: 3rem;
-    }
-
-    /* Ajusta el tamaño de las imágenes (placeholders) si lo deseas */
-    .genre-image {
-      max-width: 100%;
-      height: auto;
-      border: 1px solid #aaa;
-    }
-
-    /* Tarjetas de Libros Populares */
-    .card-img-top {
-      max-height: 180px;
-      object-fit: cover;
-    }
-
-    /* Ajustes en móvil para el carousel y tarjetas */
-    @media (max-width: 768px) {
-      .card-img-top {
-        max-height: 150px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Mágica - Jardín de Infantes</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="styles/index.css">
 </head>
-
 <body>
-
-  <!-- NAVBAR -->
-  <div class="navbar">
-    <div class="nav-icon">☰</div>
-    <div>
-      <span>¡Hola, Lionel!</span>
-    </div>
-  </div>
-
-  <!-- CONTENIDO PRINCIPAL -->
-  <div class="content">
-    <h1>Bienvenidos a la Biblioteca Virtual</h1>
-    
-    <p>
-      En esta biblioteca encontrarás diferentes textos que te ayudarán a 
-      aprender, disfrutar y ampliar tus conocimientos. A continuación se 
-      mostrarán nuevos ingresos de la biblioteca y algunos de los libros 
-      más pedidos.
-    </p>
-
-    <!-- Sección Términos y condiciones -->
-    <div class="terms-container">
-      <p>
-        Te recomendamos revisar nuestros 
-        <a href="#" target="_blank">Términos y Condiciones</a> del préstamo 
-        de libros, que encontrarás en el PDF adjunto.
-      </p>
-    </div>
-  </div>
-
-  <!-- NUEVOS INGRESOS (CAROUSEL) -->
-  <div class="content">
-    <h1>Nuevos Ingresos</h1>
-  </div>
-  <div id="carouselExampleDark" class="carousel carousel-dark slide mb-4">
-    <div class="carousel-indicators">
-      <button
-        type="button"
-        data-bs-target="#carouselExampleDark"
-        data-bs-slide-to="0"
-        class="active"
-        aria-current="true"
-        aria-label="Slide 1"
-      ></button>
-      <button
-        type="button"
-        data-bs-target="#carouselExampleDark"
-        data-bs-slide-to="1"
-        aria-label="Slide 2"
-      ></button>
-      <button
-        type="button"
-        data-bs-target="#carouselExampleDark"
-        data-bs-slide-to="2"
-        aria-label="Slide 3"
-      ></button>
-    </div>
-
-    <div class="carousel-inner">
-      <!-- Slide 1 -->
-      <div class="carousel-item active" data-bs-interval="3000">
-        <!-- Si deseas puedes reemplazar esta imagen también -->
-        <img
-          class="d-block mx-auto w-50"
-          src="https://www.delnaranjo.com/wp-content/uploads/2023/04/Tapa-Shhh-Me-hice-pis-ok.jpg"
-          alt="Slide 1"
-        />
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Primer Ingreso</h5>
-          <p>Contenido de ejemplo para el primer nuevo ingreso.</p>
+    <!-- Encabezado -->
+    <header class="header-gradient py-3 shadow">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4 mb-3 mb-md-0 d-flex align-items-center">
+                    <div class="bg-white p-2 rounded-circle me-3">
+                        <i class="fas fa-book fs-4 text-purple"></i>
+                    </div>
+                    <h1 class="fs-2 fw-bold text-white mb-0">Biblioteca Mágica</h1>
+                </div>
+                <div class="col-md-5 mb-3 mb-md-0">
+                    <div class="position-relative">
+                        <i class="fas fa-search position-absolute search-icon text-muted"></i>
+                        <input type="text" class="form-control rounded-pill py-2 ps-5" placeholder="Buscar libros...">
+                    </div>
+                </div>
+                <div class="col-md-3 text-md-end">
+                    <a href="login.html" class="btn btn-light rounded-pill px-4">
+                        <i class="fas fa-user me-2"></i>Iniciar Sesión
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
-      <!-- Slide 2 -->
-      <div class="carousel-item" data-bs-interval="3000">
-        <img
-          class="d-block mx-auto w-50"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfyzWFzVmZ-X2w7D4_-BW5vgMMLTNvvJk6Lg&s"
-          alt="Slide 2"
-        />
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Segundo Ingreso</h5>
-          <p>Contenido de ejemplo para el segundo nuevo ingreso.</p>
-        </div>
-      </div>
-      <!-- Slide 3 -->
-      <div class="carousel-item" data-bs-interval="3000">
-        <img
-          class="d-block mx-auto w-50"
-          src="https://proassetspdlcom.cdnstatics2.com/usuaris/libros/fotos/334/original/portada_el-libro-de-la-selva_yoyo_202205181551.jpg"
-          alt="Slide 3"
-        />
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Tercer Ingreso</h5>
-          <p>Contenido de ejemplo para el tercer nuevo ingreso.</p>
-        </div>
-      </div>
-    </div>
-    <!-- Controles prev/next -->
-    <button
-      class="carousel-control-prev"
-      type="button"
-      data-bs-target="#carouselExampleDark"
-      data-bs-slide="prev"
-    >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Anterior</span>
-    </button>
-    <button
-      class="carousel-control-next"
-      type="button"
-      data-bs-target="#carouselExampleDark"
-      data-bs-slide="next"
-    >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Siguiente</span>
-    </button>
-  </div>
+    </header>
 
-  <!-- LIBROS POPULARES -->
-  <div class="content">
-    <h1>Libros Populares</h1>
-  </div>
-  <div class="container mb-5">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-      <!-- Libro 1: Se ha reemplazado el placeholder por la imagen proporcionada -->
-      <div class="col">
-        <div class="card h-100">
-          <img
-            src="https://proassetspdlcom.cdnstatics2.com/usuaris/libros/fotos/334/original/portada_el-libro-de-la-selva_yoyo_202205181551.jpg"
-            class="card-img-top"
-            alt="El libro de la selva"
-          />
-          <div class="card-body">
-            <h5 class="card-title">El libro de la selva</h5>
-            <p class="card-text">
-              Una breve descripción del libro. Puedes agregar una reseña o información relevante.
-            </p>
-          </div>
+    <!-- Banner principal -->
+    <div class="bg-warning py-4">
+        <div class="container text-center">
+            <h2 class="display-5 fw-bold text-purple mb-2">¡Bienvenidos a nuestra Biblioteca Mágica!</h2>
+            <p class="fs-5 text-purple-dark">Un mundo de aventuras y aprendizaje te espera</p>
         </div>
-      </div>
-
-      <div class="col">
-        <div class="card h-100">
-          <img
-            src="https://proassetspdlcom.cdnstatics2.com/usuaris/libros/fotos/334/original/portada_el-libro-de-la-selva_yoyo_202205181551.jpg"
-            class="card-img-top"
-            alt="Libro 2"
-          />
-          <div class="card-body">
-            <h5 class="card-title">Libro 2</h5>
-            <p class="card-text">
-              Descripción breve del libro 2. Ejemplo de cómo quedaría el contenido.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="card h-100">
-          <img
-            src="https://proassetspdlcom.cdnstatics2.com/usuaris/libros/fotos/334/original/portada_el-libro-de-la-selva_yoyo_202205181551.jpg"
-            class="card-img-top"
-            alt="Libro 3"
-          />
-          <div class="card-body">
-            <h5 class="card-title">Libro 3</h5>
-            <p class="card-text">
-              Descripción breve del libro 3. Ejemplo de cómo quedaría el contenido.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- NUESTROS GÉNEROS LITERARIOS -->
-  <div class="genre-section container">
-    <h1 class="text-center">Nuestros Géneros Literarios</h1>
-
-    <!-- Ejemplo de sección "Ficción" -->
-    <h3 class="mt-4">Ficción</h3>
-    <div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
-      <div class="col text-center">
-        <img
-          src="https://proassetspdlcom.cdnstatics2.com/usuaris/libros/fotos/334/original/portada_el-libro-de-la-selva_yoyo_202205181551.jpg"
-          class="genre-image"
-          alt="Ficción 1"
-        />
-        <button class="btn btn-outline-primary mt-2">Ver más</button>
-      </div>
-      <div class="col text-center">
-        <img
-          src="https://proassetspdlcom.cdnstatics2.com/usuaris/libros/fotos/334/original/portada_el-libro-de-la-selva_yoyo_202205181551.jpg"
-          class="genre-image"
-          alt="Ficción 2"
-        />
-        <button class="btn btn-outline-primary mt-2">Ver más</button>
-      </div>
-      <div class="col text-center">
-        <img
-          src="https://proassetspdlcom.cdnstatics2.com/usuaris/libros/fotos/334/original/portada_el-libro-de-la-selva_yoyo_202205181551.jpg"
-          class="genre-image"
-          alt="Ficción 3"
-        />
-        <button class="btn btn-outline-primary mt-2">Ver más</button>
-      </div>
     </div>
 
-    <!-- Ejemplo de sección "Fantasía" -->
-    <h3 class="mt-4">Fantasía</h3>
-    <div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
-      <div class="col text-center">
-        <img
-          src="https://proassetspdlcom.cdnstatics2.com/usuaris/libros/fotos/334/original/portada_el-libro-de-la-selva_yoyo_202205181551.jpg"
-          class="genre-image"
-          alt="Fantasía 1"
-        />
-        <button class="btn btn-outline-primary mt-2">Ver más</button>
-      </div>
-      <div class="col text-center">
-        <img
-          src="https://proassetspdlcom.cdnstatics2.com/usuaris/libros/fotos/334/original/portada_el-libro-de-la-selva_yoyo_202205181551.jpg"
-          class="genre-image"
-          alt="Fantasía 2"
-        />
-        <button class="btn btn-outline-primary mt-2">Ver más</button>
-      </div>
-      <div class="col text-center">
-        <img
-          src="https://proassetspdlcom.cdnstatics2.com/usuaris/libros/fotos/334/original/portada_el-libro-de-la-selva_yoyo_202205181551.jpg"
-          class="genre-image"
-          alt="Fantasía 3"
-        />
-        <button class="btn btn-outline-primary mt-2">Ver más</button>
-      </div>
+    <!-- Géneros literarios -->
+    <div class="container py-5">
+        <h2 class="fs-1 fw-bold text-purple mb-4">Géneros Literarios</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <a href="#" class="text-decoration-none">
+                    <div class="category-card bg-pink-light rounded-4 p-4 text-center h-100">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-book fs-1 text-pink"></i>
+                        </div>
+                        <h3 class="fs-4 fw-bold mb-2">Cuentos de Hadas</h3>
+                        <p class="text-muted">Historias mágicas con princesas, hadas y dragones</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="#" class="text-decoration-none">
+                    <div class="category-card bg-green-light rounded-4 p-4 text-center h-100">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-book fs-1 text-green"></i>
+                        </div>
+                        <h3 class="fs-4 fw-bold mb-2">Fábulas con Animales</h3>
+                        <p class="text-muted">Relatos con animales que enseñan valores</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="#" class="text-decoration-none">
+                    <div class="category-card bg-blue-light rounded-4 p-4 text-center h-100">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-book fs-1 text-blue"></i>
+                        </div>
+                        <h3 class="fs-4 fw-bold mb-2">Poesía Infantil</h3>
+                        <p class="text-muted">Versos, rimas y canciones para los más pequeños</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row g-4 mt-2">
+            <div class="col-md-6">
+                <a href="#" class="text-decoration-none">
+                    <div class="category-card bg-orange-light rounded-4 p-4 text-center h-100">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-book fs-1 text-orange"></i>
+                        </div>
+                        <h3 class="fs-4 fw-bold mb-2">Libros de Aventuras</h3>
+                        <p class="text-muted">Historias emocionantes de exploración y descubrimiento</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="#" class="text-decoration-none">
+                    <div class="category-card bg-teal-light rounded-4 p-4 text-center h-100">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-book fs-1 text-teal"></i>
+                        </div>
+                        <h3 class="fs-4 fw-bold mb-2">Historias de la Naturaleza</h3>
+                        <p class="text-muted">Cuentos sobre plantas, animales y el mundo natural</p>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Espacio extra para evitar que el footer tape contenido en pantallas pequeñas -->
-  <div style="height: 100px;"></div>
+    <!-- Sección de libros destacados -->
+    <div class="container py-5">
+        <div class="d-flex align-items-center mb-4">
+            <h2 class="fs-1 fw-bold text-purple mb-0">Libros Destacados</h2>
+            <i class="fas fa-star ms-2 text-warning"></i>
+        </div>
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3">
+            <div class="col">
+                <div class="book-card card h-100 shadow-sm">
+                    <div class="book-cover d-flex align-items-center justify-content-center">
+                        <i class="fas fa-book fs-1 text-white"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-truncate">El Árbol Generoso</h5>
+                        <p class="card-text small text-muted">Shel Silverstein</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="book-card card h-100 shadow-sm">
+                    <div class="book-cover d-flex align-items-center justify-content-center">
+                        <i class="fas fa-book fs-1 text-white"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-truncate">Donde Viven los Monstruos</h5>
+                        <p class="card-text small text-muted">Maurice Sendak</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="book-card card h-100 shadow-sm">
+                    <div class="book-cover d-flex align-items-center justify-content-center">
+                        <i class="fas fa-book fs-1 text-white"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-truncate">La Oruga Muy Hambrienta</h5>
+                        <p class="card-text small text-muted">Eric Carle</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="book-card card h-100 shadow-sm">
+                    <div class="book-cover d-flex align-items-center justify-content-center">
+                        <i class="fas fa-book fs-1 text-white"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-truncate">Buenas Noches, Luna</h5>
+                        <p class="card-text small text-muted">Margaret Wise Brown</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="book-card card h-100 shadow-sm">
+                    <div class="book-cover d-flex align-items-center justify-content-center">
+                        <i class="fas fa-book fs-1 text-white"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-truncate">El Pez Arcoíris</h5>
+                        <p class="card-text small text-muted">Marcus Pfister</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="#" class="btn btn-purple rounded-pill px-4 py-2">Ver más libros</a>
+        </div>
+    </div>
 
-  <!-- FOOTER -->
-  <div class="footer">
+    <!-- Sección de actividades recientes -->
+    <div class="bg-green-light py-5">
+        <div class="container">
+            <h2 class="fs-1 fw-bold text-green-dark mb-4">Actividades Recientes</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="activity-card bg-pink-light rounded-4 p-4 h-100">
+                        <h3 class="fs-4 fw-bold mb-2">Hora del Cuento</h3>
+                        <p class="text-muted">Todos los martes a las 10:00 AM</p>
+                        <a href="#" class="text-decoration-none text-purple fw-medium">Más información →</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="activity-card bg-blue-light rounded-4 p-4 h-100">
+                        <h3 class="fs-4 fw-bold mb-2">Taller de Dibujo</h3>
+                        <p class="text-muted">Jueves a las 11:00 AM</p>
+                        <a href="#" class="text-decoration-none text-purple fw-medium">Más información →</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="activity-card bg-purple-light rounded-4 p-4 h-100">
+                        <h3 class="fs-4 fw-bold mb-2">Canciones y Rimas</h3>
+                        <p class="text-muted">Viernes a las 9:30 AM</p>
+                        <a href="#" class="text-decoration-none text-purple fw-medium">Más información →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  </div>
+    <!-- Pie de página -->
+    <footer class="bg-purple-dark text-white py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <h3 class="fs-4 fw-bold">Biblioteca Mágica</h3>
+                    <p class="text-purple-light mb-0">Jardín de Infantes "Pequeños Exploradores"</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="btn btn-outline-light me-2">Contacto</a>
+                    <a href="#" class="btn btn-outline-light">Ayuda</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-  <!-- Bootstrap JS -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
-    crossorigin="anonymous"
-  ></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

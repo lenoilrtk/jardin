@@ -1,0 +1,241 @@
+/* Estilos para el panel de administración */
+
+:root {
+    --admin-pink: #ffb6c1;
+    --admin-pink-dark: #ff69b4;
+    --admin-pink-light: #ffe6f2;
+    --admin-sidebar-bg: #f8f9fa;
+    --admin-text: #333;
+    --admin-blue: #4169e1;
+    --admin-blue-light: #e6ecff;
+    --admin-green: #2e8b57;
+    --admin-green-light: #e6f5ee;
+    --admin-orange: #ff7f50;
+    --admin-orange-light: #fff0eb;
+    --admin-teal: #20b2aa;
+    --admin-teal-light: #e6f7f6;
+}
+
+body {
+    background-color: #f5f5f5;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Header */
+.admin-header {
+    background-color: var(--admin-pink);
+    padding: 0.75rem 1rem;
+}
+
+.text-pink {
+    color: var(--admin-pink-dark);
+}
+
+.text-blue {
+    color: var(--admin-blue);
+}
+
+.text-green {
+    color: var(--admin-green);
+}
+
+.text-orange {
+    color: var(--admin-orange);
+}
+
+.text-teal {
+    color: var(--admin-teal);
+}
+
+.bg-pink {
+    background-color: var(--admin-pink-dark);
+    color: white;
+}
+
+.bg-pink-light {
+    background-color: var(--admin-pink-light);
+}
+
+.bg-blue {
+    background-color: var(--admin-blue);
+    color: white;
+}
+
+.bg-blue-light {
+    background-color: var(--admin-blue-light);
+}
+
+.bg-green {
+    background-color: var(--admin-green);
+    color: white;
+}
+
+.bg-green-light {
+    background-color: var(--admin-green-light);
+}
+
+.bg-orange {
+    background-color: var(--admin-orange);
+    color: white;
+}
+
+.bg-orange-light {
+    background-color: var(--admin-orange-light);
+}
+
+.bg-teal {
+    background-color: var(--admin-teal);
+    color: white;
+}
+
+.bg-teal-light {
+    background-color: var(--admin-teal-light);
+}
+
+.btn-pink {
+    background-color: var(--admin-pink-dark);
+    color: white;
+}
+
+.btn-pink:hover {
+    background-color: #e05a9d;
+    color: white;
+}
+
+.btn-blue {
+    background-color: var(--admin-blue);
+    color: white;
+}
+
+.btn-blue:hover {
+    background-color: #3a5ecc;
+    color: white;
+}
+
+.btn-green {
+    background-color: var(--admin-green);
+    color: white;
+}
+
+.btn-green:hover {
+    background-color: #236744;
+    color: white;
+}
+
+.btn-orange {
+    background-color: var(--admin-orange);
+    color: white;
+}
+
+.btn-orange:hover {
+    background-color: #e67348;
+    color: white;
+}
+
+.btn-teal {
+    background-color: var(--admin-teal);
+    color: white;
+}
+
+.btn-teal:hover {
+    background-color: #1a9690;
+    color: white;
+}
+
+/* Sidebar */
+.admin-sidebar {
+    background-color: var(--admin-sidebar-bg);
+    min-height: calc(100vh - 56px);
+    border-right: 1px solid #dee2e6;
+}
+
+.admin-sidebar .nav-link {
+    color: var(--admin-text);
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.admin-sidebar .nav-link:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.admin-sidebar .nav-link.active {
+    background-color: var(--admin-pink-light);
+    color: var(--admin-pink-dark);
+    font-weight: 500;
+}
+
+/* Avatar */
+.avatar-circle-sm {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Tarjetas de administración */
+.admin-card {
+    border-radius: 1rem;
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+    background-color: white;
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.12);
+}
+
+.icon-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.icon-circle i {
+    font-size: 1.75rem;
+}
+
+/* Tabla de actividad reciente */
+.table {
+    font-size: 0.9rem;
+}
+
+.table thead th {
+    font-weight: 600;
+    border-top: none;
+    border-bottom-width: 1px;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Footer */
+.admin-footer {
+    background-color: var(--admin-pink);
+    color: var(--admin-text);
+    position: relative;
+    margin-top: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 991.98px) {
+    .admin-sidebar {
+        position: fixed;
+        top: 56px;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        max-height: calc(100vh - 56px);
+        overflow-y: auto;
+    }
+}
