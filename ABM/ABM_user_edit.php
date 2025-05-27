@@ -243,6 +243,38 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="autor" class="form-label">
                                         <i class="fas fa-user-edit"></i>
+                                        Nombre
+                                    </label>
+                                    <input type="text" class="form-control" id="nombre" name="nombre" 
+                                           value="<?php echo htmlspecialchars($row["nombre"]); ?>" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="autor" class="form-label">
+                                        <i class="fas fa-user-edit"></i>
+                                        Apellido
+                                    </label>
+                                    <input type="text" class="form-control" id="apellido" name="apellido" 
+                                           value="<?php echo htmlspecialchars($row["apellido"]); ?>" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="autor" class="form-label">
+                                        <i class="fas fa-user-edit"></i>
+                                        Correo
+                                    </label>
+                                    <input type="text" class="form-control" id="correo" name="correo" 
+                                           value="<?php echo htmlspecialchars($row["correo"]); ?>" required>
+                                </div>
+                                 <div class="col-md-6 mb-3">
+                                    <label for="autor" class="form-label">
+                                        <i class="fas fa-user-edit"></i>
+                                        Documento
+                                    </label>
+                                    <input type="text" class="form-control" id="documento" name="documento" 
+                                           value="<?php echo htmlspecialchars($row["documento"]); ?>" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="autor" class="form-label">
+                                        <i class="fas fa-user-edit"></i>
                                         Contraseña
                                     </label>
                                     <input type="text" class="form-control" id="contraseña" name="contraseña" 
@@ -260,9 +292,9 @@
                                         <option value="1" <?php echo ($row["nivel"] == "1") ? "selected" : "1"; ?>>🔴 SuperAdmin</option>
                                         <option value="2" <?php echo ($row["nivel"] == "2") ? "selected" : "2"; ?>>🔵 Admin</option>
                                         <option value="3" <?php echo ($row["nivel"] == "3") ? "selected" : "3"; ?>>🟢 Usuario</option>
-                                       
                                     </select>
                             </div>
+                           
                         </div>
 
                        
