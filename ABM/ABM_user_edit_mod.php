@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,45 +14,45 @@
         .header-gradient {
             background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
         }
-        
+
         .text-purple {
             color: #8b5cf6 !important;
         }
-        
+
         .text-purple-dark {
             color: #6d28d9 !important;
         }
-        
+
         .text-purple-light {
             color: #c4b5fd !important;
         }
-        
+
         .bg-purple-dark {
             background-color: #6d28d9 !important;
         }
-        
+
         .btn-purple {
             background-color: #8b5cf6;
             border-color: #8b5cf6;
             color: white;
         }
-        
+
         .btn-purple:hover {
             background-color: #7c3aed;
             border-color: #7c3aed;
             color: white;
         }
-        
+
         .result-container {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
             padding: 40px;
             margin: 50px auto;
             max-width: 700px;
             text-align: center;
         }
-        
+
         .success-message {
             background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
             border-radius: 15px;
@@ -59,7 +60,7 @@
             margin-bottom: 30px;
             color: #065f46;
         }
-        
+
         .error-message {
             background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
             border-radius: 15px;
@@ -67,14 +68,14 @@
             margin-bottom: 30px;
             color: #dc2626;
         }
-        
+
         .book-preview {
             background: linear-gradient(135deg, #f3e8ff 0%, #e0e7ff 100%);
             border-radius: 15px;
             padding: 20px;
             margin: 20px 0;
         }
-        
+
         .changes-summary {
             background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
             border-radius: 15px;
@@ -82,13 +83,13 @@
             margin: 20px 0;
             text-align: left;
         }
-        
+
         .countdown {
             font-size: 1.2em;
             font-weight: bold;
             color: #8b5cf6;
         }
-        
+
         .btn-action {
             padding: 12px 30px;
             border-radius: 25px;
@@ -98,14 +99,14 @@
             transition: all 0.3s ease;
             margin: 10px;
         }
-        
+
         .btn-action:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
-        
+
         .change-item {
-            background: rgba(255,255,255,0.7);
+            background: rgba(255, 255, 255, 0.7);
             border-radius: 8px;
             padding: 10px;
             margin: 5px 0;
@@ -113,6 +114,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Encabezado -->
     <header class="header-gradient py-3 shadow">
@@ -168,12 +170,14 @@
             }
 
             // Función para limpiar y validar datos
-            function limpiarDato($dato) {
+            function limpiarDato($dato)
+            {
                 return htmlspecialchars(strip_tags(trim($dato)));
             }
 
             // Función para validar URL de imagen
-            function validarURL($url) {
+            function validarURL($url)
+            {
                 return filter_var($url, FILTER_VALIDATE_URL) !== false;
             }
 
@@ -193,7 +197,7 @@
             $usuario_id = limpiarDato($_POST['usuario_id'] ?? '');
             $contraseña = limpiarDato($_POST['contraseña'] ?? '');
             $nivel = limpiarDato($_POST['nivel'] ?? '');
-           
+
 
             // Validaciones
             $errores = [];
@@ -254,23 +258,22 @@
             $stmtActual->close();
 
             // Preparar la consulta SQL con prepared statement
-           
-        $sql =  "UPDATE `usuarios` SET `usuario_id` = ?, `contraseña` = ?, `nivel` = ? WHERE `usuarios`.`usuario_id` = ?";
-        $stmt = $conn->prepare($sql);
-        
-        if ($stmt === false) {
-            echo '<div class="error-message">
+
+            $sql =  "UPDATE `usuarios` SET `usuario_id` = ?, `contraseña` = ?, `nivel` = ? WHERE `usuarios`.`usuario_id` = ?";
+            $stmt = $conn->prepare($sql);
+
+            if ($stmt === false) {
+                echo '<div class="error-message">
                     <i class="fas fa-exclamation-triangle fs-2 mb-3"></i>
                     <h3>Error en la Consulta</h3>
                     <p>Error al preparar la consulta: ' . $conn->error . '</p>
                   </div>';
-            echo '<a href="./ABM_user.php" class="btn btn-purple btn-action">Intentar de Nuevo</a>';
-            $conn->close();
-            exit;
-        }
-
-        // Vincular parámetros
-        $stmt->bind_param("sssi", $usuario_id, $contraseña, $nivel, $datosActuales['usuario_id']);
+                echo '<a href="./ABM_user.php" class="btn btn-purple btn-action">Intentar de Nuevo</a>';
+                $conn->close();
+                exit;
+            }
+            // Vincular parámetros
+            $stmt->bind_param("sssi", $usuario_id, $contraseña, $nivel, $datosActuales['usuario_id']);
 
             // Ejecutar la consulta
             if ($stmt->execute()) {
@@ -280,7 +283,7 @@
                             <h3>Actualizado Exitosamente!</h3>
                             <p>Los cambios han sido guardados correctamente en el catálogo de la biblioteca.</p>
                           </div>';
-                    
+
                     // Detectar y mostrar cambios realizados
                     $cambios = [];
                     if ($datosActuales['usuario_id'] !== $usuario_id) $cambios[] = ['campo' => 'usuario_id', 'anterior' => $datosActuales['usuario_id'], 'nuevo' => $usuario_id];
@@ -301,7 +304,7 @@
                         }
                         echo '</div>';
                     }
-                    
+
                     // Mostrar preview del libro actualizado
                     echo '<div class="book-preview">
                             <h4 class="text-purple fw-bold mb-3">
@@ -316,15 +319,15 @@
                                 </div>
                             </div>
                           </div>';
-                    
+
                     echo '<div class="countdown mb-3">
                             <i class="fas fa-clock me-2"></i>
                             Redirigiendo en <span id="countdown">5</span> segundos...
                           </div>';
-                    
+
                     echo '<a href="./ABM_user.php" class="btn btn-purple btn-action">Ver Lista de Usuarios</a>';
                     echo '<a href="./ABM_user_edit.php?id=' . $usuario_id . '" class="btn btn-outline-primary btn-action">Editar de Nuevo</a>';
-                    
+
                     // JavaScript para redirección automática
                     echo '<script>
                             let timeLeft = 5;
@@ -340,7 +343,6 @@
                                 }
                             }, 1000);
                           </script>';
-                    
                 } else {
                     echo '<div class="error-message">
                             <i class="fas fa-info-circle fs-2 mb-3"></i>
@@ -387,4 +389,5 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
