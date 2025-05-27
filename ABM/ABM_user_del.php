@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eliminar Libro - Biblioteca Mágica</title>
+    <title>Eliminar Usuarios - Biblioteca Mágica</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -126,7 +126,7 @@
                     <div class="bg-white p-2 rounded-circle me-3">
                         <i class="fas fa-trash fs-4 text-purple"></i>
                     </div>
-                    <h1 class="fs-2 fw-bold text-white mb-0">Eliminar Libro</h1>
+                    <h1 class="fs-2 fw-bold text-white mb-0">Eliminar Usuario</h1>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <span class="text-white fw-bold">
