@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Mágica - Jardín de Infantes</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="styles/index.css">
+</head>
+<body>
+    <!-- Encabezado -->
+    <header class="header-gradient py-3 shadow">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4 mb-3 mb-md-0 d-flex align-items-center">
+                    <div class="bg-white p-2 rounded-circle me-3">
+                        <i class="fas fa-book fs-4 text-purple"></i>
+                    </div>
+                    <h1 class="fs-2 fw-bold text-white mb-0">Biblioteca Mágica</h1>
+                </div>
+                <div class="col-md-5 mb-3 mb-md-0">
+                    <div class="position-relative">
+                        <i class="fas fa-search position-absolute search-icon text-muted"></i>
+                        <input type="text" class="form-control rounded-pill py-2 ps-5" placeholder="Buscar libros...">
+                    </div>
+                </div>
+                <div class="col-md-3 text-md-end">
+                    <a href="login.html" class="btn btn-light rounded-pill px-4">
+                        <i class="fas fa-user me-2"></i>Iniciar Sesión
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Banner principal -->
+    <div class="bg-warning py-4">
+        <div class="container text-center">
+            <h2 class="display-5 fw-bold text-purple mb-2">¡Bienvenidos a nuestra Biblioteca Mágica!</h2>
+            <p class="fs-5 text-purple-dark">Un mundo de aventuras y aprendizaje te espera</p>
+        </div>
+    </div>
+
+    <!-- Géneros literarios -->
+    <div class="container py-5">
+        <h2 class="fs-1 fw-bold text-purple mb-4">Géneros Literarios</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <a href="#" class="text-decoration-none">
+                    <div class="category-card bg-pink-light rounded-4 p-4 text-center h-100">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-book fs-1 text-pink"></i>
+                        </div>
+                        <h3 class="fs-4 fw-bold mb-2">Cuentos de Hadas</h3>
+                        <p class="text-muted">Historias mágicas con princesas, hadas y dragones</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="#" class="text-decoration-none">
+                    <div class="category-card bg-green-light rounded-4 p-4 text-center h-100">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-book fs-1 text-green"></i>
+                        </div>
+                        <h3 class="fs-4 fw-bold mb-2">Fábulas con Animales</h3>
+                        <p class="text-muted">Relatos con animales que enseñan valores</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="#" class="text-decoration-none">
+                    <div class="category-card bg-blue-light rounded-4 p-4 text-center h-100">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-book fs-1 text-blue"></i>
+                        </div>
+                        <h3 class="fs-4 fw-bold mb-2">Poesía Infantil</h3>
+                        <p class="text-muted">Versos, rimas y canciones para los más pequeños</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row g-4 mt-2">
+            <div class="col-md-6">
+                <a href="#" class="text-decoration-none">
+                    <div class="category-card bg-orange-light rounded-4 p-4 text-center h-100">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-book fs-1 text-orange"></i>
+                        </div>
+                        <h3 class="fs-4 fw-bold mb-2">Libros de Aventuras</h3>
+                        <p class="text-muted">Historias emocionantes de exploración y descubrimiento</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="#" class="text-decoration-none">
+                    <div class="category-card bg-teal-light rounded-4 p-4 text-center h-100">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-book fs-1 text-teal"></i>
+                        </div>
+                        <h3 class="fs-4 fw-bold mb-2">Historias de la Naturaleza</h3>
+                        <p class="text-muted">Cuentos sobre plantas, animales y el mundo natural</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de libros destacados -->
+    <div class="container py-5">
+        <div class="d-flex align-items-center mb-4">
+            <h2 class="fs-1 fw-bold text-purple mb-0">Libros Destacados</h2>
+            <i class="fas fa-star ms-2 text-warning"></i>
+        </div>
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3">
+            <div class="col">
+                <div class="book-card card h-100 shadow-sm">
+                    <div class="book-cover d-flex align-items-center justify-content-center">
+                        <i class="fas fa-book fs-1 text-white"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-truncate">El Árbol Generoso</h5>
+                        <p class="card-text small text-muted">Shel Silverstein</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="book-card card h-100 shadow-sm">
+                    <div class="book-cover d-flex align-items-center justify-content-center">
+                        <i class="fas fa-book fs-1 text-white"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-truncate">Donde Viven los Monstruos</h5>
+                        <p class="card-text small text-muted">Maurice Sendak</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="book-card card h-100 shadow-sm">
+                    <div class="book-cover d-flex align-items-center justify-content-center">
+                        <i class="fas fa-book fs-1 text-white"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-truncate">La Oruga Muy Hambrienta</h5>
+                        <p class="card-text small text-muted">Eric Carle</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="book-card card h-100 shadow-sm">
+                    <div class="book-cover d-flex align-items-center justify-content-center">
+                        <i class="fas fa-book fs-1 text-white"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-truncate">Buenas Noches, Luna</h5>
+                        <p class="card-text small text-muted">Margaret Wise Brown</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="book-card card h-100 shadow-sm">
+                    <div class="book-cover d-flex align-items-center justify-content-center">
+                        <i class="fas fa-book fs-1 text-white"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-truncate">El Pez Arcoíris</h5>
+                        <p class="card-text small text-muted">Marcus Pfister</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="#" class="btn btn-purple rounded-pill px-4 py-2">Ver más libros</a>
+        </div>
+    </div>
+
+    <!-- Sección de actividades recientes -->
+    <div class="bg-green-light py-5">
+        <div class="container">
+            <h2 class="fs-1 fw-bold text-green-dark mb-4">Actividades Recientes</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="activity-card bg-pink-light rounded-4 p-4 h-100">
+                        <h3 class="fs-4 fw-bold mb-2">Hora del Cuento</h3>
+                        <p class="text-muted">Todos los martes a las 10:00 AM</p>
+                        <a href="#" class="text-decoration-none text-purple fw-medium">Más información →</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="activity-card bg-blue-light rounded-4 p-4 h-100">
+                        <h3 class="fs-4 fw-bold mb-2">Taller de Dibujo</h3>
+                        <p class="text-muted">Jueves a las 11:00 AM</p>
+                        <a href="#" class="text-decoration-none text-purple fw-medium">Más información →</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="activity-card bg-purple-light rounded-4 p-4 h-100">
+                        <h3 class="fs-4 fw-bold mb-2">Canciones y Rimas</h3>
+                        <p class="text-muted">Viernes a las 9:30 AM</p>
+                        <a href="#" class="text-decoration-none text-purple fw-medium">Más información →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="bg-purple-dark text-white py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <h3 class="fs-4 fw-bold">Biblioteca Mágica</h3>
+                    <p class="text-purple-light mb-0">Jardín de Infantes "Pequeños Exploradores"</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="btn btn-outline-light me-2">Contacto</a>
+                    <a href="#" class="btn btn-outline-light">Ayuda</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
