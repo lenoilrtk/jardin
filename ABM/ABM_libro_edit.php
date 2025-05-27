@@ -207,7 +207,7 @@
                 }
                 
                 $id = intval($_GET['id']);
-                $sql = "SELECT * FROM `libros_1` WHERE libro_id = ?";
+                $sql = "SELECT * FROM `libros` WHERE id = ?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("i", $id);
                 $stmt->execute();
@@ -223,11 +223,11 @@
                         <i class="fas fa-book me-2"></i>
                         Editando: <?php echo htmlspecialchars($row["titulo"]); ?>
                     </h3>
-                    <p class="text-muted mb-0">ID del libro: #<?php echo $row["libro_id"]; ?></p>
+                    <p class="text-muted mb-0">ID del libro: #<?php echo $row["id"]; ?></p>
                 </div>
 
                 <div class="form-container">
-                    <form action="ABM_libro_edit_mod.php?libro_id=<?php echo $row["libro_id"]; ?>" method="POST" id="editBookForm">
+                    <form action="ABM_libro_edit_mod.php?libro_id=<?php echo $row["id"]; ?>" method="POST" id="editBookForm" enctype="multipart/form-data">
                         
                         <!-- Información Básica -->
                         <div class="form-section">
@@ -331,8 +331,7 @@
                                     <i class="fas fa-link"></i>
                                     URL de la Imagen
                                 </label>
-                                <input type="url" class="form-control" id="imagen" name="imagen" 
-                                       value="<?php echo htmlspecialchars($row["imagen"]); ?>" required onchange="previewImage()">
+                                <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" onchange="previewImage()">
                                 <div class="preview-container">
                                     <h5 class="text-purple fw-bold">Vista Previa Actual:</h5>
                                     <img id="previewImg" class="image-preview" src="<?php echo htmlspecialchars($row["imagen"]); ?>" alt="Vista previa del libro">
@@ -391,25 +390,22 @@
     <script>
         // Función para mostrar vista previa de la imagen
         function previewImage() {
-            const imageUrl = document.getElementById('imagen').value;
+            const input = document.getElementById('imagen');
             const previewImg = document.getElementById('previewImg');
-            
-            if (imageUrl) {
-                previewImg.src = imageUrl;
-                
-                // Manejar errores de carga de imagen
-                previewImg.onerror = function() {
-                    this.src = '/placeholder.svg?height=200&width=150';
-                    this.alt = 'Error al cargar imagen';
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
                 };
+                reader.readAsDataURL(input.files[0]);
             }
         }
 
-        // Validación del formulario
+        // Validación del formulario antes de enviar
         document.getElementById('editBookForm').addEventListener('submit', function(e) {
-            const requiredFields = ['titulo', 'autor', 'ilustrador', 'editorial', 'clasificacion', 'color', 'resumen', 'imagen'];
+            const requiredFields = ['titulo', 'autor', 'ilustrador', 'editorial', 'clasificacion', 'color', 'resumen'];
             let isValid = true;
-            
+
             requiredFields.forEach(field => {
                 const input = document.getElementById(field);
                 if (!input.value.trim()) {
@@ -419,20 +415,23 @@
                     input.classList.remove('is-invalid');
                 }
             });
-            
+
             if (!isValid) {
                 e.preventDefault();
                 alert('Por favor, completa todos los campos requeridos.');
                 return false;
             }
-            
+
             // Confirmación antes de guardar
-            return confirm('¿Estás seguro de que quieres guardar los cambios en este libro?');
+            if (!confirm('¿Estás seguro de que quieres guardar los cambios en este libro?')) {
+                e.preventDefault();
+                return false;
+            }
         });
 
-        // Mostrar vista previa inicial
+        // Mostrar vista previa inicial (si hay imagen cargada)
         window.addEventListener('load', function() {
-            previewImage();
+            // No hace falta llamar a previewImage() aquí, ya que la imagen actual ya está en el src
         });
     </script>
 </body>

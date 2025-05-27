@@ -145,6 +145,16 @@
     <div class="container">
         <div class="result-container">
             <?php
+             include "./conex.php";
+
+    // Procesar imagen si se subió
+    $imagen = null;
+    if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+        $ruta_temporal = $_FILES['imagen']['tmp_name'];
+        $imagen = file_get_contents($ruta_temporal);
+    } else {
+        $imagen = null;
+    }
             // Verificar que la petición sea POST
             if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
                 echo '<div class="error-message">
@@ -172,11 +182,6 @@
                 return htmlspecialchars(strip_tags(trim($dato)));
             }
 
-            // Función para validar URL de imagen
-            function validarURL($url) {
-                return filter_var($url, FILTER_VALIDATE_URL) !== false;
-            }
-
             // Validar ID
             $libro_id = filter_var($_GET['libro_id'], FILTER_VALIDATE_INT);
             if ($libro_id === false || $libro_id <= 0) {
@@ -197,7 +202,7 @@
             $clasificacion = limpiarDato($_POST['clasificacion'] ?? '');
             $color = limpiarDato($_POST['color'] ?? '');
             $resumen = limpiarDato($_POST['resumen'] ?? '');
-            $imagen = limpiarDato($_POST['imagen'] ?? '');
+        
 
             // Validaciones
             $errores = [];
@@ -209,11 +214,6 @@
             if (empty($clasificacion)) $errores[] = "La clasificación es obligatoria";
             if (empty($color)) $errores[] = "El color es obligatorio";
             if (empty($resumen)) $errores[] = "El resumen es obligatorio";
-            if (empty($imagen)) {
-                $errores[] = "La URL de la imagen es obligatoria";
-            } elseif (!validarURL($imagen)) {
-                $errores[] = "La URL de la imagen no es válida";
-            }
 
             // Si hay errores, mostrarlos
             if (!empty($errores)) {
@@ -245,7 +245,7 @@
             }
 
             // Obtener datos actuales del libro para comparar cambios
-            $sqlActual = "SELECT * FROM libros_1 WHERE libro_id = ?";
+            $sqlActual = "SELECT * FROM libros WHERE id = ?";
             $stmtActual = $conn->prepare($sqlActual);
             $stmtActual->bind_param("i", $libro_id);
             $stmtActual->execute();
@@ -267,7 +267,7 @@
             $stmtActual->close();
 
             // Verificar si ya existe otro libro con el mismo título y autor (excluyendo el actual)
-            $sqlCheck = "SELECT libro_id FROM libros_1 WHERE titulo = ? AND autor = ? AND libro_id != ?";
+            $sqlCheck = "SELECT id FROM libros WHERE titulo = ? AND autor = ? AND id != ?";
             $stmtCheck = $conn->prepare($sqlCheck);
             $stmtCheck->bind_param("ssi", $titulo, $autor, $libro_id);
             $stmtCheck->execute();
@@ -288,7 +288,7 @@
             $stmtCheck->close();
 
             // Preparar la consulta SQL con prepared statement
-            $sql = "UPDATE libros_1 SET titulo = ?, autor = ?, ilustrador = ?, editorial = ?, clasificacion = ?, color = ?, observaciones = 'NULL', resumen = ?, origen = 'NULL', imagen = ? WHERE libro_id = ?";
+            $sql = "UPDATE libros SET titulo = ?, autor = ?, ilustrador = ?, editorial = ?, clasificacion = ?, color = ?, observaciones = 'NULL', resumen = ?, origen = 'NULL', imagen = ? WHERE id = ?";
             
             $stmt = $conn->prepare($sql);
             
@@ -350,7 +350,7 @@
                             </h4>
                             <div class="row align-items-center">
                                 <div class="col-md-4 text-center">
-                                    <img src="' . htmlspecialchars($imagen) . '" alt="Portada" 
+                                    <img src="data:image/jpeg;base64,' . base64_encode($imagen) . '" alt="Portada" 
                                          style="max-width: 120px; max-height: 160px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"
                                          onerror="this.src=\'/placeholder.svg?height=160&width=120\'">
                                 </div>

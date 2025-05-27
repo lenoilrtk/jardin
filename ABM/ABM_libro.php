@@ -245,15 +245,15 @@
               $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : $lista; // Página actual
               $offset = ($pagina - 1) * $limite; // Calcular el desplazamiento
 
-              $sql = "SELECT * FROM `libros_1` LIMIT $limite OFFSET $offset";
+              $sql = "SELECT * FROM `libros` LIMIT $limite OFFSET $offset";
               $result = $conn->query($sql);
 
               while ($row = $result->fetch_assoc()) {
                 echo '
                 <tr>
-                  <th scope="row" class="text-center fw-bold text-purple">' . $row["libro_id"] . '</th>
+                  <th scope="row" class="text-center fw-bold text-purple">' . $row["id"] . '</th>
                   <td class="text-center">
-                    <img src="'.$row["imagen"].'" alt="Imagen" class="book-image" style="max-height: 60px; max-width: 60px; object-fit: cover;">
+                    <img src="data:image/jpeg;base64,' . base64_encode($row["imagen"]) . '" alt="Portada" style="max-width:60px; max-height:80px;" />
                   </td>
                   <td>
                     <div class="text-truncate-custom fw-medium" title="' . htmlspecialchars($row["titulo"]) . '">
@@ -286,12 +286,12 @@
                     </div>
                   </td>
                   <td class="text-center">
-                    <a href="./ABM_libro_edit.php?id='.$row["libro_id"].'" class="btn btn-sm btn-outline-primary btn-action">
+                    <a href="./ABM_libro_edit.php?id='.$row["id"].'" class="btn btn-sm btn-outline-primary btn-action">
                       <i class="fas fa-edit me-1"></i>Editar
                     </a>
                   </td>
                   <td class="text-center">
-                    <a href="./ABM_libro_del.php?id='.$row["libro_id"].'" class="btn btn-sm btn-outline-danger btn-action" >
+                    <a href="./ABM_libro_del.php?id='.$row["id"].'" class="btn btn-sm btn-outline-danger btn-action" >
                       <i class="fas fa-trash me-1"></i>Borrar
                     </a>
                   </td>  
