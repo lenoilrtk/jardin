@@ -180,9 +180,6 @@
                     <a href="./ABM_index.html" class="btn btn-outline-secondary rounded-pill me-2">
                         <i class="fas fa-arrow-left me-2"></i>Volver
                     </a>
-                    <a href="./ABM_user_add.html" class="btn btn-purple rounded-pill">
-                        <i class="fas fa-user-plus me-2"></i>Añadir Usuario
-                    </a>
                 </div>
             </div>
         </div>
@@ -258,12 +255,23 @@
 
                         if ($result && $result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
-                                // Ocultar contraseña por seguridad
-                                $passwordDisplay = str_repeat('•', 8);
+
                                 
                                 // Determinar clase de badge según tipo
-                                $badgeClass = ($row["nivel"] == "admin") ? "admin-badge" : "user-badge";
-                                $tipoIcon = ($row["nivel"] == "admin") ? "fas fa-crown" : "fas fa-user";
+                                if ($row["nivel"] == "1") {
+                                    $badgeClass = "admin-badge";
+                                    $tipoIcon = "fas fa-user-shield";
+                                } else if ($row["nivel"] == "2") {
+                                    $badgeClass = "admin-badge";
+                                    $tipoIcon = "fas fa-user-tie";
+                                } else if ($row["nivel"] == "3") {
+                                    $badgeClass = "user-badge";
+                                    $tipoIcon = "fas fa-user";
+                                } else {
+                                    $badgeClass = "user-badge";
+                                    $tipoIcon = "fas fa-user";
+                                }
+
                                 
                                 echo '
                                 <tr>
