@@ -1,3 +1,11 @@
+<?php
+include 'ABM/conex.php';
+// Parámetros de búsqueda
+$buscar = isset($_GET['buscar']) ? $conn->real_escape_string($_GET['buscar']) : '';
+$where  = $buscar ? "AND (titulo LIKE '%$buscar%' OR autor LIKE '%$buscar%')" : '';
+// Definir géneros específicos (clasificación)
+$generos = ['Cuentos de Hadas','Fábulas con Animales','Poesía Infantil','Libros de Aventuras','Historias de la Naturaleza'];
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -16,20 +24,20 @@
     <header class="header-gradient py-3 shadow">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-md-4 mb-3 mb-md-0 d-flex align-items-center">
+                <div class="col-md-4 d-flex align-items-center">
                     <div class="bg-white p-2 rounded-circle me-3">
                         <i class="fas fa-book fs-4 text-purple"></i>
                     </div>
                     <h1 class="fs-2 fw-bold text-white mb-0">Biblioteca Mágica</h1>
                 </div>
-                <div class="col-md-5 mb-3 mb-md-0">
-                    <div class="position-relative">
+                <div class="col-md-5">
+                    <form action="index.php" method="GET" class="position-relative">
                         <i class="fas fa-search position-absolute search-icon text-muted"></i>
-                        <input type="text" class="form-control rounded-pill py-2 ps-5" placeholder="Buscar libros...">
-                    </div>
+                        <input type="text" name="buscar" class="form-control rounded-pill py-2 ps-5" placeholder="Buscar libros..." value="<?php echo htmlspecialchars($buscar); ?>">
+                    </form>
                 </div>
                 <div class="col-md-3 text-md-end">
-                    <a href="login.html" class="btn btn-light rounded-pill px-4">
+                    <a href="login.php" class="btn btn-light rounded-pill px-4">
                         <i class="fas fa-user me-2"></i>Iniciar Sesión
                     </a>
                 </div>
@@ -109,103 +117,44 @@
         </div>
     </div>
 
-    <!-- Sección de libros destacados -->
-    <div class="container py-5">
-        <div class="d-flex align-items-center mb-4">
-            <h2 class="fs-1 fw-bold text-purple mb-0">Libros Destacados</h2>
-            <i class="fas fa-star ms-2 text-warning"></i>
-        </div>
-        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3">
-            <div class="col">
-                <div class="book-card card h-100 shadow-sm">
-                    <div class="book-cover d-flex align-items-center justify-content-center">
-                        <i class="fas fa-book fs-1 text-white"></i>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold text-truncate">El Árbol Generoso</h5>
-                        <p class="card-text small text-muted">Shel Silverstein</p>
-                    </div>
+    <!-- Secciones por género dinámicas -->
+    <?php foreach ($generos as $cat): ?>
+        <?php
+        // Verificar si hay libros para esta categoría
+        $countRes = $conn->query("SELECT COUNT(*) AS cnt FROM libros WHERE clasificacion='" . $conn->real_escape_string($cat) . "' $where");
+        $count    = $countRes->fetch_assoc()['cnt'];
+        if ($count > 0):
+        ?>
+            <div class="container py-4">
+                <div class="d-flex align-items-center mb-3">
+                    <h2 class="fs-2 fw-bold text-purple mb-0"><?= htmlspecialchars($cat) ?></h2>
+                    <i class="fas fa-chevron-right ms-2 text-purple"></i>
+                </div>
+                <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3">
+                    <?php
+                    $sql = "SELECT titulo, autor, imagen FROM libros WHERE clasificacion='" . $conn->real_escape_string($cat) . "' $where LIMIT 8";
+                    $res = $conn->query($sql);
+                    while ($lib = $res->fetch_assoc()):
+                        $src = !empty($lib['imagen'])
+                             ? 'data:image/jpeg;base64,'.base64_encode($lib['imagen'])
+                             : 'https://via.placeholder.com/100x140.png?text=Libro';
+                    ?>
+                        <div class="col">
+                            <div class="book-card card h-100 shadow-sm">
+                                <div class="book-cover d-flex align-items-center justify-content-center bg-purple" style="height:140px; overflow:hidden;">
+                                    <img src="<?= $src ?>" alt="<?= htmlspecialchars($lib['titulo']) ?>" style="max-height:100%; max-width:100%; object-fit:cover;">
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="card-title fw-bold text-truncate"><?= htmlspecialchars($lib['titulo']) ?></h6>
+                                    <p class="card-text small text-muted"><?= htmlspecialchars($lib['autor']) ?></p>
+                                <//div>
+                            </div>
+                        </div>
+                    <?php endwhile; ?>
                 </div>
             </div>
-            <div class="col">
-                <div class="book-card card h-100 shadow-sm">
-                    <div class="book-cover d-flex align-items-center justify-content-center">
-                        <i class="fas fa-book fs-1 text-white"></i>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold text-truncate">Donde Viven los Monstruos</h5>
-                        <p class="card-text small text-muted">Maurice Sendak</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="book-card card h-100 shadow-sm">
-                    <div class="book-cover d-flex align-items-center justify-content-center">
-                        <i class="fas fa-book fs-1 text-white"></i>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold text-truncate">La Oruga Muy Hambrienta</h5>
-                        <p class="card-text small text-muted">Eric Carle</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="book-card card h-100 shadow-sm">
-                    <div class="book-cover d-flex align-items-center justify-content-center">
-                        <i class="fas fa-book fs-1 text-white"></i>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold text-truncate">Buenas Noches, Luna</h5>
-                        <p class="card-text small text-muted">Margaret Wise Brown</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="book-card card h-100 shadow-sm">
-                    <div class="book-cover d-flex align-items-center justify-content-center">
-                        <i class="fas fa-book fs-1 text-white"></i>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold text-truncate">El Pez Arcoíris</h5>
-                        <p class="card-text small text-muted">Marcus Pfister</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="text-center mt-4">
-            <a href="#" class="btn btn-purple rounded-pill px-4 py-2">Ver más libros</a>
-        </div>
-    </div>
-
-    <!-- Sección de actividades recientes -->
-    <div class="bg-green-light py-5">
-        <div class="container">
-            <h2 class="fs-1 fw-bold text-green-dark mb-4">Actividades Recientes</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="activity-card bg-pink-light rounded-4 p-4 h-100">
-                        <h3 class="fs-4 fw-bold mb-2">Hora del Cuento</h3>
-                        <p class="text-muted">Todos los martes a las 10:00 AM</p>
-                        <a href="#" class="text-decoration-none text-purple fw-medium">Más información →</a>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="activity-card bg-blue-light rounded-4 p-4 h-100">
-                        <h3 class="fs-4 fw-bold mb-2">Taller de Dibujo</h3>
-                        <p class="text-muted">Jueves a las 11:00 AM</p>
-                        <a href="#" class="text-decoration-none text-purple fw-medium">Más información →</a>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="activity-card bg-purple-light rounded-4 p-4 h-100">
-                        <h3 class="fs-4 fw-bold mb-2">Canciones y Rimas</h3>
-                        <p class="text-muted">Viernes a las 9:30 AM</p>
-                        <a href="#" class="text-decoration-none text-purple fw-medium">Más información →</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
 
     <!-- Pie de página -->
     <footer class="bg-purple-dark text-white py-4">

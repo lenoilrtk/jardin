@@ -154,7 +154,7 @@
                     </h3>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <a href="./ABM_index.html" class="btn btn-outline-secondary rounded-pill me-2">
+                    <a href="./ABM_index.php" class="btn btn-outline-secondary rounded-pill me-2">
                         <i class="fas fa-arrow-left me-2"></i>Volver
                     </a>
                     <a href="./ABM_libro_añadir.html" class="btn btn-purple rounded-pill">

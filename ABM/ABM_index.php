@@ -1,3 +1,17 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['usuario_id'])) {
+    header("Location: login.php");
+    exit;
+}
+
+if ($_SESSION['nivel'] != 1 && $_SESSION['nivel'] != 2) {
+    header("Location: index.php"); // O mostrar error
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -144,11 +158,14 @@
                         <input type="text" class="form-control rounded-pill py-2 ps-5" placeholder="Buscar en el sistema...">
                     </div>
                 </div>
-                <div class="col-md-3 text-md-end">
-                    <a href="index.html" class="btn btn-light rounded-pill px-4">
-                        <i class="fas fa-home me-2"></i>Volver al Inicio
-                    </a>
-                </div>
+                 <div class="col-md-3 text-md-end">
+        <a href="logout.php" class="btn btn-outline-light me-2">
+          <i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión
+        </a>
+        <a href="index.html" class="btn btn-light rounded-pill px-4">
+          <i class="fas fa-home me-2"></i>Volver al Inicio
+        </a>
+      </div>
             </div>
         </div>
     </header>
