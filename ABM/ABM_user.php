@@ -227,11 +227,19 @@
                                 <i class="fas fa-hashtag me-2"></i>ID
                             </th>
                             <th scope="col">
-                                <i class="fas fa-user me-2"></i>Usuario
+                                <i class="fas fa-user me-2"></i>Nombre
+                            </th>
+                             <th scope="col">
+                                <i class="fas fa-user me-2"></i>apellido
+                            </th>
+                             <th scope="col">
+                                <i class="fas fa-user me-2"></i>Correo
                             </th>
                             <th scope="col">
                                 <i class="fas fa-key me-2"></i>Contraseña
                             </th>
+                            <th scope="col">
+                                <i class="fas fa-users me-2"></i>Documento
                             <th scope="col">
                                 <i class="fas fa-user-tag me-2"></i>Tipo
                             </th>
@@ -279,11 +287,20 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <i class="' . $tipoIcon . ' me-2 text-purple"></i>
-                                            <span class="fw-medium">' . htmlspecialchars($row["usuario_id"]) . '</span>
+                                            <span class="fw-medium">' . htmlspecialchars($row["nombre"]) . '</span>
                                         </div>
+                                    </td>
+                                       <td>
+                                        <span>' . htmlspecialchars($row["apellido"]) . '</span>
+                                    </td>
+                                       <td>
+                                        <span>' . htmlspecialchars($row["correo"]) . '</span>
                                     </td>
                                     <td>
                                         <span>' . htmlspecialchars($row["contraseña"]) . '</span>
+                                    </td>
+                                                                           <td>
+                                        <span>' . htmlspecialchars($row["documento"]) . '</span>
                                     </td>
                                     <td>
                                         <span class="user-type-badge ' . $badgeClass . '">
@@ -291,6 +308,7 @@
                                             ' . ucfirst($row["nivel"]) . '
                                         </span>
                                     </td>
+
                                     <td class="text-center">
                                         <a href="./ABM_user_edit.php?id=' . $row["usuario_id"] . '" class="btn btn-sm btn-outline-primary btn-action">
                                             <i class="fas fa-edit me-1"></i>Editar
@@ -304,18 +322,7 @@
                                     </td>  
                                 </tr>';
                             }
-                        } else {
-                            echo '<tr>
-                                    <td colspan="7" class="text-center py-5">
-                                        <i class="fas fa-users-slash fs-2 text-muted mb-3"></i>
-                                        <h5 class="text-muted">No hay usuarios registrados</h5>
-                                        <p class="text-muted">Comienza añadiendo el primer usuario al sistema.</p>
-                                        <a href="./ABM_user_add.html" class="btn btn-purple btn-action">
-                                            <i class="fas fa-user-plus me-2"></i>Añadir Usuario
-                                        </a>
-                                    </td>
-                                  </tr>';
-                        }
+                        } 
                         ?>
                     </tbody>
                 </table>

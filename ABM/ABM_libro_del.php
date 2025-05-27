@@ -190,7 +190,7 @@
 
             if (!$confirmado) {
                 // Mostrar información del libro y pedir confirmación
-                $sqlInfo = "SELECT * FROM libros_1 WHERE libro_id = ?";
+                $sqlInfo = "SELECT * FROM libros WHERE id = ?";
                 $stmtInfo = $conn->prepare($sqlInfo);
                 $stmtInfo->bind_param("i", $libro_id);
                 $stmtInfo->execute();
@@ -225,12 +225,12 @@
                         </h4>
                         <div class="row align-items-center">
                             <div class="col-md-4 text-center">
-                                <img src="' . htmlspecialchars($libro['imagen']) . '" alt="Portada" 
+                             <img src="data:image/jpeg;base64,' . base64_encode($libro['imagen']) . '" alt="Portada" 
                                      style="max-width: 120px; max-height: 160px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"
                                      onerror="this.src=\'/placeholder.svg?height=160&width=120\'">
                             </div>
                             <div class="col-md-8 text-start">
-                                <h5 class="fw-bold text-purple">ID: #' . $libro['libro_id'] . ' - ' . htmlspecialchars($libro['titulo']) . '</h5>
+                                <h5 class="fw-bold text-purple">ID: #' . $libro['id'] . ' - ' . htmlspecialchars($libro['titulo']) . '</h5>
                                 <p class="mb-1"><strong>Autor:</strong> ' . htmlspecialchars($libro['autor']) . '</p>
                                 <p class="mb-1"><strong>Ilustrador:</strong> ' . htmlspecialchars($libro['ilustrador']) . '</p>
                                 <p class="mb-1"><strong>Editorial:</strong> ' . htmlspecialchars($libro['editorial']) . '</p>
@@ -257,7 +257,7 @@
                 // Proceder con la eliminación
                 
                 // Primero obtener información del libro para mostrar después
-                $sqlInfo = "SELECT titulo, autor FROM libros_1 WHERE libro_id = ?";
+                $sqlInfo = "SELECT titulo, autor FROM libros WHERE id = ?";
                 $stmtInfo = $conn->prepare($sqlInfo);
                 $stmtInfo->bind_param("i", $libro_id);
                 $stmtInfo->execute();
@@ -279,7 +279,7 @@
                 $stmtInfo->close();
 
                 // Realizar la eliminación con prepared statement
-                $sql = "DELETE FROM libros_1 WHERE libro_id = ?";
+                $sql = "DELETE FROM libros WHERE id = ?";
                 $stmt = $conn->prepare($sql);
                 
                 if ($stmt === false) {

@@ -146,9 +146,21 @@
             }
 
             // Función para validar URL de imagen
-            function validarURL($url) {
-                return filter_var($url, FILTER_VALIDATE_URL) !== false;
-            }
+    // Incluir conexión a la base de datos
+    include "./conex.php";
+
+    // Procesar imagen si se subió
+    $imagen = null;
+    if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+        $ruta_temporal = $_FILES['imagen']['tmp_name'];
+        $imagen = file_get_contents($ruta_temporal);
+        if ($imagen === false || strlen($imagen) === 0) {
+            $imagen = null;
+        }
+    } else {
+        $imagen = null;
+    }
+
 
             // Recoger y validar datos
             $titulo = limpiarDato($_POST['titulo'] ?? '');
@@ -158,7 +170,6 @@
             $clasificacion = limpiarDato($_POST['clasificacion'] ?? '');
             $color = limpiarDato($_POST['color'] ?? '');
             $resumen = limpiarDato($_POST['resumen'] ?? '');
-            $imagen = limpiarDato($_POST['imagen'] ?? '');
 
             // Validaciones
             $errores = [];
@@ -170,11 +181,8 @@
             if (empty($clasificacion)) $errores[] = "La clasificación es obligatoria";
             if (empty($color)) $errores[] = "El color es obligatorio";
             if (empty($resumen)) $errores[] = "El resumen es obligatorio";
-            if (empty($imagen)) {
-                $errores[] = "La URL de la imagen es obligatoria";
-            } elseif (!validarURL($imagen)) {
-                $errores[] = "La URL de la imagen no es válida";
-            }
+
+            
 
             // Si hay errores, mostrarlos
             if (!empty($errores)) {
@@ -183,7 +191,7 @@
                         <h3>Errores en los Datos</h3>
                         <ul class="text-start">';
                 foreach ($errores as $error) {
-                    echo '<li>' . $error . '</li>';
+                    echo "<li>{$error}</li>";
                 }
                 echo '</ul></div>';
                 echo '<a href="javascript:history.back()" class="btn btn-outline-danger btn-action">Corregir Datos</a>';
@@ -191,81 +199,72 @@
                 exit;
             }
 
-            // Incluir conexión a la base de datos
-            include "./conex.php";
+    // Verificar conexión
+    if ($conn->connect_error) {
+        echo '<div class="error-message">
+                <i class="fas fa-database fs-2 mb-3"></i>
+                <h3>Error de Conexión</h3>
+                <p>No se pudo conectar a la base de datos: ' . $conn->connect_error . '</p>
+              </div>';
+        echo '<a href="./ABM_libro_añadir.html" class="btn btn-purple btn-action">Intentar de Nuevo</a>';
+        exit;
+    }
 
-            // Verificar conexión
-            if ($conn->connect_error) {
-                echo '<div class="error-message">
-                        <i class="fas fa-database fs-2 mb-3"></i>
-                        <h3>Error de Conexión</h3>
-                        <p>No se pudo conectar a la base de datos: ' . $conn->connect_error . '</p>
-                      </div>';
-                echo '<a href="./ABM_libro_añadir.html" class="btn btn-purple btn-action">Intentar de Nuevo</a>';
-                exit;
-            }
+    // Verificar si ya existe un libro con el mismo título y autor
+    $sqlCheck = "SELECT id FROM libros WHERE titulo = ? AND autor = ?";
+    $stmtCheck = $conn->prepare($sqlCheck);
+    $stmtCheck->bind_param("ss", $titulo, $autor);
+    $stmtCheck->execute();
+    $resultCheck = $stmtCheck->get_result();
 
-            // Verificar si ya existe un libro con el mismo título y autor
-            $sqlCheck = "SELECT libro_id FROM libros_1 WHERE titulo = ? AND autor = ?";
-            $stmtCheck = $conn->prepare($sqlCheck);
-            $stmtCheck->bind_param("ss", $titulo, $autor);
-            $stmtCheck->execute();
-            $resultCheck = $stmtCheck->get_result();
+    if ($resultCheck->num_rows > 0) {
+        echo '<div class="error-message">
+                <i class="fas fa-copy fs-2 mb-3"></i>
+                <h3>Libro Duplicado</h3>
+                <p>Ya existe un libro con el mismo título y autor en la base de datos.</p>
+              </div>';
+        echo '<a href="javascript:history.back()" class="btn btn-outline-danger btn-action">Modificar Datos</a>';
+        echo '<a href="./ABM_libro.php" class="btn btn-purple btn-action">Ver Lista de Libros</a>';
+        $stmtCheck->close();
+        $conn->close();
+        exit;
+    }
+    $stmtCheck->close();
 
-            if ($resultCheck->num_rows > 0) {
-                echo '<div class="error-message">
-                        <i class="fas fa-copy fs-2 mb-3"></i>
-                        <h3>Libro Duplicado</h3>
-                        <p>Ya existe un libro con el mismo título y autor en la base de datos.</p>
-                      </div>';
-                echo '<a href="javascript:history.back()" class="btn btn-outline-danger btn-action">Modificar Datos</a>';
-                echo '<a href="./ABM_libro.php" class="btn btn-purple btn-action">Ver Lista de Libros</a>';
-                $stmtCheck->close();
-                $conn->close();
-                exit;
-            }
-            $stmtCheck->close();
+    // Preparar la consulta SQL con prepared statement
+    $sql = "INSERT INTO libros (titulo, autor, ilustrador, editorial, clasificacion, color, resumen, imagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
 
-            // Preparar la consulta SQL con prepared statement
-            $sql = "INSERT INTO libros_1 (titulo, autor, ilustrador, editorial, clasificacion, color, observaciones, resumen, origen, imagen) VALUES (?, ?, ?, ?, ?, ?, 'NULL', ?, 'NULL', ?)";
-            
-            $stmt = $conn->prepare($sql);
-            
-            if ($stmt === false) {
-                echo '<div class="error-message">
-                        <i class="fas fa-exclamation-triangle fs-2 mb-3"></i>
-                        <h3>Error en la Consulta</h3>
-                        <p>Error al preparar la consulta: ' . $conn->error . '</p>
-                      </div>';
-                echo '<a href="./ABM_libro_añadir.html" class="btn btn-purple btn-action">Intentar de Nuevo</a>';
-                $conn->close();
-                exit;
-            }
+    if ($stmt === false) {
+        echo '<div class="error-message">
+                <i class="fas fa-exclamation-triangle fs-2 mb-3"></i>
+                <h3>Error en la Consulta</h3>
+                <p>Error al preparar la consulta: ' . $conn->error . '</p>
+              </div>';
+        echo '<a href="./ABM_libro_añadir.html" class="btn btn-purple btn-action">Intentar de Nuevo</a>';
+        $conn->close();
+        exit;
+    }
 
-            // Vincular parámetros
-            $stmt->bind_param("ssssssss", $titulo, $autor, $ilustrador, $editorial, $clasificacion, $color, $resumen, $imagen);
+    // Vincular parámetros (usar "s" para todos, incluyendo imagen binaria)
+    $stmt->bind_param("ssssssss", $titulo, $autor, $ilustrador, $editorial, $clasificacion, $color, $resumen, $imagen);
 
-            // Ejecutar la consulta
-            if ($stmt->execute()) {
-                $libro_id = $conn->insert_id;
+    // Ejecutar la consulta
+    if ($stmt->execute()) {
                 echo '<div class="success-message">
                         <i class="fas fa-check-circle fs-2 mb-3"></i>
-                        <h3>¡Libro Añadido Exitosamente!</h3>
-                        <p>El libro ha sido agregado correctamente al catálogo de la biblioteca.</p>
-                      </div>';
-                
-                // Mostrar preview del libro añadido
-                echo '<div class="book-preview">
-                        <h4 class="text-purple fw-bold mb-3">
-                            <i class="fas fa-book me-2"></i>
-                            Libro Añadido - ID: #' . $libro_id . '
-                        </h4>
-                        <div class="row align-items-center">
-                            <div class="col-md-4 text-center">
-                                <img src="' . htmlspecialchars($imagen) . '" alt="Portada" 
-                                     style="max-width: 120px; max-height: 160px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"
-                                     onerror="this.src=\'/placeholder.svg?height=160&width=120\'">
-                            </div>
+                        <h3>Libro Añadido Correctamente</h3>
+                        <div class="book-preview row align-items-center justify-content-center">
+                            <div class="col-md-4 text-center">';
+                if ($imagen) {
+                    echo '<img src="data:image/jpeg;base64,' . base64_encode($imagen) . '" alt="Portada" 
+                        style="max-width: 120px; max-height: 160px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"
+                        onerror="this.src=\'/placeholder.svg?height=160&width=120\'">';
+                } else {
+                    echo '<img src="/placeholder.svg?height=160&width=120" alt="Portada" 
+                        style="max-width: 120px; max-height: 160px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">';
+                }
+                echo    '</div>
                             <div class="col-md-8 text-start">
                                 <h5 class="fw-bold text-purple">' . htmlspecialchars($titulo) . '</h5>
                                 <p class="mb-1"><strong>Autor:</strong> ' . htmlspecialchars($autor) . '</p>
@@ -281,9 +280,6 @@
                         <i class="fas fa-clock me-2"></i>
                         Redirigiendo en <span id="countdown">5</span> segundos...
                       </div>';
-                
-                echo '<a href="./ABM_libro.php" class="btn btn-purple btn-action">Ver Lista de Libros</a>';
-                echo '<a href="./ABM_libro_añadir.html" class="btn btn-outline-success btn-action">Añadir Otro Libro</a>';
                 
                 // JavaScript para redirección automática
                 echo '<script>
