@@ -1,6 +1,6 @@
 <?php
 
-  include_once './ABM/conex.php';
+  include_once './conex.php';
   session_start();
 
 ?>
