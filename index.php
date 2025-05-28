@@ -53,16 +53,45 @@ $generos = ['Cuentos de Hadas','Fábulas con Animales','Poesía Infantil','Libro
         </div>
     </div>
 
+    <!-- Resultados generales de búsqueda -->
+    <?php if ($buscar): ?>
+        <div class="container py-4">
+            <h2 class="fs-2 fw-bold text-purple mb-3">Resultados de búsqueda para "<?= htmlspecialchars($buscar) ?>"</h2>
+            <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3">
+                <?php
+                $sqlBusqueda = "SELECT titulo, autor, imagen FROM libros WHERE titulo LIKE '%$buscar%' OR autor LIKE '%$buscar%'";
+                $resBusqueda = $conn->query($sqlBusqueda);
+                if ($resBusqueda->num_rows > 0):
+                    while ($lib = $resBusqueda->fetch_assoc()):
+                        $src = !empty($lib['imagen']) ? 'data:image/jpeg;base64,'.base64_encode($lib['imagen']) : 'https://via.placeholder.com/100x140.png?text=Libro';
+                ?>
+                    <div class="col">
+                        <div class="book-card card h-100 shadow-sm">
+                            <div class="book-cover d-flex align-items-center justify-content-center bg-purple" style="height:140px; overflow:hidden;">
+                                <img src="<?= $src ?>" alt="<?= htmlspecialchars($lib['titulo']) ?>" style="max-height:100%; max-width:100%; object-fit:cover;">
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-title fw-bold text-truncate"><?= htmlspecialchars($lib['titulo']) ?></h6>
+                                <p class="card-text small text-muted"><?= htmlspecialchars($lib['autor']) ?></p>
+                            </div>
+                        </div>
+                    </div>
+                <?php endwhile; else: ?>
+                    <p class="text-muted">No se encontraron libros que coincidan con tu búsqueda.</p>
+                <?php endif; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+
     <!-- Géneros literarios -->
     <div class="container py-5">
         <h2 class="fs-1 fw-bold text-purple mb-4">Géneros Literarios</h2>
         <div class="row g-4">
+            <!-- Aquí se muestran los géneros como antes -->
             <div class="col-md-4">
                 <a href="#" class="text-decoration-none">
                     <div class="category-card bg-pink-light rounded-4 p-4 text-center h-100">
-                        <div class="icon-wrapper mb-3">
-                            <i class="fas fa-book fs-1 text-pink"></i>
-                        </div>
+                        <div class="icon-wrapper mb-3"><i class="fas fa-book fs-1 text-pink"></i></div>
                         <h3 class="fs-4 fw-bold mb-2">Cuentos de Hadas</h3>
                         <p class="text-muted">Historias mágicas con princesas, hadas y dragones</p>
                     </div>
@@ -71,9 +100,7 @@ $generos = ['Cuentos de Hadas','Fábulas con Animales','Poesía Infantil','Libro
             <div class="col-md-4">
                 <a href="#" class="text-decoration-none">
                     <div class="category-card bg-green-light rounded-4 p-4 text-center h-100">
-                        <div class="icon-wrapper mb-3">
-                            <i class="fas fa-book fs-1 text-green"></i>
-                        </div>
+                        <div class="icon-wrapper mb-3"><i class="fas fa-book fs-1 text-green"></i></div>
                         <h3 class="fs-4 fw-bold mb-2">Fábulas con Animales</h3>
                         <p class="text-muted">Relatos con animales que enseñan valores</p>
                     </div>
@@ -82,9 +109,7 @@ $generos = ['Cuentos de Hadas','Fábulas con Animales','Poesía Infantil','Libro
             <div class="col-md-4">
                 <a href="#" class="text-decoration-none">
                     <div class="category-card bg-blue-light rounded-4 p-4 text-center h-100">
-                        <div class="icon-wrapper mb-3">
-                            <i class="fas fa-book fs-1 text-blue"></i>
-                        </div>
+                        <div class="icon-wrapper mb-3"><i class="fas fa-book fs-1 text-blue"></i></div>
                         <h3 class="fs-4 fw-bold mb-2">Poesía Infantil</h3>
                         <p class="text-muted">Versos, rimas y canciones para los más pequeños</p>
                     </div>
@@ -95,9 +120,7 @@ $generos = ['Cuentos de Hadas','Fábulas con Animales','Poesía Infantil','Libro
             <div class="col-md-6">
                 <a href="#" class="text-decoration-none">
                     <div class="category-card bg-orange-light rounded-4 p-4 text-center h-100">
-                        <div class="icon-wrapper mb-3">
-                            <i class="fas fa-book fs-1 text-orange"></i>
-                        </div>
+                        <div class="icon-wrapper mb-3"><i class="fas fa-book fs-1 text-orange"></i></div>
                         <h3 class="fs-4 fw-bold mb-2">Libros de Aventuras</h3>
                         <p class="text-muted">Historias emocionantes de exploración y descubrimiento</p>
                     </div>
@@ -106,9 +129,7 @@ $generos = ['Cuentos de Hadas','Fábulas con Animales','Poesía Infantil','Libro
             <div class="col-md-6">
                 <a href="#" class="text-decoration-none">
                     <div class="category-card bg-teal-light rounded-4 p-4 text-center h-100">
-                        <div class="icon-wrapper mb-3">
-                            <i class="fas fa-book fs-1 text-teal"></i>
-                        </div>
+                        <div class="icon-wrapper mb-3"><i class="fas fa-book fs-1 text-teal"></i></div>
                         <h3 class="fs-4 fw-bold mb-2">Historias de la Naturaleza</h3>
                         <p class="text-muted">Cuentos sobre plantas, animales y el mundo natural</p>
                     </div>
@@ -120,9 +141,8 @@ $generos = ['Cuentos de Hadas','Fábulas con Animales','Poesía Infantil','Libro
     <!-- Secciones por género dinámicas -->
     <?php foreach ($generos as $cat): ?>
         <?php
-        // Verificar si hay libros para esta categoría
         $countRes = $conn->query("SELECT COUNT(*) AS cnt FROM libros WHERE clasificacion='" . $conn->real_escape_string($cat) . "' $where");
-        $count    = $countRes->fetch_assoc()['cnt'];
+        $count = $countRes->fetch_assoc()['cnt'];
         if ($count > 0):
         ?>
             <div class="container py-4">
@@ -132,12 +152,10 @@ $generos = ['Cuentos de Hadas','Fábulas con Animales','Poesía Infantil','Libro
                 </div>
                 <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3">
                     <?php
-                    $sql = "SELECT titulo, autor, imagen FROM libros WHERE clasificacion='" . $conn->real_escape_string($cat) . "' $where LIMIT 8";
+                    $sql = "SELECT titulo, autor, imagen FROM libros WHERE clasificacion='" . $conn->real_escape_string($cat) . "' $where";
                     $res = $conn->query($sql);
                     while ($lib = $res->fetch_assoc()):
-                        $src = !empty($lib['imagen'])
-                             ? 'data:image/jpeg;base64,'.base64_encode($lib['imagen'])
-                             : 'https://via.placeholder.com/100x140.png?text=Libro';
+                        $src = !empty($lib['imagen']) ? 'data:image/jpeg;base64,'.base64_encode($lib['imagen']) : 'https://via.placeholder.com/100x140.png?text=Libro';
                     ?>
                         <div class="col">
                             <div class="book-card card h-100 shadow-sm">
@@ -147,7 +165,7 @@ $generos = ['Cuentos de Hadas','Fábulas con Animales','Poesía Infantil','Libro
                                 <div class="card-body">
                                     <h6 class="card-title fw-bold text-truncate"><?= htmlspecialchars($lib['titulo']) ?></h6>
                                     <p class="card-text small text-muted"><?= htmlspecialchars($lib['autor']) ?></p>
-                                <//div>
+                                </div>
                             </div>
                         </div>
                     <?php endwhile; ?>
