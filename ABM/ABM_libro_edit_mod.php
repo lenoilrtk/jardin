@@ -1,5 +1,9 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,45 +17,45 @@
         .header-gradient {
             background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
         }
-        
+
         .text-purple {
             color: #8b5cf6 !important;
         }
-        
+
         .text-purple-dark {
             color: #6d28d9 !important;
         }
-        
+
         .text-purple-light {
             color: #c4b5fd !important;
         }
-        
+
         .bg-purple-dark {
             background-color: #6d28d9 !important;
         }
-        
+
         .btn-purple {
             background-color: #8b5cf6;
             border-color: #8b5cf6;
             color: white;
         }
-        
+
         .btn-purple:hover {
             background-color: #7c3aed;
             border-color: #7c3aed;
             color: white;
         }
-        
+
         .result-container {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
             padding: 40px;
             margin: 50px auto;
             max-width: 700px;
             text-align: center;
         }
-        
+
         .success-message {
             background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
             border-radius: 15px;
@@ -59,7 +63,7 @@
             margin-bottom: 30px;
             color: #065f46;
         }
-        
+
         .error-message {
             background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
             border-radius: 15px;
@@ -67,14 +71,14 @@
             margin-bottom: 30px;
             color: #dc2626;
         }
-        
+
         .book-preview {
             background: linear-gradient(135deg, #f3e8ff 0%, #e0e7ff 100%);
             border-radius: 15px;
             padding: 20px;
             margin: 20px 0;
         }
-        
+
         .changes-summary {
             background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
             border-radius: 15px;
@@ -82,13 +86,13 @@
             margin: 20px 0;
             text-align: left;
         }
-        
+
         .countdown {
             font-size: 1.2em;
             font-weight: bold;
             color: #8b5cf6;
         }
-        
+
         .btn-action {
             padding: 12px 30px;
             border-radius: 25px;
@@ -98,14 +102,14 @@
             transition: all 0.3s ease;
             margin: 10px;
         }
-        
+
         .btn-action:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
-        
+
         .change-item {
-            background: rgba(255,255,255,0.7);
+            background: rgba(255, 255, 255, 0.7);
             border-radius: 8px;
             padding: 10px;
             margin: 5px 0;
@@ -113,6 +117,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Encabezado -->
     <header class="header-gradient py-3 shadow">
@@ -145,16 +150,16 @@
     <div class="container">
         <div class="result-container">
             <?php
-             include "./conex.php";
+            include "./conex.php";
 
-    // Procesar imagen si se subió
-    $imagen = null;
-    if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-        $ruta_temporal = $_FILES['imagen']['tmp_name'];
-        $imagen = file_get_contents($ruta_temporal);
-    } else {
-        $imagen = null;
-    }
+            // Procesar imagen si se subió
+            $imagen = null;
+            if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+                $ruta_temporal = $_FILES['imagen']['tmp_name'];
+                $imagen = file_get_contents($ruta_temporal);
+            } else {
+                $imagen = null;
+            }
             // Verificar que la petición sea POST
             if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
                 echo '<div class="error-message">
@@ -178,7 +183,8 @@
             }
 
             // Función para limpiar y validar datos
-            function limpiarDato($dato) {
+            function limpiarDato($dato)
+            {
                 return htmlspecialchars(strip_tags(trim($dato)));
             }
 
@@ -202,7 +208,7 @@
             $clasificacion = limpiarDato($_POST['clasificacion'] ?? '');
             $color = limpiarDato($_POST['color'] ?? '');
             $resumen = limpiarDato($_POST['resumen'] ?? '');
-        
+
 
             // Validaciones
             $errores = [];
@@ -289,9 +295,9 @@
 
             // Preparar la consulta SQL con prepared statement
             $sql = "UPDATE libros SET titulo = ?, autor = ?, ilustrador = ?, editorial = ?, clasificacion = ?, color = ?, observaciones = 'NULL', resumen = ?, origen = 'NULL', imagen = ? WHERE id = ?";
-            
+
             $stmt = $conn->prepare($sql);
-            
+
             if ($stmt === false) {
                 echo '<div class="error-message">
                         <i class="fas fa-exclamation-triangle fs-2 mb-3"></i>
@@ -314,17 +320,29 @@
                             <h3>¡Libro Actualizado Exitosamente!</h3>
                             <p>Los cambios han sido guardados correctamente en el catálogo de la biblioteca.</p>
                           </div>';
-                    
+
                     // Detectar y mostrar cambios realizados
                     $cambios = [];
-                    if ($datosActuales['titulo'] !== $titulo) $cambios[] = ['campo' => 'Título', 'anterior' => $datosActuales['titulo'], 'nuevo' => $titulo];
-                    if ($datosActuales['autor'] !== $autor) $cambios[] = ['campo' => 'Autor', 'anterior' => $datosActuales['autor'], 'nuevo' => $autor];
-                    if ($datosActuales['ilustrador'] !== $ilustrador) $cambios[] = ['campo' => 'Ilustrador', 'anterior' => $datosActuales['ilustrador'], 'nuevo' => $ilustrador];
-                    if ($datosActuales['editorial'] !== $editorial) $cambios[] = ['campo' => 'Editorial', 'anterior' => $datosActuales['editorial'], 'nuevo' => $editorial];
-                    if ($datosActuales['clasificacion'] !== $clasificacion) $cambios[] = ['campo' => 'Clasificación', 'anterior' => $datosActuales['clasificacion'], 'nuevo' => $clasificacion];
-                    if ($datosActuales['color'] !== $color) $cambios[] = ['campo' => 'Color', 'anterior' => $datosActuales['color'], 'nuevo' => $color];
-                    if ($datosActuales['resumen'] !== $resumen) $cambios[] = ['campo' => 'Resumen', 'anterior' => $datosActuales['resumen'], 'nuevo' => $resumen];
-                    if ($datosActuales['imagen'] !== $imagen) $cambios[] = ['campo' => 'Imagen', 'anterior' => 'URL anterior', 'nuevo' => 'URL actualizada'];
+                    if ($datosActuales['titulo'] != $titulo) $cambios[] = ['campo' => 'Título', 'anterior' => $datosActuales['titulo'], 'nuevo' => $titulo];
+                    if ($datosActuales['autor'] != $autor) $cambios[] = ['campo' => 'Autor', 'anterior' => $datosActuales['autor'], 'nuevo' => $autor];
+                    if ($datosActuales['ilustrador'] != $ilustrador) $cambios[] = ['campo' => 'Ilustrador', 'anterior' => $datosActuales['ilustrador'], 'nuevo' => $ilustrador];
+                    if ($datosActuales['editorial'] != $editorial) $cambios[] = ['campo' => 'Editorial', 'anterior' => $datosActuales['editorial'], 'nuevo' => $editorial];
+                    if ($datosActuales['clasificacion'] != $clasificacion) $cambios[] = ['campo' => 'Clasificación', 'anterior' => $datosActuales['clasificacion'], 'nuevo' => $clasificacion];
+                    if ($datosActuales['color'] != $color) $cambios[] = ['campo' => 'Color', 'anterior' => $datosActuales['color'], 'nuevo' => $color];
+                    if ($datosActuales['resumen'] != $resumen) $cambios[] = ['campo' => 'Resumen', 'anterior' => $datosActuales['resumen'], 'nuevo' => $resumen];
+                    if ($datosActuales['imagen'] != $imagen) $cambios[] = ['campo' => 'Imagen', 'anterior' => 'URL anterior', 'nuevo' => 'URL actualizada'];
+
+                    // Registrar cambios en la tabla de movimientos
+                    $query = "INSERT INTO `movimientos` (`usuario_id`, `tabla_modif`, `campos_modif`, `valores_modif`, `fecha`) VALUES (?, 'libros', ?, ?, NOW())";
+                    $campos_modif = implode(',', array_column($cambios, 'campo'));
+                    $valores_modif = implode(',', array_map(function ($c) {
+                        return $c['anterior'] . ' -> ' . $c['nuevo'];
+                    }, $cambios));
+                    $stmtMov = $conn->prepare($query);
+                    $usuario_id = $_SESSION['usuario_id']; // Asumimos que el usuario que realiza la acción es el ID 1
+                    $stmtMov->bind_param("iss", $usuario_id, $campos_modif, $valores_modif);
+                    $stmtMov->execute();
+                    $stmtMov->close();
 
                     if (!empty($cambios)) {
                         echo '<div class="changes-summary">
@@ -341,7 +359,7 @@
                         }
                         echo '</div>';
                     }
-                    
+
                     // Mostrar preview del libro actualizado
                     echo '<div class="book-preview">
                             <h4 class="text-purple fw-bold mb-3">
@@ -364,15 +382,15 @@
                                 </div>
                             </div>
                           </div>';
-                    
+
                     echo '<div class="countdown mb-3">
                             <i class="fas fa-clock me-2"></i>
                             Redirigiendo en <span id="countdown">5</span> segundos...
                           </div>';
-                    
+
                     echo '<a href="./ABM_libro.php" class="btn btn-purple btn-action">Ver Lista de Libros</a>';
                     echo '<a href="./ABM_libro_edit.php?id=' . $libro_id . '" class="btn btn-outline-primary btn-action">Editar de Nuevo</a>';
-                    
+
                     // JavaScript para redirección automática
                     echo '<script>
                             let timeLeft = 5;
@@ -388,7 +406,6 @@
                                 }
                             }, 1000);
                           </script>';
-                    
                 } else {
                     echo '<div class="error-message">
                             <i class="fas fa-info-circle fs-2 mb-3"></i>
@@ -435,4 +452,5 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
