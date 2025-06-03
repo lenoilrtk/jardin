@@ -1,5 +1,9 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,29 +17,45 @@
         .header-gradient {
             background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
         }
-        .text-purple { color: #8b5cf6 !important; }
-        .text-purple-dark { color: #6d28d9 !important; }
-        .text-purple-light { color: #c4b5fd !important; }
-        .bg-purple-dark { background-color: #6d28d9 !important; }
+
+        .text-purple {
+            color: #8b5cf6 !important;
+        }
+
+        .text-purple-dark {
+            color: #6d28d9 !important;
+        }
+
+        .text-purple-light {
+            color: #c4b5fd !important;
+        }
+
+        .bg-purple-dark {
+            background-color: #6d28d9 !important;
+        }
+
         .btn-purple {
             background-color: #8b5cf6;
             border-color: #8b5cf6;
             color: white;
         }
+
         .btn-purple:hover {
             background-color: #7c3aed;
             border-color: #7c3aed;
             color: white;
         }
+
         .result-container {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
             padding: 40px;
             margin: 50px auto;
             max-width: 600px;
             text-align: center;
         }
+
         .success-message {
             background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
             border-radius: 15px;
@@ -43,6 +63,7 @@
             margin-bottom: 30px;
             color: #065f46;
         }
+
         .error-message {
             background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
             border-radius: 15px;
@@ -50,17 +71,20 @@
             margin-bottom: 30px;
             color: #dc2626;
         }
+
         .book-preview {
             background: linear-gradient(135deg, #f3e8ff 0%, #e0e7ff 100%);
             border-radius: 15px;
             padding: 20px;
             margin: 20px 0;
         }
+
         .countdown {
             font-size: 1.2em;
             font-weight: bold;
             color: #8b5cf6;
         }
+
         .btn-action {
             padding: 12px 30px;
             border-radius: 25px;
@@ -70,12 +94,14 @@
             transition: all 0.3s ease;
             margin: 10px;
         }
+
         .btn-action:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
     </style>
 </head>
+
 <body>
     <!-- Encabezado -->
     <header class="header-gradient py-3 shadow">
@@ -120,7 +146,8 @@
             }
 
             // Función para limpiar datos
-            function limpiarDato($dato) {
+            function limpiarDato($dato)
+            {
                 return htmlspecialchars(strip_tags(trim($dato)));
             }
 
@@ -150,7 +177,7 @@
             $autor        = limpiarDato($_POST['autor'] ?? '');
             $ilustrador   = limpiarDato($_POST['ilustrador'] ?? '');
             $editorial    = limpiarDato($_POST['editorial'] ?? '');
-            $clasificacion= limpiarDato($_POST['clasificacion'] ?? '');
+            $clasificacion = limpiarDato($_POST['clasificacion'] ?? '');
             $color        = limpiarDato($_POST['color'] ?? '');
             $resumen      = limpiarDato($_POST['resumen'] ?? '');
 
@@ -197,29 +224,44 @@
             $ins = $conn->prepare("INSERT INTO libros
                 (titulo,autor,ilustrador,editorial,clasificacion,color,resumen,imagen)
                 VALUES (?,?,?,?,?,?,?,?)");
-            $ins->bind_param("ssssssss",
-                $titulo, $autor, $ilustrador,
-                $editorial, $clasificacion,
-                $color, $resumen, $imagen
+            $ins->bind_param(
+                "ssssssss",
+                $titulo,
+                $autor,
+                $ilustrador,
+                $editorial,
+                $clasificacion,
+                $color,
+                $resumen,
+                $imagen
             );
 
             if ($ins->execute()) {
+                // Registrar movimiento
+                $usuario_id = $_SESSION['usuario_id'] ?? 0; // ID del usuario logueado
+                $tabla_modif = 'libros';
+                $campos_modif = 'titulo,autor,ilustrador,editorial,clasificacion,color,resumen';
+                $valores_modif = "nulo,$titulo,nulo,$autor,nulo,$ilustrador,nulo,$editorial,nulo,$clasificacion,nulo,$color,nulo,$resumen";
+                $mov = $conn->prepare("INSERT INTO movimientos(usuario_id,tabla_modif,campos_modif,valores_modif,fecha) VALUES (?,?,?,?,NOW())");
+                $mov->bind_param("isss", $usuario_id, $tabla_modif, $campos_modif, $valores_modif);
+                $mov->execute();
+                $mov->close();
                 echo '<div class="success-message"><i class="fas fa-check-circle fs-2 mb-3"></i>
                       <h3>Libro Añadido Correctamente</h3>
                       <div class="book-preview row align-items-center justify-content-center">
                         <div class="col-md-4 text-center">';
                 // Mostrar imagen desde BD o imagen por defecto
                 echo '<img src="data:image/jpeg;base64,' . base64_encode($imagen) . '"'
-                   . ' style="max-width:120px; max-height:160px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1);"'
-                   . ' alt="Portada">';
+                    . ' style="max-width:120px; max-height:160px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1);"'
+                    . ' alt="Portada">';
 
                 echo '</div><div class="col-md-8 text-start">
-                        <h5 class="fw-bold text-purple">'.htmlspecialchars($titulo).'</h5>
-                        <p><strong>Autor:</strong> '.htmlspecialchars($autor).'</p>
-                        <p><strong>Ilustrador:</strong> '.htmlspecialchars($ilustrador).'</p>
-                        <p><strong>Editorial:</strong> '.htmlspecialchars($editorial).'</p>
-                        <p><strong>Clasificación:</strong> '.htmlspecialchars($clasificacion).'</p>
-                        <p><strong>Color:</strong> '.htmlspecialchars($color).'</p>
+                        <h5 class="fw-bold text-purple">' . htmlspecialchars($titulo) . '</h5>
+                        <p><strong>Autor:</strong> ' . htmlspecialchars($autor) . '</p>
+                        <p><strong>Ilustrador:</strong> ' . htmlspecialchars($ilustrador) . '</p>
+                        <p><strong>Editorial:</strong> ' . htmlspecialchars($editorial) . '</p>
+                        <p><strong>Clasificación:</strong> ' . htmlspecialchars($clasificacion) . '</p>
+                        <p><strong>Color:</strong> ' . htmlspecialchars($color) . '</p>
                       </div></div></div>';
 
                 echo '<div class="countdown mb-3"><i class="fas fa-clock me-2"></i>
@@ -233,7 +275,7 @@
                       </script>';
             } else {
                 echo '<div class="error-message"><i class="fas fa-exclamation-triangle fs-2 mb-3"></i>
-                      <h3>Error al Añadir</h3><p>'.$ins->error.'</p></div>';
+                      <h3>Error al Añadir</h3><p>' . $ins->error . '</p></div>';
             }
 
             $ins->close();
@@ -261,4 +303,5 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

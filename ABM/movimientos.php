@@ -231,11 +231,22 @@ session_start();
         function displayArrayValues($array)
         {
           $stringToDisplay = "";
-          for ($i = 0; $i < count($array); $i++) {
-            if ($i % 2 == 0) {
-              $stringToDisplay = $stringToDisplay . "<p>" . $array[$i];
-            } else {
-              $stringToDisplay = $stringToDisplay . " -> " . $array[$i] . "</p>";
+          if ($array[0] == "nulo") {
+            $stringToDisplay = "";
+            foreach ($array as $value) {
+              if ($value == "nulo") {
+              } else {
+                $stringToDisplay = $stringToDisplay . "<p>" . $value . "</p>";
+              }
+            }
+            return $stringToDisplay;
+          } else {
+            for ($i = 0; $i < count($array); $i++) {
+              if ($i % 2 == 0) {
+                $stringToDisplay = $stringToDisplay . "<p>" . $array[$i];
+              } else {
+                $stringToDisplay = $stringToDisplay . " -> " . $array[$i] . "</p>";
+              }
             }
           }
           return $stringToDisplay;
