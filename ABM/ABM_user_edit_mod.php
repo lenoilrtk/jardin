@@ -289,6 +289,15 @@
                     if ($datosActuales['usuario_id'] !== $usuario_id) $cambios[] = ['campo' => 'usuario_id', 'anterior' => $datosActuales['usuario_id'], 'nuevo' => $usuario_id];
                     if ($datosActuales['contraseña'] !== $contraseña) $cambios[] = ['campo' => 'contraseña', 'anterior' => $datosActuales['contraseña'], 'nuevo' => $contraseña];
                     if ($datosActuales['nivel'] !== $nivel) $cambios[] = ['campo' => 'nivel', 'anterior' => $datosActuales['nivel'], 'nuevo' => $nivel];
+                    $query = "INSERT INTO `movimientos` (`usuario_id`, `tabla_modif`, `campos_modif`, `valores_modif`, `fecha`) VALUES (?, 'usuarios', ?, ?, NOW())";
+                    $campos_modif = implode(',', array_column($cambios, 'campo'));
+                    $valores_modif = implode(',', array_map(function ($c) {
+                        return $c['anterior'] . ' -> ' . $c['nuevo'];
+                    }, $cambios));
+                    $stmtMov = $conn->prepare($query);
+                    $stmtMov->bind_param("iss", $usuario_id, $campos_modif, $valores_modif);
+                    $stmtMov->execute();
+                    $stmtMov->close();
                     if (!empty($cambios)) {
                         echo '<div class="changes-summary">
                                 <h4 class="text-purple fw-bold mb-3">

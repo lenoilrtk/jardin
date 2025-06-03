@@ -36,6 +36,7 @@ $niveles = [
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,66 +52,81 @@ $niveles = [
         .header-gradient {
             background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
         }
+
         .text-purple {
             color: #8b5cf6 !important;
         }
+
         .text-purple-dark {
             color: #6d28d9 !important;
         }
+
         .text-purple-light {
             color: #c4b5fd !important;
         }
+
         .bg-purple-dark {
             background-color: #6d28d9 !important;
         }
+
         .bg-purple-light {
             background-color: #f3e8ff !important;
         }
+
         .btn-purple {
             background-color: #8b5cf6;
             border-color: #8b5cf6;
             color: white;
         }
+
         .btn-purple:hover {
             background-color: #7c3aed;
             border-color: #7c3aed;
             color: white;
         }
+
         .search-icon {
             left: 15px;
             top: 50%;
             transform: translateY(-50%);
         }
+
         .card-book {
             border: none;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s;
         }
+
         .card-book:hover {
             transform: translateY(-5px);
         }
+
         .card-img-top {
             border-top-left-radius: 12px;
             border-top-right-radius: 12px;
             object-fit: cover;
             height: 200px;
         }
+
         .action-section {
             background: linear-gradient(135deg, #f3e8ff 0%, #e0e7ff 100%);
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 30px;
         }
+
         .modal-backdrop-custom {
-            background-color: rgba(0,0,0,0.6);
+            background-color: rgba(0, 0, 0, 0.6);
         }
+
         body {
             background-color: #f8f9fa;
             font-family: Arial, sans-serif;
         }
     </style>
 </head>
+
 <body>
     <!-- Encabezado -->
     <header class="header-gradient py-3 shadow">
@@ -199,7 +215,7 @@ $niveles = [
     <div class="container-fluid pb-5">
         <div class="row gx-4 gy-4 px-4">
             <?php if ($result && $result->num_rows > 0): ?>
-                <?php while ($user = $result->fetch_assoc()): 
+                <?php while ($user = $result->fetch_assoc()):
                     $uid       = $user['usuario_id'];
                     $nombre    = htmlspecialchars($user['nombre']);
                     $apellido  = htmlspecialchars($user['apellido']);
@@ -209,10 +225,18 @@ $niveles = [
 
                     $nivelText = $niveles[$nivelVal] ?? 'Desconocido';
                     switch ($nivelVal) {
-                        case 1: $nivelBadge = 'badge bg-green text-white';  break;
-                        case 2: $nivelBadge = 'badge bg-blue text-white';   break;
-                        case 3: $nivelBadge = 'badge bg-orange text-white'; break;
-                        default: $nivelBadge = 'badge bg-secondary text-white'; break;
+                        case 1:
+                            $nivelBadge = 'badge bg-green text-white';
+                            break;
+                        case 2:
+                            $nivelBadge = 'badge bg-blue text-white';
+                            break;
+                        case 3:
+                            $nivelBadge = 'badge bg-orange text-white';
+                            break;
+                        default:
+                            $nivelBadge = 'badge bg-secondary text-white';
+                            break;
                     }
                 ?>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -228,10 +252,10 @@ $niveles = [
                                 <div class="text-center mb-3">
                                     <span class="<?php echo $nivelBadge; ?>"><?php echo $nivelText; ?></span>
                                 </div>
-                                <button 
-                                    type="button" 
-                                    class="btn btn-outline-primary mt-auto" 
-                                    data-bs-toggle="modal" 
+                                <button
+                                    type="button"
+                                    class="btn btn-outline-primary mt-auto"
+                                    data-bs-toggle="modal"
                                     data-bs-target="#modalUser<?php echo $uid; ?>">
                                     Ver detalles
                                 </button>
@@ -240,75 +264,75 @@ $niveles = [
                     </div>
 
                     <!-- Modal para usuario <?php echo $nombre . ' ' . $apellido; ?> -->
-                    <div 
-                        class="modal fade" 
-                        id="modalUser<?php echo $uid; ?>" 
-                        tabindex="-1" 
-                        aria-labelledby="modalLabel<?php echo $uid; ?>" 
+                    <div
+                        class="modal fade"
+                        id="modalUser<?php echo $uid; ?>"
+                        tabindex="-1"
+                        aria-labelledby="modalLabel<?php echo $uid; ?>"
                         aria-hidden="true">
-                      <div class="modal-dialog modal-lg modal-dialog-centered">
-                        <div class="modal-content">
-                          <div class="modal-header bg-purple-dark text-white">
-                            <h5 class="modal-title" id="modalLabel<?php echo $uid; ?>">
-                                Información de "<?php echo $nombre . ' ' . $apellido; ?>"
-                            </h5>
-                            <button 
-                                type="button" 
-                                class="btn-close btn-close-white" 
-                                data-bs-dismiss="modal" 
-                                aria-label="Cerrar">
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <div class="row">
-                              <div class="col-md-4 text-center mb-3 mb-md-0">
-                                <i class="fas fa-user-circle fa-7x text-purple-light"></i>
-                              </div>
-                              <div class="col-md-8">
-                                <ul class="list-group list-group-flush">
-                                  <li class="list-group-item">
-                                    <strong>ID:</strong> <?php echo $uid; ?>
-                                  </li>
-                                  <li class="list-group-item">
-                                    <strong>Nombre:</strong> <?php echo $nombre; ?>
-                                  </li>
-                                  <li class="list-group-item">
-                                    <strong>Apellido:</strong> <?php echo $apellido; ?>
-                                  </li>
-                                  <li class="list-group-item">
-                                    <strong>Correo:</strong> <?php echo $correo; ?>
-                                  </li>
-                                  <li class="list-group-item">
-                                    <strong>Documento:</strong> <?php echo $documento; ?>
-                                  </li>
-                                  <li class="list-group-item">
-                                    <strong>Nivel:</strong> <span class="<?php echo $nivelBadge; ?>"><?php echo $nivelText; ?></span>
-                                  </li>
-                                </ul>
-                              </div>
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-purple-dark text-white">
+                                    <h5 class="modal-title" id="modalLabel<?php echo $uid; ?>">
+                                        Información de "<?php echo $nombre . ' ' . $apellido; ?>"
+                                    </h5>
+                                    <button
+                                        type="button"
+                                        class="btn-close btn-close-white"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Cerrar">
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-4 text-center mb-3 mb-md-0">
+                                            <i class="fas fa-user-circle fa-7x text-purple-light"></i>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">
+                                                    <strong>ID:</strong> <?php echo $uid; ?>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <strong>Nombre:</strong> <?php echo $nombre; ?>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <strong>Apellido:</strong> <?php echo $apellido; ?>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <strong>Correo:</strong> <?php echo $correo; ?>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <strong>Documento:</strong> <?php echo $documento; ?>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <strong>Nivel:</strong> <span class="<?php echo $nivelBadge; ?>"><?php echo $nivelText; ?></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a
+                                        href="./ABM_user_edit.php?id=<?php echo $uid; ?>"
+                                        class="btn btn-outline-primary">
+                                        <i class="fas fa-edit me-1"></i>Editar
+                                    </a>
+                                    <a
+                                        href="eliminarUsuario.php?id=<?php echo $uid; ?>"
+                                        class="btn btn-outline-danger"
+                                        onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
+                                        <i class="fas fa-trash me-1"></i>Borrar
+                                    </a>
+                                    <button
+                                        type="button"
+                                        class="btn btn-secondary"
+                                        data-bs-dismiss="modal">
+                                        Cerrar
+                                    </button>
+                                </div>
                             </div>
-                          </div>
-                          <div class="modal-footer">
-                            <a 
-                                href="editarUsuario.php?id=<?php echo $uid; ?>" 
-                                class="btn btn-outline-primary">
-                                <i class="fas fa-edit me-1"></i>Editar
-                            </a>
-                            <a 
-                                href="eliminarUsuario.php?id=<?php echo $uid; ?>" 
-                                class="btn btn-outline-danger" 
-                                onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
-                                <i class="fas fa-trash me-1"></i>Borrar
-                            </a>
-                            <button 
-                                type="button" 
-                                class="btn btn-secondary" 
-                                data-bs-dismiss="modal">
-                                Cerrar
-                            </button>
-                          </div>
                         </div>
-                      </div>
                     </div>
                 <?php endwhile; ?>
             <?php else: ?>
@@ -339,4 +363,5 @@ $niveles = [
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
