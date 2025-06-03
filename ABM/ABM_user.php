@@ -168,7 +168,7 @@ $niveles = [
                     </h3>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <a href="index.php" class="btn btn-outline-secondary rounded-pill me-2">
+                    <a href="ABM_index.php" class="btn btn-outline-secondary rounded-pill me-2">
                         <i class="fas fa-arrow-left me-2"></i>Volver
                     </a>
                     <a href="agregarUsuario.php" class="btn btn-purple rounded-pill">
