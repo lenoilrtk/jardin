@@ -91,12 +91,12 @@ body {
     background-color: var(--teal-light);
 }
 
-/* Barra de búsqueda */
 .search-icon {
-    left: 15px;
-    top: 50%;
+    top: 50% !important;
+    left: 1rem;               /* Ajusta según tu padding-left */
     transform: translateY(-50%);
 }
+
 
 /* Botones */
 .btn-purple {
