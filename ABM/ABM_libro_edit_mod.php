@@ -336,7 +336,7 @@ session_start();
                     $query = "INSERT INTO `movimientos` (`usuario_id`, `tabla_modif`, `campos_modif`, `valores_modif`, `fecha`) VALUES (?, 'libros', ?, ?, NOW())";
                     $campos_modif = implode(',', array_column($cambios, 'campo'));
                     $valores_modif = implode(',', array_map(function ($c) {
-                        return $c['anterior'] . ' -> ' . $c['nuevo'];
+                        return $c['anterior'] . ',' . $c['nuevo'];
                     }, $cambios));
                     $stmtMov = $conn->prepare($query);
                     $usuario_id = $_SESSION['usuario_id']; // Asumimos que el usuario que realiza la acción es el ID 1
