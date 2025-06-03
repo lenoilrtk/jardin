@@ -319,7 +319,7 @@ $niveles = [
                                         <i class="fas fa-edit me-1"></i>Editar
                                     </a>
                                     <a
-                                        href="eliminarUsuario.php?id=<?php echo $uid; ?>"
+                                        href="ABM_user_del.php?id=<?php echo $uid; ?>"
                                         class="btn btn-outline-danger"
                                         onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
                                         <i class="fas fa-trash me-1"></i>Borrar
