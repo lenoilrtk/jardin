@@ -168,7 +168,7 @@ $niveles = [
                     </h3>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <a href="index.php" class="btn btn-outline-secondary rounded-pill me-2">
+                    <a href="ABM_index.php" class="btn btn-outline-secondary rounded-pill me-2">
                         <i class="fas fa-arrow-left me-2"></i>Volver
                     </a>
                     <a href="agregarUsuario.php" class="btn btn-purple rounded-pill">
@@ -226,16 +226,16 @@ $niveles = [
                     $nivelText = $niveles[$nivelVal] ?? 'Desconocido';
                     switch ($nivelVal) {
                         case 1:
-                            $nivelBadge = 'badge bg-green text-white';
+                            $nivelBadge = 'badge bg-green text-dark';
                             break;
                         case 2:
-                            $nivelBadge = 'badge bg-blue text-white';
+                            $nivelBadge = 'badge bg-blue text-dark';
                             break;
                         case 3:
-                            $nivelBadge = 'badge bg-orange text-white';
+                            $nivelBadge = 'badge bg-orange text-dark';
                             break;
                         default:
-                            $nivelBadge = 'badge bg-secondary text-white';
+                            $nivelBadge = 'badge bg-secondary text-dark';
                             break;
                     }
                 ?>
@@ -319,7 +319,7 @@ $niveles = [
                                         <i class="fas fa-edit me-1"></i>Editar
                                     </a>
                                     <a
-                                        href="eliminarUsuario.php?id=<?php echo $uid; ?>"
+                                        href="ABM_user_del.php?id=<?php echo $uid; ?>"
                                         class="btn btn-outline-danger"
                                         onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
                                         <i class="fas fa-trash me-1"></i>Borrar
