@@ -321,7 +321,6 @@ $niveles = [
         </div>
     </div>
 
-    <!-- Pie de página -->
     <footer class="bg-purple-dark text-white py-4">
         <div class="container">
             <div class="row align-items-center">
