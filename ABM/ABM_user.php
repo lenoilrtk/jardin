@@ -226,16 +226,16 @@ $niveles = [
                     $nivelText = $niveles[$nivelVal] ?? 'Desconocido';
                     switch ($nivelVal) {
                         case 1:
-                            $nivelBadge = 'badge bg-green text-white';
+                            $nivelBadge = 'badge bg-green text-dark';
                             break;
                         case 2:
-                            $nivelBadge = 'badge bg-blue text-white';
+                            $nivelBadge = 'badge bg-blue text-dark';
                             break;
                         case 3:
-                            $nivelBadge = 'badge bg-orange text-white';
+                            $nivelBadge = 'badge bg-orange text-dark';
                             break;
                         default:
-                            $nivelBadge = 'badge bg-secondary text-white';
+                            $nivelBadge = 'badge bg-secondary text-dark';
                             break;
                     }
                 ?>
