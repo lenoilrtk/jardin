@@ -1,136 +1,197 @@
 <?php
 
-  include_once './conex.php';
-  session_start();
+include_once './conex.php';
+session_start();
 
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+
   <!-- Bootstrap CSS -->
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
     rel="stylesheet"
     integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
-    crossorigin="anonymous"
-  />
+    crossorigin="anonymous" />
 
   <title>Biblioteca Virtual</title>
-  
+
   <style>
-    /* Estilos generales */
+    /* ...existing code... */
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
       margin: 0;
       padding: 0;
+      background: #f8f9fa;
+      min-height: 100vh;
     }
 
-    /* Barra de navegación */
+    /* Navbar */
     .navbar {
-      background-color: #f5a8d2;
-      color: white;
-      padding: 10px 20px;
+      background: linear-gradient(90deg, #f5a8d2 60%, #f7c6e2 100%);
+      color: #fff;
+      padding: 14px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: 0 2px 8px rgba(245, 168, 210, 0.15);
     }
 
     .navbar .nav-icon {
-      font-size: 1.5rem;
+      font-size: 2rem;
       cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .navbar .nav-icon:hover {
+      color: #fffbe7;
     }
 
     .navbar span {
       margin-left: 1rem;
       font-weight: bold;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
     }
 
     .navbar a,
     .navbar a:visited {
-      color: white;
+      color: #fff;
       text-decoration: none;
       margin: 0 10px;
+      transition: color 0.2s;
     }
+
     .navbar a:hover {
+      color: #fffbe7;
       text-decoration: underline;
     }
 
     /* Footer */
     .footer {
-      background-color: #f5a8d29f;
-      color: white;
+      background: linear-gradient(90deg, #f5a8d29f 60%, #f7c6e29f 100%);
+      color: #fff;
       text-align: center;
-      padding: 10px 0;
+      padding: 12px 0;
       position: fixed;
       bottom: 0;
       width: 100%;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      box-shadow: 0 -2px 8px rgba(245, 168, 210, 0.08);
     }
 
-    /* Contenido */
+    /* Content */
     .content {
-      padding: 20px;
+      padding: 32px 16px 80px 16px;
       text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
     h1 {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: bold;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      color: #d15fa6;
+      letter-spacing: 2px;
     }
 
-    /* Sección de “Términos y condiciones” */
-    .terms-container {
-      margin-top: 1rem;
+    /* Table Styles */
+    .table {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(245, 168, 210, 0.10);
       margin-bottom: 2rem;
     }
-    .terms-container p {
-      margin: 0;
+
+    .table th,
+    .table td {
+      vertical-align: middle !important;
+      text-align: center;
       font-size: 1rem;
-      color: #555;
-    }
-    .terms-container a {
-      color: #f5a8d2;
-      text-decoration: underline;
-      font-weight: bold;
-    }
-    .terms-container a:hover {
-      color: #f5a8d2;
+      padding: 12px 8px;
     }
 
-    /* Sección de géneros literarios */
-    .genre-section {
-      margin-top: 3rem;
-      margin-bottom: 3rem;
+    .table thead th {
+      background: #f5a8d2;
+      color: #fff;
+      border-bottom: 2px solid #e6e6e6;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
     }
 
-    /* Ajusta el tamaño de las imágenes (placeholders) si lo deseas */
-    .genre-image {
-      max-width: 100%;
-      height: auto;
-      border: 1px solid #aaa;
+    .table tbody tr {
+      transition: background 0.2s;
     }
 
-    /* Tarjetas de Libros Populares */
-    .card-img-top {
-      max-height: 180px;
-      object-fit: cover;
+    .table tbody tr:hover {
+      background: #f7e6f2;
     }
 
-    /* Ajustes en móvil para el carousel y tarjetas */
+    .table-bordered {
+      border: 1.5px solid #f5a8d2;
+    }
+
+    .table-group-divider>tr>td,
+    .table-group-divider>tr>th {
+      border-top: 1.5px solid #f5a8d2;
+    }
+
+    /* Button */
+    .btn-outline-primary {
+      border-color: #f5a8d2;
+      color: #d15fa6;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+      margin-bottom: 10px;
+    }
+
+    .btn-outline-primary:hover {
+      background: #f5a8d2;
+      color: #fff;
+      border-color: #f5a8d2;
+    }
+
+    /* Responsive */
     @media (max-width: 768px) {
-      .card-img-top {
-        max-height: 150px;
+      .content {
+        padding: 16px 4px 80px 4px;
       }
 
-    
-    }
-    img {
-        max-height: 100px;
+      .table th,
+      .table td {
+        font-size: 0.95rem;
+        padding: 8px 4px;
       }
+
+      h1 {
+        font-size: 1.4rem;
+      }
+
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 10px;
+      }
+    }
+
+    /* Misc */
+    img {
+      max-height: 100px;
+    }
+
+    p {
+      margin-bottom: 0.5rem;
+    }
+
+    /* ...existing code... */
   </style>
 </head>
 
@@ -148,81 +209,83 @@
   <div class="content">
     <h1>Log</h1>
 
-        <button type="button" class="btn btn-outline-primary">Volver</button>
-        <br><br>
+    <button type="button" class="btn btn-outline-primary">Volver</button>
+    <br><br>
     <table class="table table-bordered border-black">
-        <thead>
-          <tr>
-            <th scope="col">ID Movimiento</th>
-            <th scope="col">ID Usuario</th>
-            <th scope="col">Tabla Modificada</th>
-            <th scope="col">Campos Modificados</th>
-            <th scope="col">Valores Modificados</th>
-            <th scope="col">Fecha</th>
-          </tr>
-        </thead>
-        <tbody class="table-group-divider">
-          <?php
-            // Consulta para obtener los movimientos
-            $sql = "SELECT * FROM movimientos";
-            $result = $conn->query($sql);
+      <thead>
+        <tr>
+          <th scope="col">ID Movimiento</th>
+          <th scope="col">ID Usuario</th>
+          <th scope="col">Tabla Modificada</th>
+          <th scope="col">Campos Modificados</th>
+          <th scope="col">Valores Modificados</th>
+          <th scope="col">Fecha</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <?php
+        // Consulta para obtener los movimientos
+        $sql = "SELECT * FROM movimientos";
+        $result = $conn->query($sql);
 
-            function displayArrayValues($array) {
-              $stringToDisplay = "";
-              for ($i = 0; $i < count($array); $i++){
-                if ($i % 2 == 0) {
-                  $stringToDisplay = $stringToDisplay."<p>" . $array[$i];
-                } else {
-                  $stringToDisplay = $stringToDisplay." -> " . $array[$i] . "</p>";
-                }
-              }
-              return $stringToDisplay;
-            }
-            function displayArray($array) {
-              $stringToDisplay = "";
-              foreach ($array as $value) {
-                $stringToDisplay = $stringToDisplay . "<p>" . $value . "</p>";
-              }
-              return $stringToDisplay;
-            }
-
-            // Verificar si hay resultados
-            if ($result->num_rows > 0) {
-              // Mostrar los datos de cada fila
-              while ($row = $result->fetch_assoc()) {
-                $campos_modif = explode(",", $row["campos_modif"]);
-                $valores_modif = explode(",", $row["valores_modif"]);
-                echo "<tr>";
-                echo "<th scope='row' class='align-middle'>" . $row["id_movimiento"] . "</th>";
-                echo "<td class='align-middle'><p>" . $row["usuario_id"] . "</p></td>";
-                echo "<td class='align-middle'><p>" . $row["tabla_modif"] . "</p></td>";
-                echo "<td class='align-middle'>" . displayArray($campos_modif) . "</td>";
-                echo "<td class='align-middle'>" . displayArrayValues($valores_modif) . "</td>";
-                echo "<td class='align-middle'><p>" . $row["fecha"] . "</p></td>";
-                echo "</tr>";
-              }
+        function displayArrayValues($array)
+        {
+          $stringToDisplay = "";
+          for ($i = 0; $i < count($array); $i++) {
+            if ($i % 2 == 0) {
+              $stringToDisplay = $stringToDisplay . "<p>" . $array[$i];
             } else {
-              echo "<tr><td colspan='6'>No se encontraron movimientos.</td></tr>";
+              $stringToDisplay = $stringToDisplay . " -> " . $array[$i] . "</p>";
             }
+          }
+          return $stringToDisplay;
+        }
+        function displayArray($array)
+        {
+          $stringToDisplay = "";
+          foreach ($array as $value) {
+            $stringToDisplay = $stringToDisplay . "<p>" . $value . "</p>";
+          }
+          return $stringToDisplay;
+        }
 
-            // Cerrar la conexión
-            $conn->close();
+        // Verificar si hay resultados
+        if ($result->num_rows > 0) {
+          // Mostrar los datos de cada fila
+          while ($row = $result->fetch_assoc()) {
+            $campos_modif = explode(",", $row["campos_modif"]);
+            $valores_modif = explode(",", $row["valores_modif"]);
+            echo "<tr>";
+            echo "<th scope='row' class='align-middle'>" . $row["id_movimiento"] . "</th>";
+            echo "<td class='align-middle'><p>" . $row["usuario_id"] . "</p></td>";
+            echo "<td class='align-middle'><p>" . $row["tabla_modif"] . "</p></td>";
+            echo "<td class='align-middle'>" . displayArray($campos_modif) . "</td>";
+            echo "<td class='align-middle'>" . displayArrayValues($valores_modif) . "</td>";
+            echo "<td class='align-middle'><p>" . $row["fecha"] . "</p></td>";
+            echo "</tr>";
+          }
+        } else {
+          echo "<tr><td colspan='6'>No se encontraron movimientos.</td></tr>";
+        }
 
-          ?>
-        </tbody>
-      </table>
-    
+        // Cerrar la conexión
+        $conn->close();
 
-  <!-- FOOTER -->
-  <div class="footer">
+        ?>
+      </tbody>
+    </table>
 
-  </div>
 
-  <!-- Bootstrap JS -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
-    crossorigin="anonymous"
-  ></script>
+    <!-- FOOTER -->
+    <div class="footer">
+
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+      crossorigin="anonymous"></script>
 </body>
+
 </html>
