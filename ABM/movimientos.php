@@ -1,8 +1,61 @@
 <?php
-
 include_once './conex.php';
 session_start();
 
+function mostrarCambiosHorizontal($camposStr, $valoresStr)
+{
+  $campos = explode(",", $camposStr);
+  $valores = explode(",", $valoresStr);
+  $esAgregado = true;
+
+  // Verifica si todos los valores anteriores son "nulo"
+  for ($i = 0; $i < count($valores); $i += 2) {
+    if (trim(strtolower($valores[$i])) !== "nulo") {
+      $esAgregado = false;
+      break;
+    }
+  }
+
+  // Comienza tabla interna
+  $output = "<div style='overflow-x:auto;'>
+    <table class='table table-sm table-bordered' style='min-width:800px;'>
+      <thead class='table-light'>
+        <tr>
+          <th colspan='" . ($esAgregado ? 2 : 3) . "' class='text-" . ($esAgregado ? "success" : "primary") . "'>
+            " . ($esAgregado ? "Registro agregado" : "Registro editado") . "
+          </th>
+        </tr>
+        <tr>
+          <th>Campo</th>" .
+    (!$esAgregado ? "<th>Valor anterior</th>" : "") .
+    "<th>Valor nuevo</th>
+        </tr>
+      </thead>
+      <tbody>";
+
+  for ($i = 0, $j = 0; $i < count($campos); $i++, $j += 2) {
+    $campo = htmlspecialchars($campos[$i]);
+    $valorAnt = isset($valores[$j]) ? trim($valores[$j]) : '-';
+    $valorNuevo = isset($valores[$j + 1]) ? trim($valores[$j + 1]) : '-';
+
+    $campoHTML = "<td style='word-break: break-word;'>$campo</td>";
+    $valorAntHTML = "<td style='word-break: break-word; color:#6c757d;'>"
+      . ($valorAnt === 'nulo' ? '—' : htmlspecialchars($valorAnt)) . "</td>";
+    $valorNuevoHTML = "<td style='word-break: break-word; color:#d15fa6;'>"
+      . htmlspecialchars($valorNuevo) . "</td>";
+
+    $output .= "<tr>" . $campoHTML .
+      (!$esAgregado ? $valorAntHTML : "") .
+      $valorNuevoHTML . "</tr>";
+  }
+
+  $output .= "</tbody></table></div>";
+  return $output;
+}
+
+
+$sql = "SELECT * FROM movimientos";
+$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -11,30 +64,23 @@ session_start();
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Bootstrap CSS -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
-    crossorigin="anonymous" />
-
   <title>Biblioteca Virtual</title>
 
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous" />
+
   <style>
-    /* ...existing code... */
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f8f9fa;
       margin: 0;
       padding: 0;
-      background: #f8f9fa;
       min-height: 100vh;
     }
 
-    /* Navbar */
     .navbar {
       background: linear-gradient(90deg, #f5a8d2 60%, #f7c6e2 100%);
-      color: #fff;
       padding: 14px 32px;
       display: flex;
       justify-content: space-between;
@@ -42,37 +88,28 @@ session_start();
       box-shadow: 0 2px 8px rgba(245, 168, 210, 0.15);
     }
 
-    .navbar .nav-icon {
+    .nav-icon {
       font-size: 2rem;
       cursor: pointer;
-      transition: color 0.2s;
-    }
-
-    .navbar .nav-icon:hover {
-      color: #fffbe7;
     }
 
     .navbar span {
       margin-left: 1rem;
       font-weight: bold;
       font-size: 1.2rem;
-      letter-spacing: 1px;
     }
 
-    .navbar a,
-    .navbar a:visited {
+    .navbar a {
       color: #fff;
       text-decoration: none;
       margin: 0 10px;
-      transition: color 0.2s;
     }
 
     .navbar a:hover {
-      color: #fffbe7;
       text-decoration: underline;
+      color: #fffbe7;
     }
 
-    /* Footer */
     .footer {
       background: linear-gradient(90deg, #f5a8d29f 60%, #f7c6e29f 100%);
       color: #fff;
@@ -82,16 +119,14 @@ session_start();
       bottom: 0;
       width: 100%;
       font-size: 1rem;
-      letter-spacing: 1px;
       box-shadow: 0 -2px 8px rgba(245, 168, 210, 0.08);
     }
 
-    /* Content */
     .content {
-      padding: 32px 16px 80px 16px;
+      padding: 0;
+      max-width: 100%;
+      margin: 0 0;
       text-align: center;
-      max-width: 900px;
-      margin: 0 auto;
     }
 
     h1 {
@@ -99,36 +134,19 @@ session_start();
       font-weight: bold;
       margin-bottom: 1.5rem;
       color: #d15fa6;
-      letter-spacing: 2px;
     }
 
-    /* Table Styles */
     .table {
       background: #fff;
       border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 2px 12px rgba(245, 168, 210, 0.10);
+      box-shadow: 0 2px 12px rgba(245, 168, 210, 0.1);
       margin-bottom: 2rem;
-    }
-
-    .table th,
-    .table td {
-      vertical-align: middle !important;
-      text-align: center;
-      font-size: 1rem;
-      padding: 12px 8px;
     }
 
     .table thead th {
       background: #f5a8d2;
       color: #fff;
-      border-bottom: 2px solid #e6e6e6;
       font-size: 1.1rem;
-      letter-spacing: 1px;
-    }
-
-    .table tbody tr {
-      transition: background 0.2s;
     }
 
     .table tbody tr:hover {
@@ -144,25 +162,21 @@ session_start();
       border-top: 1.5px solid #f5a8d2;
     }
 
-    /* Button */
     .btn-outline-primary {
       border-color: #f5a8d2;
       color: #d15fa6;
       font-weight: 500;
-      transition: background 0.2s, color 0.2s;
       margin-bottom: 10px;
     }
 
     .btn-outline-primary:hover {
       background: #f5a8d2;
       color: #fff;
-      border-color: #f5a8d2;
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
       .content {
-        padding: 16px 4px 80px 4px;
+        padding: 0;
       }
 
       .table th,
@@ -178,11 +192,15 @@ session_start();
       .navbar {
         flex-direction: column;
         align-items: flex-start;
-        padding: 10px 10px;
+        padding: 10px;
       }
     }
 
-    /* Misc */
+    td div {
+      word-break: break-word;
+      font-size: 0.95rem;
+    }
+
     img {
       max-height: 100px;
     }
@@ -191,112 +209,192 @@ session_start();
       margin-bottom: 0.5rem;
     }
 
-    /* ...existing code... */
+    /* Estilo base de tabla */
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+      margin-bottom: 2rem;
+      background: white;
+      width: 100%;
+    }
+
+    .table-custom {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1.5px solid #f5a8d2;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .table-custom thead th {
+      position: sticky;
+      top: 0;
+      background-color: #f5a8d2;
+      color: #fff;
+      text-align: center;
+      padding: 12px;
+      cursor: pointer;
+      user-select: none;
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+
+    .table-custom tbody td {
+      text-align: center;
+      padding: 12px;
+      vertical-align: middle;
+      border-top: 1px solid #f3d1e4;
+      font-size: 0.95rem;
+      color: #333;
+      max-width: 180px;
+      word-wrap: break-word;
+      overflow-y: auto;
+    }
+
+    .table-custom tbody tr:hover {
+      background-color: #fcebf5;
+    }
+
+    /* Scroll interno para celdas largas */
+    .table-custom td p {
+      margin: 0.25rem 0;
+      max-height: 100px;
+      overflow-y: auto;
+      word-break: break-word;
+    }
+
+    .table td,
+    .table th {
+      vertical-align: middle;
+      word-break: break-word;
+      white-space: normal;
+    }
+
+    .table td[colspan="2"] {
+      min-width: 600px;
+      max-width: 1000px;
+      word-break: break-word;
+      white-space: normal;
+      padding: 0 !important;
+    }
+
+    @media (min-width: 992px) {
+      .table td[colspan="2"] {
+        width: 60vw;
+      }
+    }
+
+    .table td[colspan="2"] table {
+      width: 100%;
+    }
+
+    .table td[colspan="2"] th,
+    .table td[colspan="2"] td {
+      font-size: 0.9rem;
+      padding: 6px 8px;
+      vertical-align: top;
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
   <div class="navbar">
     <div class="nav-icon">☰</div>
-    <div>
-      <span>¡Hola, Lionel!</span>
-    </div>
+    <div><span>¡Hola, Lionel!</span></div>
   </div>
 
-  <!-- CONTENIDO PRINCIPAL -->
   <div class="content">
     <h1>Log</h1>
 
     <button type="button" class="btn btn-outline-primary">Volver</button>
     <br><br>
-    <table class="table table-bordered border-black">
-      <thead>
-        <tr>
-          <th scope="col">ID Movimiento</th>
-          <th scope="col">ID Usuario</th>
-          <th scope="col">Tabla Modificada</th>
-          <th scope="col">Campos Modificados</th>
-          <th scope="col">Valores Modificados</th>
-          <th scope="col">Fecha</th>
-        </tr>
-      </thead>
-      <tbody class="table-group-divider">
-        <?php
-        // Consulta para obtener los movimientos
-        $sql = "SELECT * FROM movimientos";
-        $result = $conn->query($sql);
 
-        function displayArrayValues($array)
-        {
-          $stringToDisplay = "";
-          if ($array[0] == "nulo") {
-            $stringToDisplay = "";
-            foreach ($array as $value) {
-              if ($value == "nulo") {
-              } else {
-                $stringToDisplay = $stringToDisplay . "<p>" . $value . "</p>";
-              }
-            }
-            return $stringToDisplay;
-          } else {
-            for ($i = 0; $i < count($array); $i++) {
-              if ($i % 2 == 0) {
-                $stringToDisplay = $stringToDisplay . "<p>" . $array[$i];
-              } else {
-                $stringToDisplay = $stringToDisplay . " -> " . $array[$i] . "</p>";
-              }
-            }
-          }
-          return $stringToDisplay;
-        }
-        function displayArray($array)
-        {
-          $stringToDisplay = "";
-          foreach ($array as $value) {
-            $stringToDisplay = $stringToDisplay . "<p>" . $value . "</p>";
-          }
-          return $stringToDisplay;
-        }
-
-        // Verificar si hay resultados
-        if ($result->num_rows > 0) {
-          // Mostrar los datos de cada fila
-          while ($row = $result->fetch_assoc()) {
-            $campos_modif = explode(",", $row["campos_modif"]);
-            $valores_modif = explode(",", $row["valores_modif"]);
-            echo "<tr>";
-            echo "<th scope='row' class='align-middle'>" . $row["id_movimiento"] . "</th>";
-            echo "<td class='align-middle'><p>" . $row["usuario_id"] . "</p></td>";
-            echo "<td class='align-middle'><p>" . $row["tabla_modif"] . "</p></td>";
-            echo "<td class='align-middle'>" . displayArray($campos_modif) . "</td>";
-            echo "<td class='align-middle'>" . displayArrayValues($valores_modif) . "</td>";
-            echo "<td class='align-middle'><p>" . $row["fecha"] . "</p></td>";
-            echo "</tr>";
-          }
-        } else {
-          echo "<tr><td colspan='6'>No se encontraron movimientos.</td></tr>";
-        }
-
-        // Cerrar la conexión
-        $conn->close();
-
-        ?>
-      </tbody>
-    </table>
-
-
-    <!-- FOOTER -->
-    <div class="footer">
-
+    <div class="table-wrapper">
+      <table class="table-custom">
+        <thead>
+          <tr>
+            <th style="width: 5%;">ID</th>
+            <th style="width: 10%;">Usuario</th>
+            <th style="width: 15%;">Tabla</th>
+            <th colspan="2" style="width: 50%;">Cambios Realizados</th>
+            <th style="width: 20%;">Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if ($result->num_rows > 0): ?>
+            <?php while ($row = $result->fetch_assoc()): ?>
+              <tr>
+                <td><?= $row["id_movimiento"] ?></td>
+                <td>
+                  <p><?= $row["usuario_id"] ?></p>
+                </td>
+                <td>
+                  <p><?= $row["tabla_modif"] ?></p>
+                </td>
+                <td class='align-middle' colspan='2'><?= mostrarCambiosHorizontal($row["campos_modif"], $row["valores_modif"]) ?></td>
+                <td>
+                  <p><?= $row["fecha"] ?></p>
+                </td>
+              </tr>
+            <?php endwhile; ?>
+          <?php else: ?>
+            <tr>
+              <td colspan="6">No se encontraron movimientos.</td>
+            </tr>
+          <?php endif; ?>
+          <?php $conn->close(); ?>
+        </tbody>
+      </table>
     </div>
+  </div>
 
-    <!-- Bootstrap JS -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
-      crossorigin="anonymous"></script>
+  <div class="footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+    crossorigin="anonymous"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const table = document.querySelector('.table-custom');
+      const headers = table.querySelectorAll('th');
+      let sortDirection = 1; // 1: asc, -1: desc
+      let lastIndex = -1;
+
+      headers.forEach((header, index) => {
+        header.addEventListener('click', () => {
+          const tbody = table.querySelector('tbody');
+          const rows = Array.from(tbody.querySelectorAll('tr'));
+
+          if (lastIndex === index) {
+            sortDirection *= -1; // reverse order
+          } else {
+            sortDirection = 1;
+          }
+
+          lastIndex = index;
+
+          rows.sort((a, b) => {
+            const cellA = a.children[index].innerText.trim().toLowerCase();
+            const cellB = b.children[index].innerText.trim().toLowerCase();
+
+            // Comparar números si ambos valores son numéricos
+            const isNumeric = !isNaN(cellA) && !isNaN(cellB);
+            if (isNumeric) {
+              return sortDirection * (parseFloat(cellA) - parseFloat(cellB));
+            }
+
+            return sortDirection * cellA.localeCompare(cellB);
+          });
+
+          // Reordenar las filas
+          rows.forEach(row => tbody.appendChild(row));
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>
