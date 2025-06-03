@@ -1,9 +1,45 @@
+<?php
+session_start();
+include './conex.php';
+
+// ----- Procesar parámetros de búsqueda y filtro -----
+$buscar    = $_GET['buscar'] ?? '';
+$nivelFiltro = $_GET['nivel'] ?? '';
+
+// Construir condiciones dinámicas
+$condiciones = [];
+if (!empty($buscar)) {
+    $b = $conn->real_escape_string($buscar);
+    // Buscar por nombre, apellido, correo o documento
+    $condiciones[] = "(nombre LIKE '%$b%' OR apellido LIKE '%$b%' OR correo LIKE '%$b%' OR documento LIKE '%$b%')";
+}
+if (!empty($nivelFiltro)) {
+    $n = (int)$nivelFiltro;
+    $condiciones[] = "nivel = $n";
+}
+
+$condSQL = '';
+if (count($condiciones) > 0) {
+    $condSQL = 'WHERE ' . implode(' AND ', $condiciones);
+}
+
+// Obtener usuarios según búsqueda/filtro
+$sql    = "SELECT * FROM usuarios $condSQL ORDER BY usuario_id DESC";
+$result = $conn->query($sql);
+
+// Para el select de niveles (roles)
+$niveles = [
+    1 => 'Usuario',
+    2 => 'Bibliotecario',
+    3 => 'Directivo'
+];
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Libros - Biblioteca Mágica</title>
+    <title>Gestión de Usuarios</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -67,8 +103,11 @@
         .modal-backdrop-custom {
             background-color: rgba(0,0,0,0.6);
         }
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
     </style>
-    <?php include "./conex.php"; ?>
 </head>
 <body>
     <!-- Encabezado -->
@@ -77,16 +116,16 @@
             <div class="row align-items-center">
                 <div class="col-md-4 mb-3 mb-md-0 d-flex align-items-center">
                     <div class="bg-white p-2 rounded-circle me-3">
-                        <i class="fas fa-book fs-4 text-purple"></i>
+                        <i class="fas fa-users fs-4 text-purple"></i>
                     </div>
-                    <h1 class="fs-2 fw-bold text-white mb-0">Gestión de Libros</h1>
+                    <h1 class="fs-2 fw-bold text-white mb-0">Gestión de Usuarios</h1>
                 </div>
                 <div class="col-md-5 mb-3 mb-md-0">
-                    <!-- El buscador ahora está en la sección de filtros -->
+                    <!-- El buscador está en la sección de filtros -->
                 </div>
                 <div class="col-md-3 text-md-end">
                     <span class="text-white fw-bold">
-                        <i class="fas fa-user-circle me-2"></i>¡Hola, Lionel!
+                        <i class="fas fa-user-circle me-2"></i>¡Hola, Administrador!
                     </span>
                 </div>
             </div>
@@ -96,8 +135,8 @@
     <!-- Banner principal -->
     <div class="bg-warning py-4">
         <div class="container text-center">
-            <h2 class="display-5 fw-bold text-purple mb-2">Administración de Biblioteca</h2>
-            <p class="fs-5 text-purple-dark">Gestiona el catálogo de libros de forma eficiente</p>
+            <h2 class="display-5 fw-bold text-purple mb-2">Administración de Usuarios</h2>
+            <p class="fs-5 text-purple-dark">Gestiona los usuarios de forma eficiente</p>
         </div>
     </div>
 
@@ -111,86 +150,41 @@
                     </h3>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <a href="./ABM_index.php" class="btn btn-outline-secondary rounded-pill me-2">
+                    <a href="index.php" class="btn btn-outline-secondary rounded-pill me-2">
                         <i class="fas fa-arrow-left me-2"></i>Volver
                     </a>
-                    <a href="./ABM_libro_añadir.html" class="btn btn-purple rounded-pill">
-                        <i class="fas fa-plus me-2"></i>Añadir Libro
+                    <a href="agregarUsuario.php" class="btn btn-purple rounded-pill">
+                        <i class="fas fa-plus me-2"></i>Añadir Usuario
                     </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <?php
-    // -------------------------------
-    // Lógica de búsqueda y filtros
-    // -------------------------------
-    $busqueda = $_GET['buscar'] ?? '';
-    $color = $_GET['color'] ?? '';
-    $genero = $_GET['genero'] ?? '';
-
-    $condiciones = [];
-    if (!empty($busqueda)) {
-        $busq = mysqli_real_escape_string($conn, $busqueda);
-        $condiciones[] = "titulo LIKE '%$busq%'";
-    }
-    if (!empty($color)) {
-        $col = mysqli_real_escape_string($conn, $color);
-        $condiciones[] = "color = '$col'";
-    }
-    if (!empty($genero)) {
-        $gen = mysqli_real_escape_string($conn, $genero);
-        $condiciones[] = "clasificacion = '$gen'";
-    }
-    $condSQL = '';
-    if (count($condiciones) > 0) {
-        $condSQL = "WHERE " . implode(' AND ', $condiciones);
-    }
-
-    // Obtener libros filtrados
-    $sql = "SELECT * FROM libros $condSQL ORDER BY id DESC";
-    $result = $conn->query($sql);
-
-    // Obtener géneros y colores únicos para los select
-    $generosRes = $conn->query("SELECT DISTINCT clasificacion FROM libros WHERE clasificacion <> ''");
-    $coloresRes = $conn->query("SELECT DISTINCT color FROM libros WHERE color <> ''");
-    ?>
-
     <!-- Sección de filtros -->
     <div class="container">
         <div class="action-section">
-            <form method="GET" action="ABM_libro.php" class="row g-3 align-items-center">
-                <div class="col-md-4 position-relative">
+            <form method="GET" action="ABM_user.php" class="row g-3 align-items-center">
+                <div class="col-md-5 position-relative">
                     <i class="fas fa-search position-absolute search-icon text-muted"></i>
                     <input 
                         type="text" 
                         name="buscar" 
                         class="form-control rounded-pill py-2 ps-5" 
-                        placeholder="Buscar por título..." 
-                        value="<?php echo htmlspecialchars($busqueda); ?>">
+                        placeholder="Buscar por nombre, apellido, correo o documento..." 
+                        value="<?php echo htmlspecialchars($buscar); ?>">
                 </div>
-                <div class="col-md-3">
-                    <select name="color" class="form-select rounded-pill">
-                        <option value="">Todos los colores</option>
-                        <?php while ($fila = $coloresRes->fetch_assoc()): ?>
-                            <option value="<?php echo $fila['color']; ?>" <?php echo ($color === $fila['color']) ? 'selected' : ''; ?>>
-                                <?php echo $fila['color']; ?>
+                <div class="col-md-4">
+                    <select name="nivel" class="form-select rounded-pill">
+                        <option value="">Todos los niveles</option>
+                        <?php foreach ($niveles as $key => $label): ?>
+                            <option value="<?php echo $key; ?>" <?php echo ($nivelFiltro == $key) ? 'selected' : ''; ?>>
+                                <?php echo $label; ?>
                             </option>
-                        <?php endwhile; ?>
+                        <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-md-3">
-                    <select name="genero" class="form-select rounded-pill">
-                        <option value="">Todos los géneros</option>
-                        <?php while ($fila = $generosRes->fetch_assoc()): ?>
-                            <option value="<?php echo $fila['clasificacion']; ?>" <?php echo ($genero === $fila['clasificacion']) ? 'selected' : ''; ?>>
-                                <?php echo $fila['clasificacion']; ?>
-                            </option>
-                        <?php endwhile; ?>
-                    </select>
-                </div>
-                <div class="col-md-2 text-md-end">
+                <div class="col-md-3 text-md-end">
                     <button type="submit" class="btn btn-purple rounded-pill px-4">
                         <i class="fas fa-filter me-2"></i>Filtrar
                     </button>
@@ -199,60 +193,62 @@
         </div>
     </div>
 
-    <!-- Tarjetas de libros -->
+    <!-- Tarjetas de usuarios -->
     <div class="container-fluid pb-5">
         <div class="row gx-4 gy-4 px-4">
             <?php if ($result && $result->num_rows > 0): ?>
-                <?php while ($row = $result->fetch_assoc()): ?>
-                    <?php
-                    $id = $row['id'];
-                    $titulo = htmlspecialchars($row['titulo']);
-                    $autor = htmlspecialchars($row['autor']);
-                    $ilustrador = htmlspecialchars($row['ilustrador']);
-                    $editorial = htmlspecialchars($row['editorial']);
-                    $clasificacion = htmlspecialchars($row['clasificacion']);
-                    $colorPortada = htmlspecialchars($row['color']);
-                    $base64img = base64_encode($row['imagen']);
-                    ?>
+                <?php while ($user = $result->fetch_assoc()): 
+                    $uid       = $user['usuario_id'];
+                    $nombre    = htmlspecialchars($user['nombre']);
+                    $apellido  = htmlspecialchars($user['apellido']);
+                    $correo    = htmlspecialchars($user['correo']);
+                    $nivelVal  = (int)$user['nivel'];
+                    $documento = htmlspecialchars($user['documento']);
+
+                    $nivelText = $niveles[$nivelVal] ?? 'Desconocido';
+                    switch ($nivelVal) {
+                        case 1: $nivelBadge = 'badge bg-green text-white';  break;
+                        case 2: $nivelBadge = 'badge bg-blue text-white';   break;
+                        case 3: $nivelBadge = 'badge bg-orange text-white'; break;
+                        default: $nivelBadge = 'badge bg-secondary text-white'; break;
+                    }
+                ?>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="card card-book h-100">
-                            <img 
-                                src="data:image/jpeg;base64,<?= $base64img; ?>" 
-                                class="card-img-top" 
-                                alt="Portada de <?= $titulo; ?>">
                             <div class="card-body d-flex flex-column">
-                                <h5 class="card-title text-purple mb-2 text-truncate" title="<?= $titulo; ?>">
-                                    <?= $titulo; ?>
+                                <div class="text-center mb-3">
+                                    <i class="fas fa-user-circle fa-6x text-purple-light"></i>
+                                </div>
+                                <h5 class="card-title text-purple mb-1 text-center">
+                                    <?php echo $nombre . ' ' . $apellido; ?>
                                 </h5>
-                                <p class="card-text mb-1">
-                                    <strong>Género:</strong> <?= $clasificacion; ?>
-                                </p>
-                                <p class="card-text mb-3">
-                                    <strong>Color:</strong> <span class="badge bg-secondary"><?= $colorPortada; ?></span>
-                                </p>
+                                <p class="card-text text-muted mb-2 text-center"><?php echo $correo; ?></p>
+                                <div class="text-center mb-3">
+                                    <span class="<?php echo $nivelBadge; ?>"><?php echo $nivelText; ?></span>
+                                </div>
                                 <button 
                                     type="button" 
                                     class="btn btn-outline-primary mt-auto" 
                                     data-bs-toggle="modal" 
-                                    data-bs-target="#modalLibro<?= $id; ?>">
+                                    data-bs-target="#modalUser<?php echo $uid; ?>">
                                     Ver detalles
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Modal para libro <?= $titulo; ?> -->
+                    <!-- Modal para usuario <?php echo $nombre . ' ' . $apellido; ?> -->
                     <div 
                         class="modal fade" 
-                        id="modalLibro<?= $id; ?>" 
+                        id="modalUser<?php echo $uid; ?>" 
                         tabindex="-1" 
-                        aria-labelledby="modalLabel<?= $id; ?>" 
+                        aria-labelledby="modalLabel<?php echo $uid; ?>" 
                         aria-hidden="true">
                       <div class="modal-dialog modal-lg modal-dialog-centered">
                         <div class="modal-content">
                           <div class="modal-header bg-purple-dark text-white">
-                            <h5 class="modal-title" id="modalLabel<?= $id; ?>">
-                                Información de "<?= $titulo; ?>"
+                            <h5 class="modal-title" id="modalLabel<?php echo $uid; ?>">
+                                Información de "<?php echo $nombre . ' ' . $apellido; ?>"
                             </h5>
                             <button 
                                 type="button" 
@@ -264,33 +260,27 @@
                           <div class="modal-body">
                             <div class="row">
                               <div class="col-md-4 text-center mb-3 mb-md-0">
-                                <img 
-                                    src="data:image/jpeg;base64,<?= $base64img; ?>" 
-                                    class="img-fluid rounded" 
-                                    alt="Portada de <?= $titulo; ?>">
+                                <i class="fas fa-user-circle fa-7x text-purple-light"></i>
                               </div>
                               <div class="col-md-8">
                                 <ul class="list-group list-group-flush">
                                   <li class="list-group-item">
-                                    <strong>ID:</strong> <?= $id; ?>
+                                    <strong>ID:</strong> <?php echo $uid; ?>
                                   </li>
                                   <li class="list-group-item">
-                                    <strong>Título:</strong> <?= $titulo; ?>
+                                    <strong>Nombre:</strong> <?php echo $nombre; ?>
                                   </li>
                                   <li class="list-group-item">
-                                    <strong>Autor:</strong> <?= $autor; ?>
+                                    <strong>Apellido:</strong> <?php echo $apellido; ?>
                                   </li>
                                   <li class="list-group-item">
-                                    <strong>Ilustrador:</strong> <?= $ilustrador; ?>
+                                    <strong>Correo:</strong> <?php echo $correo; ?>
                                   </li>
                                   <li class="list-group-item">
-                                    <strong>Editorial:</strong> <?= $editorial; ?>
+                                    <strong>Documento:</strong> <?php echo $documento; ?>
                                   </li>
                                   <li class="list-group-item">
-                                    <strong>Género:</strong> <?= $clasificacion; ?>
-                                  </li>
-                                  <li class="list-group-item">
-                                    <strong>Color:</strong> <span class="badge bg-secondary"><?= $colorPortada; ?></span>
+                                    <strong>Nivel:</strong> <span class="<?php echo $nivelBadge; ?>"><?php echo $nivelText; ?></span>
                                   </li>
                                 </ul>
                               </div>
@@ -298,14 +288,14 @@
                           </div>
                           <div class="modal-footer">
                             <a 
-                                href="./ABM_libro_edit.php?id=<?= $id; ?>" 
+                                href="editarUsuario.php?id=<?php echo $uid; ?>" 
                                 class="btn btn-outline-primary">
                                 <i class="fas fa-edit me-1"></i>Editar
                             </a>
                             <a 
-                                href="./ABM_libro_del.php?id=<?= $id; ?>" 
+                                href="eliminarUsuario.php?id=<?php echo $uid; ?>" 
                                 class="btn btn-outline-danger" 
-                                onclick="return confirm('¿Estás seguro de eliminar este libro?')">
+                                onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
                                 <i class="fas fa-trash me-1"></i>Borrar
                             </a>
                             <button 
@@ -322,7 +312,7 @@
             <?php else: ?>
                 <div class="col-12">
                     <div class="alert alert-secondary text-center" role="alert">
-                        No se encontraron libros.
+                        No se encontraron usuarios.
                     </div>
                 </div>
             <?php endif; ?>
@@ -334,8 +324,8 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6 mb-3 mb-md-0">
-                    <h3 class="fs-4 fw-bold">Biblioteca Mágica - Gestión</h3>
-                    <p class="text-purple-light mb-0">Jardín de Infantes "Pequeños Exploradores"</p>
+                    <h3 class="fs-4 fw-bold">Sistema de Usuarios - Gestión</h3>
+                    <p class="text-purple-light mb-0">Administración interna de la plataforma</p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <a href="#" class="btn btn-outline-light me-2">Soporte Técnico</a>
