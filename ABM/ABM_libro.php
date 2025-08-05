@@ -539,10 +539,6 @@
                         <i class="fas fa-home"></i>
                         Inicio
                     </a>
-                    <a href="#stats" class="nav-item">
-                        <i class="fas fa-chart-bar"></i>
-                        Estadísticas
-                    </a>
                     <div class="user-dropdown">
                         <button class="user-btn" onclick="toggleDropdown()">
                             <i class="fas fa-user-shield"></i>
@@ -799,8 +795,7 @@
                                 class="btn-outline-teal" 
                                 style="border-color: #e53e3e; color: #e53e3e;"
                                 onmouseover="this.style.background='#e53e3e'; this.style.color='white';"
-                                onmouseout="this.style.background='transparent'; this.style.color='#e53e3e';"
-                                onclick="return confirm('¿Estás seguro de eliminar este libro?')">
+                                onmouseout="this.style.background='transparent'; this.style.color='#e53e3e';">
                                 <i class="fas fa-trash"></i>
                                 Borrar
                             </a>
