@@ -34,6 +34,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ";
             if ($conn->query($insertSql)) {
                 $success = 'Usuario agregado correctamente.';
+                // Registrar el movimiento en la tabla movimientos
+                $usuario_id = $_SESSION['usuario_id']; // Asumimos que el usuario que realiza la acción es el ID del usuario logueado
+                $campos_modif = 'nombre,apellido,correo,contraseña,nivel,documento';
+                $valores_modif = "nulo,$nombre,nulo,$apellido,nulo,$correo,nulo,$password,nulo,$nivel,nulo,$documento";
+                $query = "INSERT INTO movimientos (usuario_id, tabla_modif, campos_modif, valores_modif, fecha)
+                          VALUES (?, 'usuarios', ?, ?, NOW())";
+                $stmtMov = $conn->prepare($query);
+                $stmtMov->bind_param("iss", $usuario_id, $campos_modif, $valores_modif);
+                $stmtMov->execute();
+                $stmtMov->close();
                 // Redirigir de vuelta al listado tras 2 segundos
                 header("refresh:2; url=ABM_user.php");
             } else {
@@ -45,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -60,33 +71,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .header-gradient {
             background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
         }
+
         .text-purple {
             color: #8b5cf6 !important;
         }
+
         .text-purple-dark {
             color: #6d28d9 !important;
         }
+
         .btn-purple {
             background-color: #8b5cf6;
             border-color: #8b5cf6;
             color: white;
         }
+
         .btn-purple:hover {
             background-color: #7c3aed;
             border-color: #7c3aed;
             color: white;
         }
+
         body {
             background-color: #f8f9fa;
             font-family: Arial, sans-serif;
         }
+
         .form-card {
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header class="header-gradient py-3 mb-4 shadow-sm">
@@ -171,9 +189,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <label for="nivel" class="form-label fw-medium">Nivel de Usuario</label>
                             <select id="nivel" name="nivel" class="form-select" required>
                                 <option value="">Selecciona un nivel</option>
-                                <option value="1" <?= (isset($_POST['nivel']) && $_POST['nivel']=='1') ? 'selected' : '' ?>>1 - Básico</option>
-                                <option value="2" <?= (isset($_POST['nivel']) && $_POST['nivel']=='2') ? 'selected' : '' ?>>2 - Encargado</option>
-                                <option value="3" <?= (isset($_POST['nivel']) && $_POST['nivel']=='3') ? 'selected' : '' ?>>3 - Administrador</option>
+                                <option value="1" <?= (isset($_POST['nivel']) && $_POST['nivel'] == '1') ? 'selected' : '' ?>>1 - Básico</option>
+                                <option value="2" <?= (isset($_POST['nivel']) && $_POST['nivel'] == '2') ? 'selected' : '' ?>>2 - Encargado</option>
+                                <option value="3" <?= (isset($_POST['nivel']) && $_POST['nivel'] == '3') ? 'selected' : '' ?>>3 - Administrador</option>
                             </select>
                         </div>
                     </div>
@@ -191,4 +209,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

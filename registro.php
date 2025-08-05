@@ -5,38 +5,49 @@ include 'ABM/conex.php';  // Ajusta la ruta si es necesario
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre    = $conn->real_escape_string($_POST['nombre']);
-    $apellido  = $conn->real_escape_string($_POST['apellido']);
-    $documento = $conn->real_escape_string($_POST['documento']);
-    $correo    = $conn->real_escape_string($_POST['email']);
-    $nivel     = (int) $_POST['nivel'];
-    $pass      = $_POST['password'];
+  $nombre    = $conn->real_escape_string($_POST['nombre']);
+  $apellido  = $conn->real_escape_string($_POST['apellido']);
+  $documento = $conn->real_escape_string($_POST['documento']);
+  $correo    = $conn->real_escape_string($_POST['email']);
+  $nivel     = (int) $_POST['nivel'];
+  $pass      = $_POST['password'];
 
-    // Verificar que no exista el correo
-    $existe = $conn->query("SELECT 1 FROM usuarios WHERE correo = '$correo' LIMIT 1");
-    if ($existe->num_rows) {
-        $error = 'Ya existe una cuenta con ese correo.';
-    } else {
-        // Insertar en texto plano
-        $sql = "INSERT INTO usuarios
+  // Verificar que no exista el correo
+  $existe = $conn->query("SELECT 1 FROM usuarios WHERE correo = '$correo' LIMIT 1");
+  if ($existe->num_rows) {
+    $error = 'Ya existe una cuenta con ese correo.';
+  } else {
+    // Insertar en texto plano
+    $sql = "INSERT INTO usuarios
                 (nombre, apellido, documento, correo, contraseña, nivel)
                 VALUES
                 ('$nombre','$apellido','$documento','$correo','$pass',$nivel)";
 
-        if ($conn->query($sql)) {
-            // Auto-login tras registro
-            $_SESSION['usuario_id'] = $conn->insert_id;
-            $_SESSION['nivel']      = $nivel;
-            header('Location: index.php');
-            exit;
-        } else {
-            $error = 'Error al crear la cuenta: ' . $conn->error;
-        }
+    if ($conn->query($sql)) {
+      // Auto-login tras registro
+      $_SESSION['usuario_id'] = $conn->insert_id;
+      $_SESSION['nivel']      = $nivel;
+
+      // Registrar el movimiento en la tabla movimientos
+      $campos_modif = 'nombre,apellido,documento,correo,contraseña,nivel';
+      $valores_modif = "nulo,$nombre,nulo,$apellido,nulo,$documento,nulo,$correo,nulo,$pass,nulo,$nivel";
+      $query = "INSERT INTO movimientos (usuario_id, tabla_modif, campos_modif, valores_modif, fecha)
+                      VALUES (?, 'usuarios', ?, ?, NOW())";
+      $stmtMov = $conn->prepare($query);
+      $stmtMov->bind_param("iss", $_SESSION['usuario_id'], $campos_modif, $valores_modif);
+      $stmtMov->execute();
+      $stmtMov->close();
+      header('Location: index.php');
+      exit;
+    } else {
+      $error = 'Error al crear la cuenta: ' . $conn->error;
     }
+  }
 }
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <!-- Tus estilos de login/registro -->
   <link rel="stylesheet" href="styles/login.css">
 </head>
+
 <body class="d-flex flex-column min-vh-100">
   <!-- Mensaje de error -->
   <?php if ($error): ?>
@@ -111,4 +123,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
