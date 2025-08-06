@@ -1,7 +1,7 @@
 <?php
 // registro.php
 session_start();
-include 'ABM/conex.php';  // Ajusta la ruta si es necesario
+include '../ABM/conex.php';  // Ajusta la ruta si es necesario
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

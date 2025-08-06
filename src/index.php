@@ -21,14 +21,15 @@ $generos = [
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biblioteca Mágica - Jardín de Infantes</title>
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         * {
             margin: 0;
@@ -186,15 +187,42 @@ $generos = [
             animation: bounce 2s infinite;
         }
 
-        .dot-1 { background-color: #f48fb1; }
-        .dot-2 { background-color: #81c784; animation-delay: 0.1s; }
-        .dot-3 { background-color: #64b5f6; animation-delay: 0.2s; }
-        .dot-4 { background-color: #ffb74d; animation-delay: 0.3s; }
+        .dot-1 {
+            background-color: #f48fb1;
+        }
+
+        .dot-2 {
+            background-color: #81c784;
+            animation-delay: 0.1s;
+        }
+
+        .dot-3 {
+            background-color: #64b5f6;
+            animation-delay: 0.2s;
+        }
+
+        .dot-4 {
+            background-color: #ffb74d;
+            animation-delay: 0.3s;
+        }
 
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
         }
 
         .hero-title {
@@ -221,18 +249,39 @@ $generos = [
             animation: pulse 2s infinite;
         }
 
-        .icon-sparkles { color: #f48fb1; }
-        .icon-star { color: #ffb74d; animation: spin 3s linear infinite; }
-        .icon-heart { color: #f48fb1; }
+        .icon-sparkles {
+            color: #f48fb1;
+        }
+
+        .icon-star {
+            color: #ffb74d;
+            animation: spin 3s linear infinite;
+        }
+
+        .icon-heart {
+            color: #f48fb1;
+        }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
         }
 
         @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         /* Clear Filters */
@@ -305,11 +354,25 @@ $generos = [
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
 
-        .genre-cuentos { background: linear-gradient(135deg, #fce4ec, #f8bbd9); }
-        .genre-fabulas { background: linear-gradient(135deg, #e8f5e8, #c8e6c9); }
-        .genre-poesia { background: linear-gradient(135deg, #e3f2fd, #bbdefb); }
-        .genre-aventuras { background: linear-gradient(135deg, #fff3e0, #ffcc02); }
-        .genre-naturaleza { background: linear-gradient(135deg, #f1f8e9, #dcedc8); }
+        .genre-cuentos {
+            background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+        }
+
+        .genre-fabulas {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+        }
+
+        .genre-poesia {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        }
+
+        .genre-aventuras {
+            background: linear-gradient(135deg, #fff3e0, #ffcc02);
+        }
+
+        .genre-naturaleza {
+            background: linear-gradient(135deg, #f1f8e9, #dcedc8);
+        }
 
         .genre-icon-wrapper {
             flex-shrink: 0;
@@ -331,11 +394,25 @@ $generos = [
             font-size: 2.25rem;
         }
 
-        .icon-cuentos { color: #c2185b; }
-        .icon-fabulas { color: #388e3c; }
-        .icon-poesia { color: #1976d2; }
-        .icon-aventuras { color: #f57c00; }
-        .icon-naturaleza { color: #689f38; }
+        .icon-cuentos {
+            color: #c2185b;
+        }
+
+        .icon-fabulas {
+            color: #388e3c;
+        }
+
+        .icon-poesia {
+            color: #1976d2;
+        }
+
+        .icon-aventuras {
+            color: #f57c00;
+        }
+
+        .icon-naturaleza {
+            color: #689f38;
+        }
 
         .genre-content {
             flex-grow: 1;
@@ -588,6 +665,7 @@ $generos = [
         }
     </style>
 </head>
+
 <body>
     <!-- Floating Header -->
     <div class="header-wrapper">
@@ -614,8 +692,7 @@ $generos = [
                                 name="buscar"
                                 class="search-input"
                                 placeholder="¿Qué libro buscas?"
-                                value="<?php echo htmlspecialchars($buscar); ?>"
-                            >
+                                value="<?php echo htmlspecialchars($buscar); ?>">
                             <?php if ($generoSeleccionado): ?>
                                 <input type="hidden" name="genero" value="<?php echo htmlspecialchars($generoSeleccionado); ?>">
                             <?php endif; ?>
@@ -624,7 +701,7 @@ $generos = [
                 </div>
 
                 <!-- Login Button -->
-                <a href="login.php" class="login-btn">
+                <a href="Usuarios/login.php" class="login-btn">
                     <i class="fas fa-user"></i>
                     Entrar
                 </a>
@@ -684,8 +761,8 @@ $generos = [
                         'Cuentos sobre plantas, animales y el mundo natural'
                     ];
                     ?>
-                    <a href="?genero=<?php echo urlencode($genero); ?><?php echo $buscar ? '&buscar=' . urlencode($buscar) : ''; ?>" 
-                       class="genre-card <?php echo $classes[$index]; ?> <?php echo $isSelected ? 'selected' : ''; ?>">
+                    <a href="?genero=<?php echo urlencode($genero); ?><?php echo $buscar ? '&buscar=' . urlencode($buscar) : ''; ?>"
+                        class="genre-card <?php echo $classes[$index]; ?> <?php echo $isSelected ? 'selected' : ''; ?>">
                         <div class="genre-icon-wrapper">
                             <div class="genre-icon">
                                 <i class="<?php echo $icons[$index]; ?> <?php echo $iconClasses[$index]; ?>"></i>
@@ -728,7 +805,7 @@ $generos = [
             }
 
             $result = $conn->query($sql);
-            
+
             if ($result && $result->num_rows > 0):
             ?>
                 <div class="books-grid">
@@ -791,7 +868,7 @@ $generos = [
     <script>
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
@@ -802,7 +879,7 @@ $generos = [
         // Auto-submit search form on input (optional)
         const searchInput = document.querySelector('input[name="buscar"]');
         let searchTimeout;
-        
+
         searchInput.addEventListener('input', function() {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(() => {
@@ -843,4 +920,5 @@ $generos = [
         });
     </script>
 </body>
+
 </html>

@@ -6,5 +6,5 @@ $_SESSION = [];
 // Destruir la sesión
 session_destroy();
 // Redirigir al login u otra página pública
-header('Location: login.php');
+header('Location: ./login.php');
 exit;

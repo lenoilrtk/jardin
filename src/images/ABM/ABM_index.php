@@ -1,14 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración - Biblioteca Mágica</title>
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         * {
             margin: 0;
@@ -511,6 +511,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -521,12 +522,24 @@
             animation: fadeInUp 0.6s ease forwards;
         }
 
-        .fade-in:nth-child(1) { animation-delay: 0.1s; }
-        .fade-in:nth-child(2) { animation-delay: 0.2s; }
-        .fade-in:nth-child(3) { animation-delay: 0.3s; }
-        .fade-in:nth-child(4) { animation-delay: 0.4s; }
+        .fade-in:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .fade-in:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .fade-in:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .fade-in:nth-child(4) {
+            animation-delay: 0.4s;
+        }
     </style>
 </head>
+
 <body>
     <!-- Admin Header -->
     <header class="admin-header">
@@ -543,7 +556,7 @@
                 </div>
 
                 <nav class="admin-nav">
-                    <a href="index.php" class="nav-item">
+                    <a href="../index.php" class="nav-item">
                         <i class="fas fa-home"></i>
                         Inicio
                     </a>
@@ -566,7 +579,7 @@
                                 <i class="fas fa-cog"></i>
                                 Configuración
                             </a>
-                            <a href="logout.php" class="dropdown-item danger" onclick="return confirm('¿Cerrar sesión?')">
+                            <a href="../Usuarios/logout.php" class="dropdown-item danger" onclick="return confirm('¿Cerrar sesión?')">
                                 <i class="fas fa-sign-out-alt"></i>
                                 Cerrar Sesión
                             </a>
@@ -629,15 +642,15 @@
             <div class="quick-actions">
                 <h3 class="actions-title">Acciones Rápidas</h3>
                 <div class="actions-grid">
-                    <a href="ABM_libro.php" class="action-btn">
+                    <a href="./Libros/ABM_libro.php" class="action-btn">
                         <i class="fas fa-plus"></i>
                         Agregar Libro
                     </a>
-                    <a href="ABM_user.php" class="action-btn">
+                    <a href="./Usuarios/ABM_user.php" class="action-btn">
                         <i class="fas fa-user-plus"></i>
                         Nuevo Usuario
                     </a>
-                    <a href="movimientos.php" class="action-btn">
+                    <a href="./movimientos.php" class="action-btn">
                         <i class="fas fa-exchange-alt"></i>
                         Registrar Préstamo
                     </a>
@@ -655,7 +668,7 @@
         <div class="container">
             <h2 class="section-title">Módulos de Administración</h2>
             <div class="modules-grid">
-                <a href="ABM_libro.php" class="module-card fade-in">
+                <a href="./Libros/ABM_libro.php" class="module-card fade-in">
                     <div class="module-header">
                         <div class="module-icon">
                             <i class="fas fa-book"></i>
@@ -666,7 +679,7 @@
                         </div>
                     </div>
                     <p class="module-description">
-                        Administra todo el catálogo de libros: agregar nuevos títulos, editar información, 
+                        Administra todo el catálogo de libros: agregar nuevos títulos, editar información,
                         gestionar disponibilidad y organizar por categorías.
                     </p>
                     <div class="module-features">
@@ -677,7 +690,7 @@
                     </div>
                 </a>
 
-                <a href="ABM_user.php" class="module-card fade-in">
+                <a href="./Usuarios/ABM_user.php" class="module-card fade-in">
                     <div class="module-header">
                         <div class="module-icon">
                             <i class="fas fa-users"></i>
@@ -688,7 +701,7 @@
                         </div>
                     </div>
                     <p class="module-description">
-                        Registra nuevos usuarios, gestiona perfiles, controla niveles de acceso y 
+                        Registra nuevos usuarios, gestiona perfiles, controla niveles de acceso y
                         mantén actualizada la información de contacto.
                     </p>
                     <div class="module-features">
@@ -699,7 +712,7 @@
                     </div>
                 </a>
 
-                <a href="movimientos.php" class="module-card fade-in">
+                <a href="./movimientos.php" class="module-card fade-in">
                     <div class="module-header">
                         <div class="module-icon">
                             <i class="fas fa-exchange-alt"></i>
@@ -710,7 +723,7 @@
                         </div>
                     </div>
                     <p class="module-description">
-                        Registra préstamos, devoluciones, renovaciones y mantén un historial 
+                        Registra préstamos, devoluciones, renovaciones y mantén un historial
                         completo de todas las transacciones de la biblioteca.
                     </p>
                     <div class="module-features">
@@ -732,7 +745,7 @@
                         </div>
                     </div>
                     <p class="module-description">
-                        Genera reportes detallados, visualiza estadísticas de uso, 
+                        Genera reportes detallados, visualiza estadísticas de uso,
                         libros más populares y análisis de actividad de usuarios.
                     </p>
                     <div class="module-features">
@@ -781,7 +794,7 @@
         document.addEventListener('click', function(event) {
             const dropdown = document.getElementById('userDropdown');
             const button = event.target.closest('.user-btn');
-            
+
             if (!button && !dropdown.contains(event.target)) {
                 dropdown.classList.remove('show');
             }
@@ -812,7 +825,7 @@
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
@@ -825,4 +838,5 @@
         });
     </script>
 </body>
+
 </html>

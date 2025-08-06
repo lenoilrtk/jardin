@@ -168,10 +168,10 @@ $niveles = [
                     </h3>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <a href="ABM_index.php" class="btn btn-outline-secondary rounded-pill me-2">
+                    <a href="../ABM_index.php" class="btn btn-outline-secondary rounded-pill me-2">
                         <i class="fas fa-arrow-left me-2"></i>Volver
                     </a>
-                    <a href="agregarUsuario.php" class="btn btn-purple rounded-pill">
+                    <a href="./Añadir/agregarUsuario.php" class="btn btn-purple rounded-pill">
                         <i class="fas fa-plus me-2"></i>Añadir Usuario
                     </a>
                 </div>
@@ -314,12 +314,12 @@ $niveles = [
                                 </div>
                                 <div class="modal-footer">
                                     <a
-                                        href="./ABM_user_edit.php?id=<?php echo $uid; ?>"
+                                        href="./Editar/ABM_user_edit.php?id=<?php echo $uid; ?>"
                                         class="btn btn-outline-primary">
                                         <i class="fas fa-edit me-1"></i>Editar
                                     </a>
                                     <a
-                                        href="ABM_user_del.php?id=<?php echo $uid; ?>"
+                                        href="./ABM_user_del.php?id=<?php echo $uid; ?>"
                                         class="btn btn-outline-danger"
                                         onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
                                         <i class="fas fa-trash me-1"></i>Borrar

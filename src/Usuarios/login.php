@@ -9,11 +9,11 @@ $showTab = 'login'; // Por defecto mostrar pestaña de login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $_POST['action_type'] === 'login') {
     $correo = $conn->real_escape_string($_POST['login_email']);
     $pass   = $_POST['login_password'];
-    
+
     // Buscar usuario por correo
     $sql  = "SELECT usuario_id, contraseña, nivel FROM usuarios WHERE correo = '$correo' LIMIT 1";
     $res  = $conn->query($sql);
-    
+
     if ($res && $res->num_rows === 1) {
         $user = $res->fetch_assoc();
         // Comparar contraseña en texto plano
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $_P
             // Login correcto
             $_SESSION['usuario_id'] = $user['usuario_id'];
             $_SESSION['nivel']      = $user['nivel'];
-            
+
             // Redirección según nivel: 1 y 2 a ABM, 3 a frontend
             if ($user['nivel'] == 1 || $user['nivel'] == 2) {
                 header('Location: ABM/ABM_index.php');
@@ -41,14 +41,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $_P
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biblioteca Mágica - Iniciar Sesión</title>
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         * {
             margin: 0;
@@ -417,8 +418,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $_P
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
         }
 
         /* Responsive */
@@ -426,15 +434,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $_P
             .form-row {
                 grid-template-columns: 1fr;
             }
-            
+
             .container {
                 padding: 0 0.5rem;
             }
-            
+
             .header h1 {
                 font-size: 1.75rem;
             }
-            
+
             .tab-button {
                 font-size: 0.8rem;
                 padding: 0.625rem 0.75rem;
@@ -445,17 +453,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $_P
             .auth-card {
                 margin: 0.5rem;
             }
-            
+
             .tab-content {
                 padding: 1rem;
             }
-            
+
             .tabs {
                 margin: 1rem 1rem 0;
             }
         }
     </style>
 </head>
+
 <body>
     <!-- Floating Shapes -->
     <div class="floating-shapes">
@@ -492,7 +501,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $_P
             <div id="login-tab" class="tab-content <?= $showTab === 'login' ? 'active' : '' ?>">
                 <form method="POST" action="login.php">
                     <input type="hidden" name="action_type" value="login">
-                    
+
                     <div class="form-group">
                         <label for="login-email">
                             <i class="fas fa-envelope" style="margin-right: 0.5rem;"></i>
@@ -555,14 +564,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $_P
             // Hide all tab contents
             const tabContents = document.querySelectorAll('.tab-content');
             tabContents.forEach(content => content.classList.remove('active'));
-            
+
             // Remove active class from all tab buttons
             const tabButtons = document.querySelectorAll('.tab-button');
             tabButtons.forEach(button => button.classList.remove('active'));
-            
+
             // Show selected tab content
             document.getElementById(tabName + '-tab').classList.add('active');
-            
+
             // Add active class to clicked button
             event.currentTarget.classList.add('active');
         }
@@ -571,7 +580,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $_P
             const input = document.getElementById(inputId);
             const button = input.nextElementSibling;
             const icon = button.querySelector('i');
-            
+
             if (input.type === 'password') {
                 input.type = 'text';
                 icon.className = 'fas fa-eye-slash';
@@ -592,18 +601,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $_P
         document.addEventListener('DOMContentLoaded', function() {
             const authCard = document.querySelector('.auth-card');
             const header = document.querySelector('.header');
-            
+
             authCard.style.opacity = '0';
             authCard.style.transform = 'translateY(20px)';
             header.style.opacity = '0';
             header.style.transform = 'translateY(-20px)';
-            
+
             setTimeout(() => {
                 header.style.transition = 'all 0.6s ease';
                 header.style.opacity = '1';
                 header.style.transform = 'translateY(0)';
             }, 100);
-            
+
             setTimeout(() => {
                 authCard.style.transition = 'all 0.6s ease';
                 authCard.style.opacity = '1';
@@ -616,11 +625,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $_P
             input.addEventListener('focus', function() {
                 this.parentElement.style.transform = 'scale(1.02)';
             });
-            
+
             input.addEventListener('blur', function() {
                 this.parentElement.style.transform = 'scale(1)';
             });
         });
     </script>
 </body>
+
 </html>

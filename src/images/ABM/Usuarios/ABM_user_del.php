@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,45 +14,45 @@
         .header-gradient {
             background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
         }
-        
+
         .text-purple {
             color: #8b5cf6 !important;
         }
-        
+
         .text-purple-dark {
             color: #6d28d9 !important;
         }
-        
+
         .text-purple-light {
             color: #c4b5fd !important;
         }
-        
+
         .bg-purple-dark {
             background-color: #6d28d9 !important;
         }
-        
+
         .btn-purple {
             background-color: #8b5cf6;
             border-color: #8b5cf6;
             color: white;
         }
-        
+
         .btn-purple:hover {
             background-color: #7c3aed;
             border-color: #7c3aed;
             color: white;
         }
-        
+
         .result-container {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
             padding: 40px;
             margin: 50px auto;
             max-width: 700px;
             text-align: center;
         }
-        
+
         .confirmation-container {
             background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
             border-radius: 15px;
@@ -59,7 +60,7 @@
             margin-bottom: 30px;
             color: #92400e;
         }
-        
+
         .success-message {
             background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
             border-radius: 15px;
@@ -67,7 +68,7 @@
             margin-bottom: 30px;
             color: #065f46;
         }
-        
+
         .error-message {
             background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
             border-radius: 15px;
@@ -75,7 +76,7 @@
             margin-bottom: 30px;
             color: #dc2626;
         }
-        
+
         .book-info {
             background: linear-gradient(135deg, #f3e8ff 0%, #e0e7ff 100%);
             border-radius: 15px;
@@ -83,13 +84,13 @@
             margin: 20px 0;
             border: 2px solid #dc2626;
         }
-        
+
         .countdown {
             font-size: 1.2em;
             font-weight: bold;
             color: #8b5cf6;
         }
-        
+
         .btn-action {
             padding: 12px 30px;
             border-radius: 25px;
@@ -99,24 +100,33 @@
             transition: all 0.3s ease;
             margin: 10px;
         }
-        
+
         .btn-action:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
-        
+
         .warning-icon {
             color: #dc2626;
             animation: pulse 2s infinite;
         }
-        
+
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
     </style>
 </head>
+
 <body>
     <!-- Encabezado -->
     <header class="header-gradient py-3 shadow">
@@ -209,7 +219,7 @@
                 }
 
                 $row = $resultInfo->fetch_assoc();
-                
+
                 echo '<div class="confirmation-container">
                         <i class="fas fa-exclamation-triangle warning-icon fs-2 mb-3"></i>
                         <h3>⚠️ Confirmación de Eliminación ⚠️</h3>
@@ -248,14 +258,14 @@
                 $stmtInfo->close();
             } else {
                 // Proceder con la eliminación
-                
+
                 // Primero obtener información del libro para mostrar después
                 $sqlInfo = "SELECT * FROM `usuarios` WHERE `usuario_id` LIKE ?";
                 $stmtInfo = $conn->prepare($sqlInfo);
                 $stmtInfo->bind_param("i", $usuario_id);
                 $stmtInfo->execute();
                 $resultInfo = $stmtInfo->get_result();
-                
+
                 if ($resultInfo->num_rows === 0) {
                     echo '<div class="error-message">
                             <i class="fas fa-book-dead fs-2 mb-3"></i>
@@ -267,14 +277,14 @@
                     $conn->close();
                     exit;
                 }
-                
+
                 $row = $resultInfo->fetch_assoc();
                 $stmtInfo->close();
 
                 // Realizar la eliminación con prepared statement
                 $sql = "DELETE FROM `usuarios` WHERE `usuarios`.`usuario_id` =  ?";
                 $stmt = $conn->prepare($sql);
-                
+
                 if ($stmt === false) {
                     echo '<div class="error-message">
                             <i class="fas fa-exclamation-triangle fs-2 mb-3"></i>
@@ -295,14 +305,14 @@
                                 <h3>¡Usuario Eliminado Exitosamente!</h3>
                                 <p><strong>ID eliminado:</strong> #' . $usuario_id . '</p>
                               </div>';
-                        
+
                         echo '<div class="countdown mb-3">
                                 <i class="fas fa-clock me-2"></i>
                                 Redirigiendo en <span id="countdown">5</span> segundos...
                               </div>';
-                        
+
                         echo '<a href="./ABM_user.php" class="btn btn-purple btn-action">Ver Lista de Usuarios</a>';
-                        
+
                         // JavaScript para redirección automática
                         echo '<script>
                                 let timeLeft = 5;
@@ -324,7 +334,7 @@
                                 <h3>Libro No Encontrado</h3>
                                 <p>No se encontró ningún libro con el ID especificado para eliminar.</p>
                               </div>';
-                        echo '<a href="./ABM_libro.php" class="btn btn-purple btn-action">Volver a la Lista</a>';
+                        echo '<a href="../Libros/ABM_libro.php" class="btn btn-purple btn-action">Volver a la Lista</a>';
                     }
                 } else {
                     echo '<div class="error-message">
@@ -364,4 +374,5 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

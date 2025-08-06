@@ -1,0 +1,24 @@
+{
+  "name": "eest1/jardin",
+  "description": "Proyecto para administrar bibliotecas de jardines",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "Eest1\\Jardin\\": "src/"
+    }
+  },
+  "minimum-stability": "RC",
+  "require": {},
+  "scripts": {
+    "post-install-cmd": [
+      "php artisan clear-compiled",
+      "php artisan optimize",
+      "npm install"
+    ],
+    "post-update-cmd": [
+      "php artisan clear-compiled",
+      "php artisan optimize",
+      "npm update"
+    ]
+  }
+}
