@@ -1,6 +1,9 @@
 <?php
+
+require_once __DIR__ . '/../../../vendor/autoload.php';
+require_once app_path('public/conex.php');
+
 session_start();
-include './conex.php';
 
 // ----- Procesar parámetros de búsqueda y filtro -----
 $buscar      = $_GET['buscar'] ?? '';

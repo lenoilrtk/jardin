@@ -1,7 +1,8 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once app_path('public/conex.php');
 // login.php
 session_start();
-include 'ABM/conex.php';  // Conexión a BDD
 
 $error = '';
 $showTab = 'login'; // Por defecto mostrar pestaña de login
@@ -24,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $_P
 
             // Redirección según nivel: 1 y 2 a ABM, 3 a frontend
             if ($user['nivel'] == 1 || $user['nivel'] == 2) {
-                header('Location: ABM/ABM_index.php');
+                header('Location: ' . app_path('public\ABM\ABM_index.php'));
             } else {
-                header('Location: index.php');
+                header('Location: ' . app_path('public/index.php'));
             }
             exit;
         } else {
@@ -499,7 +500,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $_P
         <div class="auth-card">
             <!-- Login Form -->
             <div id="login-tab" class="tab-content <?= $showTab === 'login' ? 'active' : '' ?>">
-                <form method="POST" action="login.php">
+                <form method="POST" action="<?= app_path('public/Usuarios/login.php') ?>">
                     <input type="hidden" name="action_type" value="login">
 
                     <div class="form-group">

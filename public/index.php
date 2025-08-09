@@ -1,5 +1,6 @@
 <?php
-include 'ABM/conex.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once app_path('public/conex.php');
 
 // Parámetros de búsqueda y género
 $buscar = isset($_GET['buscar']) ? $conn->real_escape_string($_GET['buscar']) : '';
@@ -25,11 +26,11 @@ $generos = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?= vite_assets() ?>
     <title>Biblioteca Mágica - Jardín de Infantes</title>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script type="module" src="http://localhost:5173/Resources/Js/main.js"></script>
     <style>
         * {
             margin: 0;
@@ -684,7 +685,7 @@ $generos = [
 
                 <!-- Search Bar -->
                 <div class="search-section">
-                    <form action="index.php" method="GET">
+                    <form action="<?= app_path('public/index.php') ?>" method="GET">
                         <div style="position: relative;">
                             <i class="fas fa-search search-icon"></i>
                             <input
@@ -701,7 +702,7 @@ $generos = [
                 </div>
 
                 <!-- Login Button -->
-                <a href="Usuarios/login.php" class="login-btn">
+                <a href="<?= app_path('public/Usuarios/login.php') ?>" class="login-btn">
                     <i class="fas fa-user"></i>
                     Entrar
                 </a>
@@ -734,7 +735,7 @@ $generos = [
     <?php if ($buscar || $generoSeleccionado): ?>
         <div class="clear-filters">
             <div class="container">
-                <a href="index.php" class="clear-btn">
+                <a href="<?= app_path('public/index.php') ?>" class="clear-btn">
                     <i class="fas fa-home"></i>
                     Ver todos los libros
                 </a>

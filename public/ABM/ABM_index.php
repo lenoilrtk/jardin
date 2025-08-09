@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once app_path('public/conex.php');
+?>
 <!DOCTYPE html>
 <html lang="es">
 

@@ -1,7 +1,8 @@
 <?php
-// registro.php
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once app_path('public/conex.php');
+
 session_start();
-include '../ABM/conex.php';  // Ajusta la ruta si es necesario
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -37,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $stmtMov->bind_param("iss", $_SESSION['usuario_id'], $campos_modif, $valores_modif);
       $stmtMov->execute();
       $stmtMov->close();
-      header('Location: index.php');
+      header('Location: ' . app_path('public/index.php'));
       exit;
     } else {
       $error = 'Error al crear la cuenta: ' . $conn->error;
@@ -75,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h2 class="fs-3 fw-bold mb-0">Crear Cuenta</h2>
           </div>
           <div class="card-body p-4">
-            <form method="POST" action="registro.php">
+            <form method="POST" action="<?= app_path('public/Usuarios/registro.php') ?>">
               <div class="mb-3">
                 <label class="form-label fw-medium">Nombre</label>
                 <input type="text" name="nombre" class="form-control border-0 bg-light" required>
@@ -106,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               </div>
               <button type="submit" class="btn btn-green w-100 py-2 rounded-pill mb-3">Crear Cuenta</button>
               <div class="text-center">
-                <a href="login.php" class="text-decoration-none">← Volver al login</a>
+                <a href="<?= app_path('public/Usuarios/login.php') ?>" class="text-decoration-none">← Volver al login</a>
               </div>
             </form>
           </div>

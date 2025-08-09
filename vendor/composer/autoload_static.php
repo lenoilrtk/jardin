@@ -6,21 +6,35 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitfd7069823a4a52b42373038902529f61
 {
+    public static $files = array (
+        'c3332b4225a7f768bcdef28518de9dbe' => __DIR__ . '/../..' . '/bootstrap/app.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
-        'E' => 
+        'T' => 
         array (
-            'Eest1\\Jardin\\' => 13,
+            'Tests\\' => 6,
+        ),
+        'A' => 
+        array (
+            'App\\' => 4,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Eest1\\Jardin\\' => 
+        'Tests\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/tests',
+        ),
+        'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
     );
 
     public static $classMap = array (
+        'App\\Config\\App' => __DIR__ . '/../..' . '/src/Config/App.php',
+        'App\\Helpers\\ViteHelper' => __DIR__ . '/../..' . '/src/Helpers/ViteHelper.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 

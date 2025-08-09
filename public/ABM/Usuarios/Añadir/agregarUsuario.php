@@ -1,7 +1,9 @@
 <?php
 // agregarUsuario.php
 session_start();
-include 'conex.php'; // Ajusta la ruta si tu archivo está en otra carpeta
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';
+require_once app_path('public/conex.php');
 
 $error   = '';
 $success = '';

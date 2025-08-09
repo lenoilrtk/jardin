@@ -6,5 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Config\\App' => $baseDir . '/src/Config/App.php',
+    'App\\Helpers\\ViteHelper' => $baseDir . '/src/Helpers/ViteHelper.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
 );

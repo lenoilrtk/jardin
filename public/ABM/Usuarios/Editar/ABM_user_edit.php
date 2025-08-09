@@ -196,7 +196,8 @@
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <?php
-                include "./conex.php";
+                require_once __DIR__ . '/../../../../vendor/autoload.php';
+                require_once app_path('public/conex.php');
 
                 if (!isset($_GET['id']) || empty($_GET['id'])) {
                     echo '<div class="error-message">

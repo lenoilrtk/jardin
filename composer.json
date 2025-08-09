@@ -4,7 +4,15 @@
   "type": "project",
   "autoload": {
     "psr-4": {
-      "Eest1\\Jardin\\": "src/"
+      "App\\": "src/"
+    },
+    "files": [
+      "bootstrap/app.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
     }
   },
   "minimum-stability": "RC",
@@ -20,5 +28,10 @@
       "php artisan optimize",
       "npm update"
     ]
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "prefer-stable": true,
+    "sort-packages": true
   }
 }

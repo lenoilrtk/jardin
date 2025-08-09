@@ -182,7 +182,8 @@
                 exit;
             }
 
-            include "./conex.php";
+            require_once __DIR__ . '/../../../vendor/autoload.php';
+            require_once app_path('public/conex.php');
 
             // Verificar conexión
             if ($conn->connect_error) {
