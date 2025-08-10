@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Tus estilos de login/registro -->
-  <link rel="stylesheet" href="styles/login.css">
+  <link rel="stylesheet" href="<?= app_path('resources/css/login.css') ?>">
 </head>
 
 <body class="d-flex flex-column min-vh-100">

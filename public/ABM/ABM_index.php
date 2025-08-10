@@ -560,7 +560,7 @@ require_once app_path('public/conex.php');
                 </div>
 
                 <nav class="admin-nav">
-                    <a href="../index.php" class="nav-item">
+                    <a href="<?= app_path('public/index.php') ?>" class="nav-item">
                         <i class="fas fa-home"></i>
                         Inicio
                     </a>
@@ -583,7 +583,7 @@ require_once app_path('public/conex.php');
                                 <i class="fas fa-cog"></i>
                                 Configuración
                             </a>
-                            <a href="../Usuarios/logout.php" class="dropdown-item danger" onclick="return confirm('¿Cerrar sesión?')">
+                            <a href="<?= app_path('public/Usuarios/logout.php') ?>" class="dropdown-item danger" onclick="return confirm('¿Cerrar sesión?')">
                                 <i class="fas fa-sign-out-alt"></i>
                                 Cerrar Sesión
                             </a>
@@ -646,15 +646,15 @@ require_once app_path('public/conex.php');
             <div class="quick-actions">
                 <h3 class="actions-title">Acciones Rápidas</h3>
                 <div class="actions-grid">
-                    <a href="./Libros/ABM_libro.php" class="action-btn">
+                    <a href="<?= app_path('public/ABM/Libros/ABM_libro.php') ?>" class="action-btn">
                         <i class="fas fa-plus"></i>
                         Agregar Libro
                     </a>
-                    <a href="./Usuarios/ABM_user.php" class="action-btn">
+                    <a href="<?= app_path('public/ABM/Usuarios/ABM_user.php') ?>" class="action-btn">
                         <i class="fas fa-user-plus"></i>
                         Nuevo Usuario
                     </a>
-                    <a href="./movimientos.php" class="action-btn">
+                    <a href="<?= app_path('public/ABM/movimientos.php') ?>" class="action-btn">
                         <i class="fas fa-exchange-alt"></i>
                         Registrar Préstamo
                     </a>
@@ -672,7 +672,7 @@ require_once app_path('public/conex.php');
         <div class="container">
             <h2 class="section-title">Módulos de Administración</h2>
             <div class="modules-grid">
-                <a href="./Libros/ABM_libro.php" class="module-card fade-in">
+                <a href="./Libros/ABM_libro.php<?= app_path('public/ABM/Libros/ABM_libro.php') ?>" class="module-card fade-in">
                     <div class="module-header">
                         <div class="module-icon">
                             <i class="fas fa-book"></i>
@@ -694,7 +694,7 @@ require_once app_path('public/conex.php');
                     </div>
                 </a>
 
-                <a href="./Usuarios/ABM_user.php" class="module-card fade-in">
+                <a href="<?= app_path('public/ABM/Usuarios/ABM_user.php') ?>" class="module-card fade-in">
                     <div class="module-header">
                         <div class="module-icon">
                             <i class="fas fa-users"></i>
@@ -716,7 +716,7 @@ require_once app_path('public/conex.php');
                     </div>
                 </a>
 
-                <a href="./movimientos.php" class="module-card fade-in">
+                <a href="<?= app_path('public/ABM/movimientos.php') ?>" class="module-card fade-in">
                     <div class="module-header">
                         <div class="module-icon">
                             <i class="fas fa-exchange-alt"></i>

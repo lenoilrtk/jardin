@@ -544,7 +544,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $_P
 
             <!-- Back Button -->
             <div style="padding: 0 1.5rem 1.5rem;">
-                <a href="index.php" class="back-btn">
+                <a href="<?= app_path('public/index.php') ?>" class="back-btn">
                     <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i>
                     Volver al Inicio
                 </a>

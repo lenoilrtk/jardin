@@ -159,6 +159,10 @@
     <div class="container">
         <div class="result-container">
             <?php
+
+            require_once __DIR__ . '/../../../vendor/autoload.php';
+            require_once app_path('public/conex.php');
+
             // Verificar que se haya proporcionado un ID
             if (!isset($_GET['id']) || empty($_GET['id'])) {
                 echo '<div class="error-message">
@@ -166,7 +170,7 @@
                         <h3>ID No Especificado</h3>
                         <p>No se ha proporcionado un ID.</p>
                       </div>';
-                echo '<a href="./ABM_user.php" class="btn btn-purple btn-action">Volver a la Lista</a>';
+                echo '<a href="' . app_path('public/ABM/Usuarios/ABM_user.php') . '" class="btn btn-purple btn-action">Volver a la Lista</a>';
                 exit;
             }
 
@@ -178,12 +182,9 @@
                         <h3>ID No Válido</h3>
                         <p>El ID proporcionado no es válido.</p>
                       </div>';
-                echo '<a href="./ABM_user.php" class="btn btn-purple btn-action">Volver a la Lista</a>';
+                echo '<a href="' . app_path('public/ABM/Usuarios/ABM_user.php') . '" class="btn btn-purple btn-action">Volver a la Lista</a>';
                 exit;
             }
-
-            require_once __DIR__ . '/../../../vendor/autoload.php';
-            require_once app_path('public/conex.php');
 
             // Verificar conexión
             if ($conn->connect_error) {
@@ -192,7 +193,7 @@
                         <h3>Error de Conexión</h3>
                         <p>No se pudo conectar a la base de datos: ' . $conn->connect_error . '</p>
                       </div>';
-                echo '<a href="./ABM_user.php" class="btn btn-purple btn-action">Intentar de Nuevo</a>';
+                echo '<a href="' . app_path('public/ABM/Usuarios/ABM_user.php') . '" class="btn btn-purple btn-action">Intentar de Nuevo</a>';
                 exit;
             }
 
@@ -213,7 +214,7 @@
                             <h3>Libro No Encontrado</h3>
                             <p>No se encontró el ID especificado.</p>
                           </div>';
-                    echo '<a href="./ABM_user.php" class="btn btn-purple btn-action">Volver a la Lista</a>';
+                    echo '<a href="' . app_path('public/ABM/Usuarios/ABM_user.php') . '" class="btn btn-purple btn-action">Volver a la Lista</a>';
                     $stmtInfo->close();
                     $conn->close();
                     exit;
