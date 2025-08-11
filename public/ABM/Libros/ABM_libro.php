@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -287,7 +288,8 @@
             border: 1px solid #b2dfdb;
         }
 
-        .form-control, .form-select {
+        .form-control,
+        .form-select {
             border: 2px solid #b2dfdb;
             border-radius: 1rem;
             padding: 0.75rem 1rem;
@@ -296,7 +298,8 @@
             transition: all 0.3s ease;
         }
 
-        .form-control:focus, .form-select:focus {
+        .form-control:focus,
+        .form-select:focus {
             border-color: #26a69a;
             box-shadow: 0 0 0 0.2rem rgba(38, 166, 154, 0.25);
             background: white;
@@ -485,6 +488,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -517,8 +521,12 @@
             }
         }
     </style>
-    <?php include "./conex.php"; ?>
+    <?php
+    require_once __DIR__ . '/../../../vendor/autoload.php';
+    require_once app_path('public/conex.php');
+    ?>
 </head>
+
 <body>
     <!-- Header -->
     <header class="admin-header">
@@ -535,7 +543,7 @@
                 </div>
 
                 <nav class="admin-nav">
-                    <a href="ABM_index.php" class="nav-item">
+                    <a href="<?= app_path("public/ABM/ABM_index.php") ?>" class="nav-item">
                         <i class="fas fa-home"></i>
                         Inicio
                     </a>
@@ -584,11 +592,11 @@
                     </h3>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <a href="./ABM_index.php" class="btn-outline-teal me-3">
+                    <a href="<?= app_path("public/ABM/ABM_index.php") ?>" class="btn-outline-teal me-3">
                         <i class="fas fa-arrow-left"></i>
                         Volver
                     </a>
-                    <a href="./ABM_libro_añadir.html" class="btn-teal">
+                    <a href="<?= app_path("public/ABM/Libros/Añadir/ABM_libro_añadir.html") ?>" class="btn-teal">
                         <i class="fas fa-plus"></i>
                         Añadir Libro
                     </a>
@@ -640,15 +648,15 @@
                 Filtros de Búsqueda
             </h3>
             <div class="filter-form">
-                <form method="GET" action="ABM_libro.php" class="row g-3 align-items-center">
+                <form method="GET" action="<?= app_path("public/ABM/Libros/ABM_libro.php") ?>" class="row g-3 align-items-center">
                     <div class="col-md-4">
                         <div class="search-input">
                             <i class="fas fa-search search-icon"></i>
-                            <input 
-                                type="text" 
-                                name="buscar" 
-                                class="form-control" 
-                                placeholder="Buscar por título..." 
+                            <input
+                                type="text"
+                                name="buscar"
+                                class="form-control"
+                                placeholder="Buscar por título..."
                                 value="<?php echo htmlspecialchars($busqueda); ?>">
                         </div>
                     </div>
@@ -700,9 +708,9 @@
                     ?>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="book-card h-100 fade-in">
-                            <img 
-                                src="data:image/jpeg;base64,<?= $base64img; ?>" 
-                                class="book-image" 
+                            <img
+                                src="data:image/jpeg;base64,<?= $base64img; ?>"
+                                class="book-image"
                                 alt="Portada de <?= $titulo; ?>">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="book-title text-truncate" title="<?= $titulo; ?>">
@@ -714,10 +722,10 @@
                                 <p class="book-info mb-3">
                                     <strong>Color:</strong> <span class="book-badge"><?= $colorPortada; ?></span>
                                 </p>
-                                <button 
-                                    type="button" 
-                                    class="btn-outline-teal mt-auto" 
-                                    data-bs-toggle="modal" 
+                                <button
+                                    type="button"
+                                    class="btn-outline-teal mt-auto"
+                                    data-bs-toggle="modal"
                                     data-bs-target="#modalLibro<?= $id; ?>">
                                     <i class="fas fa-eye"></i>
                                     Ver detalles
@@ -727,88 +735,88 @@
                     </div>
 
                     <!-- Modal for book <?= $titulo; ?> -->
-                    <div 
-                        class="modal fade" 
-                        id="modalLibro<?= $id; ?>" 
-                        tabindex="-1" 
-                        aria-labelledby="modalLabel<?= $id; ?>" 
+                    <div
+                        class="modal fade"
+                        id="modalLibro<?= $id; ?>"
+                        tabindex="-1"
+                        aria-labelledby="modalLabel<?= $id; ?>"
                         aria-hidden="true">
-                      <div class="modal-dialog modal-lg modal-dialog-centered">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="modalLabel<?= $id; ?>">
-                                <i class="fas fa-book-open me-2"></i>
-                                Información de "<?= $titulo; ?>"
-                            </h5>
-                            <button 
-                                type="button" 
-                                class="btn-close btn-close-white" 
-                                data-bs-dismiss="modal" 
-                                aria-label="Cerrar">
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <div class="row">
-                              <div class="col-md-4 text-center mb-3 mb-md-0">
-                                <img 
-                                    src="data:image/jpeg;base64,<?= $base64img; ?>" 
-                                    class="img-fluid rounded-3" 
-                                    alt="Portada de <?= $titulo; ?>"
-                                    style="border-radius: 1rem;">
-                              </div>
-                              <div class="col-md-8">
-                                <ul class="list-group list-group-flush">
-                                  <li class="list-group-item">
-                                    <strong>ID:</strong> <?= $id; ?>
-                                  </li>
-                                  <li class="list-group-item">
-                                    <strong>Título:</strong> <?= $titulo; ?>
-                                  </li>
-                                  <li class="list-group-item">
-                                    <strong>Autor:</strong> <?= $autor; ?>
-                                  </li>
-                                  <li class="list-group-item">
-                                    <strong>Ilustrador:</strong> <?= $ilustrador; ?>
-                                  </li>
-                                  <li class="list-group-item">
-                                    <strong>Editorial:</strong> <?= $editorial; ?>
-                                  </li>
-                                  <li class="list-group-item">
-                                    <strong>Género:</strong> <?= $clasificacion; ?>
-                                  </li>
-                                  <li class="list-group-item">
-                                    <strong>Color:</strong> <span class="book-badge"><?= $colorPortada; ?></span>
-                                  </li>
-                                </ul>
-                              </div>
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabel<?= $id; ?>">
+                                        <i class="fas fa-book-open me-2"></i>
+                                        Información de "<?= $titulo; ?>"
+                                    </h5>
+                                    <button
+                                        type="button"
+                                        class="btn-close btn-close-white"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Cerrar">
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-4 text-center mb-3 mb-md-0">
+                                            <img
+                                                src="data:image/jpeg;base64,<?= $base64img; ?>"
+                                                class="img-fluid rounded-3"
+                                                alt="Portada de <?= $titulo; ?>"
+                                                style="border-radius: 1rem;">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">
+                                                    <strong>ID:</strong> <?= $id; ?>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <strong>Título:</strong> <?= $titulo; ?>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <strong>Autor:</strong> <?= $autor; ?>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <strong>Ilustrador:</strong> <?= $ilustrador; ?>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <strong>Editorial:</strong> <?= $editorial; ?>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <strong>Género:</strong> <?= $clasificacion; ?>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <strong>Color:</strong> <span class="book-badge"><?= $colorPortada; ?></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a
+                                        href="<?= app_path("public/ABM/Libros/Editar/ABM_libro_edit.php") ?>?id=<?= $id; ?>"
+                                        class="btn-outline-teal">
+                                        <i class="fas fa-edit"></i>
+                                        Editar
+                                    </a>
+                                    <a
+                                        href="<?= app_path("public/ABM/Libros/ABM_libro_del.php") ?>?id=<?= $id; ?>"
+                                        class="btn-outline-teal"
+                                        style="border-color: #e53e3e; color: #e53e3e;"
+                                        onmouseover="this.style.background='#e53e3e'; this.style.color='white';"
+                                        onmouseout="this.style.background='transparent'; this.style.color='#e53e3e';">
+                                        <i class="fas fa-trash"></i>
+                                        Borrar
+                                    </a>
+                                    <button
+                                        type="button"
+                                        class="btn-outline-teal"
+                                        data-bs-dismiss="modal">
+                                        <i class="fas fa-times"></i>
+                                        Cerrar
+                                    </button>
+                                </div>
                             </div>
-                          </div>
-                          <div class="modal-footer">
-                            <a 
-                                href="./ABM_libro_edit.php?id=<?= $id; ?>" 
-                                class="btn-outline-teal">
-                                <i class="fas fa-edit"></i>
-                                Editar
-                            </a>
-                            <a 
-                                href="./ABM_libro_del.php?id=<?= $id; ?>" 
-                                class="btn-outline-teal" 
-                                style="border-color: #e53e3e; color: #e53e3e;"
-                                onmouseover="this.style.background='#e53e3e'; this.style.color='white';"
-                                onmouseout="this.style.background='transparent'; this.style.color='#e53e3e';">
-                                <i class="fas fa-trash"></i>
-                                Borrar
-                            </a>
-                            <button 
-                                type="button" 
-                                class="btn-outline-teal" 
-                                data-bs-dismiss="modal">
-                                <i class="fas fa-times"></i>
-                                Cerrar
-                            </button>
-                          </div>
                         </div>
-                      </div>
                     </div>
                 <?php endwhile; ?>
             <?php else: ?>
@@ -849,7 +857,7 @@
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <script>
         // Dropdown functionality
         function toggleDropdown() {
@@ -861,7 +869,7 @@
         document.addEventListener('click', function(event) {
             const dropdown = document.getElementById('userDropdown');
             const button = event.target.closest('.user-btn');
-            
+
             if (!button && !dropdown.contains(event.target)) {
                 dropdown.classList.remove('show');
             }
@@ -892,7 +900,7 @@
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
@@ -905,4 +913,5 @@
         });
     </script>
 </body>
+
 </html>

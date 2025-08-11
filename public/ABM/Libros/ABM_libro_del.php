@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eliminar Libro - Biblioteca Mágica</title>
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         * {
             margin: 0;
@@ -223,7 +224,7 @@
             max-width: 120px;
             max-height: 160px;
             border-radius: 0.5rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             object-fit: cover;
         }
 
@@ -309,9 +310,17 @@
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
 
         /* Footer */
@@ -403,6 +412,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -414,6 +424,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Admin Header -->
     <header class="admin-header">
@@ -430,7 +441,7 @@
                 </div>
 
                 <nav class="admin-nav">
-                    <a href="ABM_index.php" class="nav-item">
+                    <a href="<?= app_path("public/ABM/ABM_index.php") ?>" class="nav-item">
                         <i class="fas fa-home"></i>
                         Inicio
                     </a>
@@ -461,7 +472,7 @@
                             <h3 class="message-title">ID No Especificado</h3>
                             <p>No se ha proporcionado un ID válido para eliminar el libro.</p>
                           </div>';
-                    echo '<a href="./ABM_libro.php" class="btn-action">
+                    echo '<a href="' . app_path("public/ABM/Libros/ABM_libro.php") . '" class="btn-action">
                             <i class="fas fa-arrow-left"></i>
                             Volver a la Lista
                           </a>';
@@ -526,7 +537,7 @@
                     }
 
                     $libro = $resultInfo->fetch_assoc();
-                    
+
                     echo '<div class="confirmation-container">
                             <i class="fas fa-exclamation-triangle warning-icon message-icon"></i>
                             <h3 class="message-title">⚠️ Confirmación de Eliminación ⚠️</h3>
@@ -570,14 +581,14 @@
                     $stmtInfo->close();
                 } else {
                     // Proceder con la eliminación
-                    
+
                     // Primero obtener información del libro para mostrar después
                     $sqlInfo = "SELECT titulo, autor FROM libros WHERE id = ?";
                     $stmtInfo = $conn->prepare($sqlInfo);
                     $stmtInfo->bind_param("i", $libro_id);
                     $stmtInfo->execute();
                     $resultInfo = $stmtInfo->get_result();
-                    
+
                     if ($resultInfo->num_rows === 0) {
                         echo '<div class="error-message">
                                 <i class="fas fa-book-dead message-icon"></i>
@@ -592,14 +603,14 @@
                         $conn->close();
                         exit;
                     }
-                    
+
                     $libroInfo = $resultInfo->fetch_assoc();
                     $stmtInfo->close();
 
                     // Realizar la eliminación con prepared statement
                     $sql = "DELETE FROM libros WHERE id = ?";
                     $stmt = $conn->prepare($sql);
-                    
+
                     if ($stmt === false) {
                         echo '<div class="error-message">
                                 <i class="fas fa-exclamation-triangle message-icon"></i>
@@ -624,12 +635,12 @@
                                     <p>El libro "<strong>' . htmlspecialchars($libroInfo['titulo']) . '</strong>" de <strong>' . htmlspecialchars($libroInfo['autor']) . '</strong> ha sido eliminado correctamente del catálogo.</p>
                                     <p><strong>ID eliminado:</strong> #' . $libro_id . '</p>
                                   </div>';
-                            
+
                             echo '<div class="countdown">
                                     <i class="fas fa-clock"></i>
                                     Redirigiendo en <span id="countdown">5</span> segundos...
                                   </div>';
-                            
+
                             echo '<div style="text-align: center;">
                                     <a href="./ABM_libro.php" class="btn-action">
                                         <i class="fas fa-list"></i>
@@ -640,7 +651,7 @@
                                         Añadir Nuevo Libro
                                     </a>
                                   </div>';
-                            
+
                             // JavaScript para redirección automática
                             echo '<script>
                                     let timeLeft = 5;
@@ -734,7 +745,7 @@
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
@@ -747,4 +758,5 @@
         });
     </script>
 </body>
+
 </html>

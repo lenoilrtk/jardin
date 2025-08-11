@@ -204,7 +204,7 @@
                             <i class="fas fa-exclamation-triangle fs-2 mb-3"></i>
                             <h3>Error: ID no especificado</h3>
                             <p>No se ha proporcionado un ID válido</p>
-                            <a href="../ABM_user.php" class="btn btn-purple btn-action">Volver a la Lista</a>
+                            <a href="' . app_path('public/ABM/Usuarios/ABM_user.php') . '" class="btn btn-purple btn-action">Volver a la Lista</a>
                           </div>';
                     exit;
                 }
@@ -226,7 +226,7 @@
                     </div>
 
                     <div class="form-container">
-                        <form action="ABM_user_edit_mod.php?usuario_id=<?php echo $row["usuario_id"]; ?>" method="POST" id="editBookForm">
+                        <form action="<?= app_path('public/ABM/Usuarios/Editar/ABM_user_edit_mod.php') ?>?usuario_id=<?php echo $row["usuario_id"]; ?>" method="POST" id="editBookForm">
 
                             <!-- Información Básica -->
                             <div class="form-section">
@@ -307,7 +307,7 @@
 
                             <!-- Botones de Acción -->
                             <div class="text-center">
-                                <a href="../ABM_user.php" class="btn btn-outline-secondary btn-action me-3">
+                                <a href="<?= app_path(" public/ABM/Usuarios/ABM_user.php") ?>" class="btn btn-outline-secondary btn-action me-3">
                                     <i class="fas fa-arrow-left me-2"></i>
                                     Cancelar
                                 </a>
@@ -325,7 +325,7 @@
                             <i class="fas fa-book-dead fs-2 mb-3"></i>
                             <h3>Libro no encontrado</h3>
                             <p>No se encontró ningún libro con el ID especificado.</p>
-                            <a href="../ABM_user.php" class="btn btn-purple btn-action">Volver a la Lista</a>
+                            <a href="' . app_path(" public/ABM/Usuarios/ABM_user.php") . '" class="btn btn-purple btn-action">Volver a la Lista</a>
                           </div>';
                 }
                 $conn->close();
@@ -355,7 +355,7 @@
 
     <script>
         // Validación del formulario
-        document.getElementById('editBookForm').addEventListener('submit', function(e) {
+        document.getElementById(' editBookForm').addEventListener('submit', function(e) {
             const requiredFields = ['usuario_id', 'contraseña', 'nivel'];
             let isValid = true;
 

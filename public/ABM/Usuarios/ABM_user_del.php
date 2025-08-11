@@ -247,11 +247,11 @@
 
                 // Botones de confirmación
                 echo '<div class="text-center">
-                        <a href="./ABM_user.php" class="btn btn-outline-secondary btn-action">
+                        <a href="' . app_path('public/ABM/Usuarios/ABM_user.php') . '" class="btn btn-outline-secondary btn-action">
                             <i class="fas fa-times me-2"></i>
                             Cancelar
                         </a>
-                        <a href="./ABM_user_del.php?id=' . $usuario_id . '&confirmar=si" class="btn btn-danger btn-action">
+                        <a href="' . app_path('public/ABM/Usuarios/ABM_user_del.php') . '?id=' . $usuario_id . '&confirmar=si" class="btn btn-danger btn-action">
                             <i class="fas fa-trash me-2"></i>
                             Confirmar Eliminación
                         </a>
@@ -274,7 +274,7 @@
                             <h3>Libro No Encontrado</h3>
                             <p>El Usuario que intentas eliminar ya no existe en la base de datos.</p>
                           </div>';
-                    echo '<a href="./ABM_user.php" class="btn btn-purple btn-action">Volver a la Lista</a>';
+                    echo '<a href="' . app_path('public/ABM/Usuarios/ABM_user.php') . '" class="btn btn-purple btn-action">Volver a la Lista</a>';
                     $stmtInfo->close();
                     $conn->close();
                     exit;
@@ -293,7 +293,7 @@
                             <h3>Error en la Consulta</h3>
                             <p>Error al preparar la consulta de eliminación: ' . $conn->error . '</p>
                           </div>';
-                    echo '<a href="./ABM_user.php" class="btn btn-purple btn-action">Volver a la Lista</a>';
+                    echo '<a href="' . app_path('public/ABM/Usuarios/ABM_user.php') . '" class="btn btn-purple btn-action">Volver a la Lista</a>';
                     $conn->close();
                     exit;
                 }
@@ -313,7 +313,7 @@
                                 Redirigiendo en <span id="countdown">5</span> segundos...
                               </div>';
 
-                        echo '<a href="./ABM_user.php" class="btn btn-purple btn-action">Ver Lista de Usuarios</a>';
+                        echo '<a href="' . app_path('public/ABM/Usuarios/ABM_user.php') . '" class="btn btn-purple btn-action">Ver Lista de Usuarios</a>';
 
                         // JavaScript para redirección automática
                         echo '<script>
@@ -326,7 +326,7 @@
                                     
                                     if (timeLeft <= 0) {
                                         clearInterval(timer);
-                                        window.location.href = "./ABM_user.php";
+                                        window.location.href = "' . app_path('public/ABM/Usuarios/ABM_user.php') . '";
                                     }
                                 }, 1000);
                               </script>';
@@ -336,7 +336,7 @@
                                 <h3>Libro No Encontrado</h3>
                                 <p>No se encontró ningún libro con el ID especificado para eliminar.</p>
                               </div>';
-                        echo '<a href="../Libros/ABM_libro.php" class="btn btn-purple btn-action">Volver a la Lista</a>';
+                        echo '<a href="' . app_path('public/ABM/Libros/ABM_libro.php') . '" class="btn btn-purple btn-action">Volver a la Lista</a>';
                     }
                 } else {
                     echo '<div class="error-message">
@@ -345,8 +345,8 @@
                             <p>Se produjo un error al intentar eliminar el libro de la base de datos.</p>
                             <p><strong>Error:</strong> ' . $stmt->error . '</p>
                           </div>';
-                    echo '<a href="./ABM_user.php" class="btn btn-purple btn-action">Volver a la Lista</a>';
-                    echo '<a href="./ABM_user_del.php?id=' . $usuario_id . '" class="btn btn-outline-danger btn-action">Intentar de Nuevo</a>';
+                    echo '<a href="' . app_path('public/ABM/Usuarios/ABM_user.php') . '" class="btn btn-purple btn-action">Volver a la Lista</a>';
+                    echo '<a href="' . app_path('public/ABM/Usuarios/ABM_user_del.php') . '?id=' . $usuario_id . '" class="btn btn-outline-danger btn-action">Intentar de Nuevo</a>';
                 }
 
                 $stmt->close();

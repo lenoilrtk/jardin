@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmtMov->execute();
                 $stmtMov->close();
                 // Redirigir de vuelta al listado tras 2 segundos
-                header("refresh:2; url=ABM_user.php");
+                header("refresh:2; url=" . app_path(" public/ABM/Usuarios/ABM_user.php"));
             } else {
                 $error = 'Error al insertar el usuario: ' . $conn->error;
             }
@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <i class="fas fa-users fa-2x me-2 text-white"></i>
             <h1 class="h3 text-white mb-0">Añadir Nuevo Usuario</h1>
             <div class="ms-auto">
-                <a href="ABM_user.php" class="btn btn-outline-light">
+                <a href="<?= app_path(" public/ABM/Usuarios/ABM_user.php") ?>" class="btn btn-outline-light">
                     <i class="fas fa-arrow-left me-1"></i>Volver al Listado
                 </a>
             </div>
@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="card form-card mb-5">
             <div class="card-body p-4">
-                <form method="POST" action="agregarUsuario.php">
+                <form method="POST" action="<?= app_path(" public/ABM/Usuarios/Añadir/agregarUsuario.php") ?>">
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label for="nombre" class="form-label fw-medium">Nombre</label>
