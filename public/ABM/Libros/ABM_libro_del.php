@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/../../../vendor/autoload.php';
+require_once app_path('public/conex.php');
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -487,7 +491,7 @@
                             <h3 class="message-title">ID No Válido</h3>
                             <p>El ID proporcionado no es válido.</p>
                           </div>';
-                    echo '<a href="./ABM_libro.php" class="btn-action">
+                    echo '<a href="' . app_path("public/ABM/Libros/ABM_libro.php") . '" class="btn-action">
                             <i class="fas fa-arrow-left"></i>
                             Volver a la Lista
                           </a>';
@@ -503,7 +507,7 @@
                             <h3 class="message-title">Error de Conexión</h3>
                             <p>No se pudo conectar a la base de datos: ' . $conn->connect_error . '</p>
                           </div>';
-                    echo '<a href="./ABM_libro.php" class="btn-action">
+                    echo '<a href="' . app_path("public/ABM/Libros/ABM_libro.php") . '" class="btn-action">
                             <i class="fas fa-redo"></i>
                             Intentar de Nuevo
                           </a>';
@@ -527,7 +531,7 @@
                                 <h3 class="message-title">Libro No Encontrado</h3>
                                 <p>No se encontró ningún libro con el ID especificado.</p>
                               </div>';
-                        echo '<a href="./ABM_libro.php" class="btn-action">
+                        echo '<a href="' . app_path("public/ABM/Libros/ABM_libro.php") . '" class="btn-action">
                                 <i class="fas fa-arrow-left"></i>
                                 Volver a la Lista
                               </a>';
@@ -568,11 +572,11 @@
 
                     // Botones de confirmación
                     echo '<div style="text-align: center;">
-                            <a href="./ABM_libro.php" class="btn-action btn-secondary">
+                            <a href="' . app_path("public/ABM/Libros/ABM_libro.php") . '" class="btn-action btn-secondary">
                                 <i class="fas fa-times"></i>
                                 Cancelar
                             </a>
-                            <a href="./ABM_libro_del.php?id=' . $libro_id . '&confirmar=si" class="btn-action btn-danger">
+                            <a href="' . app_path("public/ABM/Libros/ABM_libro_del.php") . '?id=' . $libro_id . '&confirmar=si" class="btn-action btn-danger">
                                 <i class="fas fa-trash"></i>
                                 Confirmar Eliminación
                             </a>
@@ -595,7 +599,7 @@
                                 <h3 class="message-title">Libro No Encontrado</h3>
                                 <p>El libro que intentas eliminar ya no existe en la base de datos.</p>
                               </div>';
-                        echo '<a href="./ABM_libro.php" class="btn-action">
+                        echo '<a href="' . app_path("public/ABM/Libros/ABM_libro.php") . '" class="btn-action">
                                 <i class="fas fa-arrow-left"></i>
                                 Volver a la Lista
                               </a>';
@@ -617,7 +621,7 @@
                                 <h3 class="message-title">Error en la Consulta</h3>
                                 <p>Error al preparar la consulta de eliminación: ' . $conn->error . '</p>
                               </div>';
-                        echo '<a href="./ABM_libro.php" class="btn-action">
+                        echo '<a href="' . app_path("public/ABM/Libros/ABM_libro.php") . '" class="btn-action">
                                 <i class="fas fa-arrow-left"></i>
                                 Volver a la Lista
                               </a>';
@@ -642,11 +646,11 @@
                                   </div>';
 
                             echo '<div style="text-align: center;">
-                                    <a href="./ABM_libro.php" class="btn-action">
+                                    <a href="' . app_path("public/ABM/Libros/ABM_libro.php") . '" class="btn-action">
                                         <i class="fas fa-list"></i>
                                         Ver Lista de Libros
                                     </a>
-                                    <a href="./ABM_libro_añadir.html" class="btn-action btn-success">
+                                    <a href="' . app_path("public/ABM/Libros/Añadir/ABM_libro_añadir.php") . '" class="btn-action btn-success">
                                         <i class="fas fa-plus"></i>
                                         Añadir Nuevo Libro
                                     </a>
@@ -663,7 +667,7 @@
                                         
                                         if (timeLeft <= 0) {
                                             clearInterval(timer);
-                                            window.location.href = "./ABM_libro.php";
+                                            window.location.href = "' . app_path("public/ABM/Libros/ABM_libro.php") . '";
                                         }
                                     }, 1000);
                                   </script>';
@@ -673,7 +677,7 @@
                                     <h3 class="message-title">Libro No Encontrado</h3>
                                     <p>No se encontró ningún libro con el ID especificado para eliminar.</p>
                                   </div>';
-                            echo '<a href="./ABM_libro.php" class="btn-action">
+                            echo '<a href="' . app_path("public/ABM/Libros/ABM_libro.php") . '" class="btn-action">
                                     <i class="fas fa-arrow-left"></i>
                                     Volver a la Lista
                                   </a>';
@@ -686,11 +690,11 @@
                                 <p><strong>Error:</strong> ' . $stmt->error . '</p>
                               </div>';
                         echo '<div style="text-align: center;">
-                                <a href="./ABM_libro.php" class="btn-action">
+                                <a href="' . app_path("public/ABM/Libros/ABM_libro.php") . '" class="btn-action">
                                     <i class="fas fa-arrow-left"></i>
                                     Volver a la Lista
                                 </a>
-                                <a href="./ABM_libro_del.php?id=' . $libro_id . '" class="btn-action btn-danger">
+                                <a href="' . app_path("public/ABM/Libros/ABM_libro_del.php") . '?id=' . $libro_id . '" class="btn-action btn-danger">
                                     <i class="fas fa-redo"></i>
                                     Intentar de Nuevo
                                 </a>

@@ -1,13 +1,18 @@
+<?php
+require_once __DIR__ . '/../../../../vendor/autoload.php';
+require_once app_path('public/conex.php');
+?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modificar Libro - Biblioteca Mágica</title>
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         * {
             margin: 0;
@@ -285,7 +290,7 @@
             max-width: 150px;
             max-height: 200px;
             border-radius: 0.5rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             margin: 0 auto;
             display: block;
             object-fit: cover;
@@ -438,6 +443,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -449,6 +455,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Admin Header -->
     <header class="admin-header">
@@ -465,13 +472,13 @@
                 </div>
 
                 <nav class="admin-nav">
-                    <a href="ABM_index.php" class="nav-item">
+                    <a href="<?= app_path("public/ABM/ABM_index.php") ?>" class="nav-item">
                         <i class="fas fa-home"></i>
                         Inicio
                     </a>
                     <div class="user-info">
                         <i class="fas fa-user-shield"></i>
-Administrador   
+                        Administrador
                     </div>
                 </nav>
             </div>
@@ -488,177 +495,177 @@ Administrador
 
             <?php
             include "./conex.php";
-            
+
             if (!isset($_GET['id']) || empty($_GET['id'])) {
                 echo '<div class="error-message fade-in">
                         <i class="fas fa-exclamation-triangle"></i>
                         <h3>Error: ID de libro no especificado</h3>
                         <p>No se ha proporcionado un ID válido para el libro.</p>
-                        <a href="./ABM_libro.php" class="btn-action">
+                        <a href="' . app_path("public/ABM/Libros/ABM_libro.php") . '" class="btn-action">
                             <i class="fas fa-arrow-left"></i>
                             Volver a la Lista
                         </a>
                       </div>';
                 exit;
             }
-            
+
             $id = intval($_GET['id']);
             $sql = "SELECT * FROM `libros` WHERE id = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("i", $id);
             $stmt->execute();
             $result = $stmt->get_result();
-            
+
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
             ?>
-            
-            <!-- Book Info Header -->
-            <div class="book-info-header fade-in">
-                <h3>
-                    <i class="fas fa-book"></i>
-                    Editando: <?php echo htmlspecialchars($row["titulo"]); ?>
-                </h3>
-                <p>ID del libro: #<?php echo $row["id"]; ?></p>
-            </div>
 
-            <div class="form-container fade-in">
-                <form action="ABM_libro_edit_mod.php?libro_id=<?php echo $row["id"]; ?>" method="POST" id="editBookForm" enctype="multipart/form-data">
-                    
-                    <!-- Información Básica -->
-                    <div class="form-section">
-                        <h3 class="section-title">
-                            <i class="fas fa-book"></i>
-                            Información Básica del Libro
-                        </h3>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="titulo" class="form-label">
-                                    <i class="fas fa-heading"></i>
-                                    Título
-                                </label>
-                                <input type="text" class="form-control" id="titulo" name="titulo" 
-                                       value="<?php echo htmlspecialchars($row["titulo"]); ?>" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="autor" class="form-label">
-                                    <i class="fas fa-user-edit"></i>
-                                    Autor
-                                </label>
-                                <input type="text" class="form-control" id="autor" name="autor" 
-                                       value="<?php echo htmlspecialchars($row["autor"]); ?>" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="ilustrador" class="form-label">
-                                    <i class="fas fa-palette"></i>
-                                    Ilustrador
-                                </label>
-                                <input type="text" class="form-control" id="ilustrador" name="ilustrador" 
-                                       value="<?php echo htmlspecialchars($row["ilustrador"]); ?>" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="editorial" class="form-label">
-                                    <i class="fas fa-building"></i>
-                                    Editorial
-                                </label>
-                                <input type="text" class="form-control" id="editorial" name="editorial" 
-                                       value="<?php echo htmlspecialchars($row["editorial"]); ?>" required>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Book Info Header -->
+                <div class="book-info-header fade-in">
+                    <h3>
+                        <i class="fas fa-book"></i>
+                        Editando: <?php echo htmlspecialchars($row["titulo"]); ?>
+                    </h3>
+                    <p>ID del libro: #<?php echo $row["id"]; ?></p>
+                </div>
 
-                    <!-- Clasificación y Características -->
-                    <div class="form-section">
-                        <h3 class="section-title">
-                            <i class="fas fa-tags"></i>
-                            Clasificación y Características
-                        </h3>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="clasificacion" class="form-label">
-                                    <i class="fas fa-bookmark"></i>
-                                    Clasificación
-                                </label>
-                                <select class="form-control" id="clasificacion" name="clasificacion" required>
-                                    <option value="">Selecciona una clasificación</option>
-                                    <option value="Cuentos de Hadas" <?php echo ($row["clasificacion"] == "Cuentos de Hadas") ? "selected" : ""; ?>>Cuentos de Hadas</option>
-                                    <option value="Fábulas con Animales" <?php echo ($row["clasificacion"] == "Fábulas con Animales") ? "selected" : ""; ?>>Fábulas con Animales</option>
-                                    <option value="Poesía Infantil" <?php echo ($row["clasificacion"] == "Poesía Infantil") ? "selected" : ""; ?>>Poesía Infantil</option>
-                                    <option value="Libros de Aventuras" <?php echo ($row["clasificacion"] == "Libros de Aventuras") ? "selected" : ""; ?>>Libros de Aventuras</option>
-                                    <option value="Historias de la Naturaleza" <?php echo ($row["clasificacion"] == "Historias de la Naturaleza") ? "selected" : ""; ?>>Historias de la Naturaleza</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="color" class="form-label">
-                                    <i class="fas fa-circle"></i>
-                                    Color Identificativo
-                                </label>
-                                <select class="form-control" id="color" name="color" required>
-                                    <option value="">Selecciona un color</option>
-                                    <option value="Rojo" <?php echo ($row["color"] == "Rojo") ? "selected" : ""; ?>>🔴 Rojo</option>
-                                    <option value="Azul" <?php echo ($row["color"] == "Azul") ? "selected" : ""; ?>>🔵 Azul</option>
-                                    <option value="Verde" <?php echo ($row["color"] == "Verde") ? "selected" : ""; ?>>🟢 Verde</option>
-                                    <option value="Amarillo" <?php echo ($row["color"] == "Amarillo") ? "selected" : ""; ?>>🟡 Amarillo</option>
-                                    <option value="Rosa" <?php echo ($row["color"] == "Rosa") ? "selected" : ""; ?>>🌸 Rosa</option>
-                                    <option value="Morado" <?php echo ($row["color"] == "Morado") ? "selected" : ""; ?>>🟣 Morado</option>
-                                    <option value="Naranja" <?php echo ($row["color"] == "Naranja") ? "selected" : ""; ?>>🟠 Naranja</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                <div class="form-container fade-in">
+                    <form action="<?= app_path("public/ABM/Editar/ABM_libro_edit_mod.php") ?>?libro_id=<?php echo $row["id"]; ?>" method="POST" id="editBookForm" enctype="multipart/form-data">
 
-                    <!-- Descripción e Imagen -->
-                    <div class="form-section">
-                        <h3 class="section-title">
-                            <i class="fas fa-image"></i>
-                            Descripción e Imagen
-                        </h3>
-                        <div class="mb-3">
-                            <label for="resumen" class="form-label">
-                                <i class="fas fa-align-left"></i>
-                                Resumen
-                            </label>
-                            <textarea class="form-control" id="resumen" name="resumen" rows="4" required><?php echo htmlspecialchars($row["resumen"]); ?></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="imagen" class="form-label">
-                                <i class="fas fa-camera"></i>
-                                Imagen del Libro
-                            </label>
-                            <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" onchange="previewImage()">
-                            <div class="preview-container">
-                                <h5>
-                                    <i class="fas fa-eye"></i>
-                                    Vista Previa Actual
-                                </h5>
-                                <img id="previewImg" class="image-preview" src="data:image/jpeg;base64,<?php echo base64_encode($row['imagen']); ?>" alt="Vista previa del libro" onerror="this.src='/placeholder.svg?height=200&width=150&text=Sin+Imagen'">
+                        <!-- Información Básica -->
+                        <div class="form-section">
+                            <h3 class="section-title">
+                                <i class="fas fa-book"></i>
+                                Información Básica del Libro
+                            </h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="titulo" class="form-label">
+                                        <i class="fas fa-heading"></i>
+                                        Título
+                                    </label>
+                                    <input type="text" class="form-control" id="titulo" name="titulo"
+                                        value="<?php echo htmlspecialchars($row["titulo"]); ?>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="autor" class="form-label">
+                                        <i class="fas fa-user-edit"></i>
+                                        Autor
+                                    </label>
+                                    <input type="text" class="form-control" id="autor" name="autor"
+                                        value="<?php echo htmlspecialchars($row["autor"]); ?>" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="ilustrador" class="form-label">
+                                        <i class="fas fa-palette"></i>
+                                        Ilustrador
+                                    </label>
+                                    <input type="text" class="form-control" id="ilustrador" name="ilustrador"
+                                        value="<?php echo htmlspecialchars($row["ilustrador"]); ?>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="editorial" class="form-label">
+                                        <i class="fas fa-building"></i>
+                                        Editorial
+                                    </label>
+                                    <input type="text" class="form-control" id="editorial" name="editorial"
+                                        value="<?php echo htmlspecialchars($row["editorial"]); ?>" required>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Botones de Acción -->
-                    <div style="text-align: center;">
-                        <a href="./ABM_libro.php" class="btn-action btn-secondary">
-                            <i class="fas fa-times"></i>
-                            Cancelar
-                        </a>
-                        <button type="submit" class="btn-action">
-                            <i class="fas fa-save"></i>
-                            Guardar Cambios
-                        </button>
-                    </div>
-                </form>
-            </div>
-            
-            <?php 
+                        <!-- Clasificación y Características -->
+                        <div class="form-section">
+                            <h3 class="section-title">
+                                <i class="fas fa-tags"></i>
+                                Clasificación y Características
+                            </h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="clasificacion" class="form-label">
+                                        <i class="fas fa-bookmark"></i>
+                                        Clasificación
+                                    </label>
+                                    <select class="form-control" id="clasificacion" name="clasificacion" required>
+                                        <option value="">Selecciona una clasificación</option>
+                                        <option value="Cuentos de Hadas" <?php echo ($row["clasificacion"] == "Cuentos de Hadas") ? "selected" : ""; ?>>Cuentos de Hadas</option>
+                                        <option value="Fábulas con Animales" <?php echo ($row["clasificacion"] == "Fábulas con Animales") ? "selected" : ""; ?>>Fábulas con Animales</option>
+                                        <option value="Poesía Infantil" <?php echo ($row["clasificacion"] == "Poesía Infantil") ? "selected" : ""; ?>>Poesía Infantil</option>
+                                        <option value="Libros de Aventuras" <?php echo ($row["clasificacion"] == "Libros de Aventuras") ? "selected" : ""; ?>>Libros de Aventuras</option>
+                                        <option value="Historias de la Naturaleza" <?php echo ($row["clasificacion"] == "Historias de la Naturaleza") ? "selected" : ""; ?>>Historias de la Naturaleza</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="color" class="form-label">
+                                        <i class="fas fa-circle"></i>
+                                        Color Identificativo
+                                    </label>
+                                    <select class="form-control" id="color" name="color" required>
+                                        <option value="">Selecciona un color</option>
+                                        <option value="Rojo" <?php echo ($row["color"] == "Rojo") ? "selected" : ""; ?>>🔴 Rojo</option>
+                                        <option value="Azul" <?php echo ($row["color"] == "Azul") ? "selected" : ""; ?>>🔵 Azul</option>
+                                        <option value="Verde" <?php echo ($row["color"] == "Verde") ? "selected" : ""; ?>>🟢 Verde</option>
+                                        <option value="Amarillo" <?php echo ($row["color"] == "Amarillo") ? "selected" : ""; ?>>🟡 Amarillo</option>
+                                        <option value="Rosa" <?php echo ($row["color"] == "Rosa") ? "selected" : ""; ?>>🌸 Rosa</option>
+                                        <option value="Morado" <?php echo ($row["color"] == "Morado") ? "selected" : ""; ?>>🟣 Morado</option>
+                                        <option value="Naranja" <?php echo ($row["color"] == "Naranja") ? "selected" : ""; ?>>🟠 Naranja</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Descripción e Imagen -->
+                        <div class="form-section">
+                            <h3 class="section-title">
+                                <i class="fas fa-image"></i>
+                                Descripción e Imagen
+                            </h3>
+                            <div class="mb-3">
+                                <label for="resumen" class="form-label">
+                                    <i class="fas fa-align-left"></i>
+                                    Resumen
+                                </label>
+                                <textarea class="form-control" id="resumen" name="resumen" rows="4" required><?php echo htmlspecialchars($row["resumen"]); ?></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="imagen" class="form-label">
+                                    <i class="fas fa-camera"></i>
+                                    Imagen del Libro
+                                </label>
+                                <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" onchange="previewImage()">
+                                <div class="preview-container">
+                                    <h5>
+                                        <i class="fas fa-eye"></i>
+                                        Vista Previa Actual
+                                    </h5>
+                                    <img id="previewImg" class="image-preview" src="data:image/jpeg;base64,<?php echo base64_encode($row['imagen']); ?>" alt="Vista previa del libro" onerror="this.src='/placeholder.svg?height=200&width=150&text=Sin+Imagen'">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Botones de Acción -->
+                        <div style="text-align: center;">
+                            <a href="<?= app_path("public/ABM/Libros/ABM_libro.php") ?>" class="btn-action btn-secondary">
+                                <i class="fas fa-times"></i>
+                                Cancelar
+                            </a>
+                            <button type="submit" class="btn-action">
+                                <i class="fas fa-save"></i>
+                                Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            <?php
             } else {
                 echo '<div class="error-message fade-in">
                         <i class="fas fa-book-dead"></i>
                         <h3>Libro no encontrado</h3>
                         <p>No se encontró ningún libro con el ID especificado.</p>
-                        <a href="./ABM_libro.php" class="btn-action">
+                        <a href="' . app_path("public/ABM/Libros/ABM_libro.php") . '" class="btn-action">
                             <i class="fas fa-arrow-left"></i>
                             Volver a la Lista
                         </a>
@@ -749,7 +756,7 @@ Administrador
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
@@ -762,4 +769,5 @@ Administrador
         });
     </script>
 </body>
+
 </html>

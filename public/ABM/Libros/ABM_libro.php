@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/../../../vendor/autoload.php';
+require_once app_path('public/conex.php');
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -521,10 +525,6 @@
             }
         }
     </style>
-    <?php
-    require_once __DIR__ . '/../../../vendor/autoload.php';
-    require_once app_path('public/conex.php');
-    ?>
 </head>
 
 <body>
@@ -596,7 +596,7 @@
                         <i class="fas fa-arrow-left"></i>
                         Volver
                     </a>
-                    <a href="<?= app_path("public/ABM/Libros/Añadir/ABM_libro_añadir.html") ?>" class="btn-teal">
+                    <a href="<?= app_path("public/ABM/Libros/Añadir/ABM_libro_añadir.php") ?>" class="btn-teal">
                         <i class="fas fa-plus"></i>
                         Añadir Libro
                     </a>

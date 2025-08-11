@@ -1,6 +1,12 @@
-<?php session_start(); ?>
+<?php
+session_start();
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';
+require_once app_path('public/conex.php');
+?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -155,8 +161,15 @@
         }
 
         @keyframes successPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
         }
 
         /* Error Message */
@@ -189,9 +202,19 @@
         }
 
         @keyframes errorShake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
         }
 
         .error-message ul {
@@ -280,8 +303,13 @@
         }
 
         @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .countdown-number {
@@ -430,6 +458,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -467,6 +496,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header class="admin-header">
@@ -508,7 +538,7 @@
                         <h3>Acceso No Válido</h3>
                         <p>Esta página solo puede ser accedida mediante el formulario de añadir libro.</p>
                       </div>';
-                echo '<a href="./ABM_libro_añadir.html" class="btn-teal">
+                echo '<a href="' . app_path("public/ABM/Libros/Añadir/ABM_libro_añadir.php") . '" class="btn-teal">
                         <i class="fas fa-arrow-left"></i>
                         Volver al Formulario
                       </a>';
@@ -536,7 +566,7 @@
 
             // Si no se subió imagen, usar imagen por defecto
             if ($imagen === null) {
-                $ruta_defecto = __DIR__ . '/../images/defecto.jpg';
+                $ruta_defecto = __DIR__ . app_path("resources/images/defecto.jpg");
                 if (file_exists($ruta_defecto)) {
                     $imagen = file_get_contents($ruta_defecto);
                 }
@@ -572,7 +602,7 @@
                         <i class="fas fa-arrow-left"></i>
                         Corregir
                       </a>';
-                echo '<a href="./ABM_libro.php" class="btn-teal">
+                echo '<a href="' . app_path("public/ABM/Libros/ABM_libro.php") . '" class="btn-teal">
                         <i class="fas fa-book"></i>
                         Ver Libros
                       </a>';
@@ -604,7 +634,7 @@
                         <i class="fas fa-arrow-left"></i>
                         Volver
                       </a>';
-                echo '<a href="./ABM_libro.php" class="btn-teal">
+                echo '<a href="' . app_path("public/ABM/Libros/ABM_libro.php") . '" class="btn-teal">
                         <i class="fas fa-book"></i>
                         Ver Libros
                       </a>';
@@ -672,11 +702,11 @@
                       </div>';
 
                 echo '<div class="text-center">
-                        <a href="./ABM_libro.php" class="btn-teal">
+                        <a href="' . app_path("public/ABM/Libros/ABM_libro.php") . '" class="btn-teal">
                             <i class="fas fa-book"></i>
                             Ver Todos los Libros
                         </a>
-                        <a href="./ABM_libro_añadir.html" class="btn-outline-teal">
+                        <a href="' . app_path("public/ABM/Libros/Añadir/ABM_libro_añadir.php") . '" class="btn-outline-teal">
                             <i class="fas fa-plus"></i>
                             Añadir Otro Libro
                         </a>
@@ -689,7 +719,7 @@
                             el.textContent=t;
                             if(t<=0) {
                                 clearInterval(interval);
-                                location="./ABM_libro.php";
+                                location="' . app_path("public/ABM/Libros/ABM_libro.php") . '";
                             }
                         },1000);
                       </script>';
@@ -705,7 +735,7 @@
                             <i class="fas fa-arrow-left"></i>
                             Intentar de Nuevo
                         </a>
-                        <a href="./ABM_libro.php" class="btn-teal">
+                        <a href="' . app_path("public/ABM/Libros/ABM_libro.php") . '" class="btn-teal">
                             <i class="fas fa-book"></i>
                             Ver Libros
                         </a>
@@ -745,7 +775,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <script>
         // Add fade-in animation on scroll
         const observerOptions = {
@@ -771,4 +801,5 @@
         });
     </script>
 </body>
+
 </html>

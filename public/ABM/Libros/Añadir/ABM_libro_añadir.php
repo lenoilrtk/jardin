@@ -1,5 +1,10 @@
+<?php
+require_once __DIR__ . '/../../../../vendor/autoload.php';
+require_once app_path('public/conex.php');
+?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -265,7 +270,8 @@
             font-size: 0.9rem;
         }
 
-        .form-control, .form-select {
+        .form-control,
+        .form-select {
             border: 2px solid #b2dfdb;
             border-radius: 1rem;
             padding: 0.75rem 1rem;
@@ -275,7 +281,8 @@
             font-size: 0.95rem;
         }
 
-        .form-control:focus, .form-select:focus {
+        .form-control:focus,
+        .form-select:focus {
             border-color: #26a69a;
             box-shadow: 0 0 0 0.2rem rgba(38, 166, 154, 0.25);
             background: white;
@@ -426,6 +433,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -467,6 +475,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header class="admin-header">
@@ -483,11 +492,11 @@
                 </div>
 
                 <nav class="admin-nav">
-                    <a href="ABM_index.php" class="nav-item">
+                    <a href="<?= app_path("public/ABM/ABM_index.php") ?>" class="nav-item">
                         <i class="fas fa-home"></i>
                         Inicio
                     </a>
-                    <a href="ABM_libro_styled.php" class="nav-item">
+                    <a href="<?= app_path("public/ABM/Libros/ABM_libro.php") ?>" class="nav-item">
                         <i class="fas fa-book"></i>
                         Gestión de Libros
                     </a>
@@ -530,8 +539,8 @@
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="form-container fade-in">
-                    <form action="./ABM_libro_añadir_mod.php" method="POST" id="bookForm" enctype="multipart/form-data">
-                        
+                    <form action="<?= app_path("public/ABM/Libros/Añadir/ABM_libro_añadir_mod.php") ?>" method="POST" id="bookForm" enctype="multipart/form-data">
+
                         <!-- Información Básica -->
                         <div class="form-section fade-in">
                             <h3 class="section-title">
@@ -640,16 +649,15 @@
                                         id="previewImg"
                                         class="image-preview"
                                         alt="Vista previa"
-                                        src="../images/defecto.jpg"
-                                        onerror="this.onerror=null; this.src='imagen/defecto.php';"
-                                    >
+                                        src="<?= app_path("resources/images/defecto.jpg") ?>"
+                                        onerror="this.onerror=null;">
                                 </div>
                             </div>
                         </div>
 
                         <!-- Action Buttons -->
                         <div class="text-center fade-in">
-                            <a href="./ABM_libro.php" class="btn-outline-teal me-3">
+                            <a href="<?= app_path("public/ABM/Libros/ABM_libro.php") ?>" class="btn-outline-teal me-3">
                                 <i class="fas fa-arrow-left"></i>
                                 Cancelar
                             </a>
@@ -702,7 +710,7 @@
         document.addEventListener('click', function(event) {
             const dropdown = document.getElementById('userDropdown');
             const button = event.target.closest('.user-btn');
-            
+
             if (!button && !dropdown.contains(event.target)) {
                 dropdown.classList.remove('show');
             }
@@ -713,7 +721,7 @@
             const input = document.getElementById('imagen');
             const previewContainer = document.getElementById('imagePreview');
             const previewImg = document.getElementById('previewImg');
-            const defaultSrc = '../imagen/defecto.php';
+            const defaultSrc = '<?= app_path("resources/images/defecto.jpg") ?>';
 
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
@@ -739,9 +747,9 @@
 
         // Form validation
         document.getElementById('bookForm').addEventListener('submit', function(e) {
-            const required = ['titulo','autor','ilustrador','editorial','clasificacion','color','resumen'];
+            const required = ['titulo', 'autor', 'ilustrador', 'editorial', 'clasificacion', 'color', 'resumen'];
             let isValid = true;
-            
+
             required.forEach(id => {
                 const field = document.getElementById(id);
                 if (!field.value.trim()) {
@@ -751,7 +759,7 @@
                     field.classList.remove('is-invalid');
                 }
             });
-            
+
             if (!isValid) {
                 e.preventDefault();
                 alert('Por favor, completa todos los campos requeridos.');
@@ -783,7 +791,7 @@
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
@@ -796,5 +804,5 @@
         });
     </script>
 </body>
+
 </html>
- 

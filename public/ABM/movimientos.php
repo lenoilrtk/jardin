@@ -11,7 +11,7 @@ function mostrarCambiosHorizontal($camposStr, $valoresStr)
 
   // Verifica si todos los valores anteriores son "nulo"
   for ($i = 0; $i < count($valores); $i += 2) {
-    if (trim(custom_strtolower($valores[$i])) !== "nulo") {
+    if (trim(strtolower($valores[$i])) !== "nulo") {
       $esAgregado = false;
       break;
     }
